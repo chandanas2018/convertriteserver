@@ -1,0 +1,245 @@
+METADATA|worker|PersonNumber|EffectiveStartDate|PersonId|EffectiveEndDate|ActionCode|BloodType|CorrespondenceLanguage|CountryOfBirth|DateOfBirth|DateOfDeath|PersonDuplicateCheck
+MERGE|worker||Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)||Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|B+|English|United States|Sun Jun 20 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)||Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)|termination|B-|English| Mexico|Mon May 21 1984 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)||Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)|conversion|B+|English|Canada|Wed Apr 23 1986 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)||Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)|termination|B+|English|Guatemala|Sat Feb 06 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)||Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|B-|English|Cuba|Mon Jun 21 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)||Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)|termination|A+|English|Haiti|Tue May 22 1984 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)||Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|O-|English|El Salvador|Tue Jun 22 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)||Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)|termination|AB+|English|Nicaragua 	
+|Wed May 23 1984 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)||Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)|conversion|O+|English| Costa Rica|Fri Apr 25 1986 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)||Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)|termination|AB-|English|Panama|Mon Feb 08 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)||Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|A+|English|Puerto Rico|Tue Jun 22 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)||Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)|termination|AB+|English|Jamaica|Thu May 24 1984 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)||Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)|conversion|A-|English|Dominican Republic|Thu Apr 24 1986 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)||Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)|termination|O+|English|Honduras |Sun Feb 07 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)||Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)|conversion|B+|English|Trinidad and Tobago|Sat Apr 26 1986 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)||Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)|termination|O+|English|Guadeloupe |Tue Feb 09 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)||Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|AB-|English|Bahamas|Wed Jun 23 1982 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)||Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)|termination|A+|English|Belize |Fri May 25 1984 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)||Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|A+|English|Barbados|Sun Apr 27 1986 00:00:00 GMT+0530 (India Standard Time)||
+MERGE|worker||Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)||Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)|termination|AB+|English|Saint Lucia|Wed Feb 10 1982 00:00:00 GMT+0530 (India Standard Time)||
+
+METADATA|PersonCitizenship|CitizenshipId|LegislationCode|PersonNumber|PersonId|CitizenshipStatus|DateFrom|DateTo|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonCitizenship||US|12OC09||Active|Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||MX|12OC10||Inactive |Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Wed May 21 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||CA|12OC01||Inactive |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||GT|12OC11||Inactive |Sun Feb 06 2000 00:00:00 GMT+0530 (India Standard Time)|Thu Feb 06 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||CU|12OC02||Active |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||HT|12OC08||Active|Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||DO|12OC12||Active |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||HN|12OC13||Active|Sun Feb 06 2000 00:00:00 GMT+0530 (India Standard Time)|Thu Feb 06 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||SV|12OC14||Active |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||NI|12OC15||Active|Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||CR|12OC16||Active |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||PA|12OC17||Active|Fri Feb 06 2004 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 06 2029 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||PR|12OC03||Active |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||JM|12OC04||Active|Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||TT|12OC05||Active |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||GP|12OC07||Active|Sun Feb 06 2000 00:00:00 GMT+0530 (India Standard Time)|Thu Feb 06 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||BS|12OC18||Inactive |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||BZ|12OC19||Inactive |Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||BB|12OC06||Inactive |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonCitizenship||LC|12OC20||Inactive |Fri Feb 06 2004 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 06 2029 00:00:00 GMT+0530 (India Standard Time)|||
+
+METADATA|PersonDriversLicence|DriversLicenseId|LegislationCode|LicenseNumber|LicenseType|PersonNumber|PersonId|DateFrom|IssuingAuthority|IssuingCountry|IssuingLocation|LicenseSuspended|NumberOfPoints|SuspendedFromDate|SuspendedToDate|DateTo|Violations|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonDriversLicence||US|F255-921-50-094-0|Car|12OC09||Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)|State|United States|California|||||01-Feb-18||||
+MERGE|PersonDriversLicence||MX|F256-922-49-093-0|Motorcycle|12OC10||Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)|State| Mexico|Mexico City|||||14-Mar-18||||
+MERGE|PersonDriversLicence||CA|F255-921-50-094-1|Chauffeur|12OC01||Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|State|Canada|Ontario|||||24-Apr-18||||
+MERGE|PersonDriversLicence||GT|F256-922-49-093-1|Cdl|12OC11||Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)|State|Guatemala|Jalapa|||||04-Jun-18||||
+MERGE|PersonDriversLicence||CU|F255-921-50-094-2|Car|12OC02||Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)|State|Cuba|Mayabeque|||||15-Jul-18||||
+MERGE|PersonDriversLicence||HT|F256-922-49-093-2|Motorcycle|12OC08||Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)|State|Haiti|Haiti|||||25-Aug-18||||
+MERGE|PersonDriversLicence||DO|F255-921-50-094-3|Chauffeur|12OC12||Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)|State|Dominican Republic|Dominican Republic|||||05-Oct-18||||
+MERGE|PersonDriversLicence||HN|F256-922-49-093-3|Cdl|12OC13||Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)|State|Honduras |Honduras |||||15-Nov-18||||
+MERGE|PersonDriversLicence||SV|F255-921-50-094-4|Car|12OC14||Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)|State|El Salvador|El Salvador|||||26-Dec-18||||
+MERGE|PersonDriversLicence||NI|F256-922-49-093-4|Motorcycle|12OC15||Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)|State| Nicaragua 	
+| Nicaragua 	
+|||||05-Feb-19||||
+MERGE|PersonDriversLicence||CR|F255-921-50-094-5|Chauffeur|12OC16||Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|State| Costa Rica| Costa Rica|||||18-Mar-19||||
+MERGE|PersonDriversLicence||PA|F256-922-49-093-5|Cdl|12OC17||Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)|State|Panama|Panama|||||28-Apr-19||||
+MERGE|PersonDriversLicence||PR|F255-921-50-094-6|Car|12OC03||Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)|State|Puerto Rico|Puerto Rico|||||08-Jun-19||||
+MERGE|PersonDriversLicence||JM|F256-922-49-093-6|Motorcycle|12OC04||Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)|State|Jamaica|Jamaica|||||19-Jul-19||||
+MERGE|PersonDriversLicence||TT|F255-921-50-094-7|Chauffeur|12OC05||Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)|State|Trinidad and Tobago|Trinidad and Tobago|||||29-Aug-19||||
+MERGE|PersonDriversLicence||GP|F256-922-49-093-7|Cdl|12OC07||Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)|State|Guadeloupe |Guadeloupe |||||09-Oct-19||||
+MERGE|PersonDriversLicence||BS|F255-921-50-094-8|Car|12OC18||Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)|State|Bahamas|Bahamas|||||19-Nov-19||||
+MERGE|PersonDriversLicence||BZ|F256-922-49-093-8|Motorcycle|12OC19||Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)|State|Belize |Belize |||||30-Dec-19||||
+MERGE|PersonDriversLicence||BB|F255-921-50-094-9|Chauffeur|12OC06||Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)|State|Barbados|Barbados|||||09-Feb-20||||
+MERGE|PersonDriversLicence||LC|F256-922-49-093-9|Cdl|12OC20||Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)|State|Saint Lucia|Saint Lucia|||||21-Mar-20||||
+
+METADATA|PersonEmail|EmailAddressId|EmailAddress|EmailType|PersonNumber|PersonId|DateFrom|DateTo|PrimaryFlag|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonEmail||jbutt@gmail.com|Work|12OC09||Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)|Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||josephine_darakjy@darakjy.org|Work|12OC10||Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||art@venere.org|Work|12OC01||Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||lpaprocki@hotmail.com|Work|12OC11||Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)|Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||donette.foller@cox.net|Work|12OC02||Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)|Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||simona@morasca.com|Work|12OC08||Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||mitsue_tollner@yahoo.com|Work|12OC12||Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||leota@hotmail.com|Work|12OC13||Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)|Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||sage_wieser@cox.net|Work|12OC14||Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)|Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||kris@gmail.com|Work|12OC15||Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||minna_amigon@yahoo.com|Work|12OC16||Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||amaclead@gmail.com|Work|12OC17||Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||kiley.caldarera@aol.com|Work|12OC03||Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||gruta@cox.net|Work|12OC04||Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)|Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||calbares@gmail.com|Work|12OC05||Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)|Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||mattie@aol.com|Work|12OC07||Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||meaghan@hotmail.com|Home|12OC18||Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)|Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||gladys.rim@rim.org|Home|12OC19||Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||yuki_whobrey@aol.com|Home|12OC06||Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)||||
+MERGE|PersonEmail||fletcher.flosi@yahoo.com|Home|12OC20||Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)||||
+
+METADATA|PersonEthnicity|EthnicityId|Ethnicity|LegislationCode|PersonNumber|PersonId|DeclarerId|DeclarerPersonNumber|PrimaryFlag|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonEthnicity||American|US|12OC09|||||||
+MERGE|PersonEthnicity||American|MX|12OC10|||||||
+MERGE|PersonEthnicity||American|CA|12OC01|||||||
+MERGE|PersonEthnicity||American|GT|12OC11|||||||
+MERGE|PersonEthnicity||American|CU|12OC02|||||||
+MERGE|PersonEthnicity||American|HT|12OC08|||||||
+MERGE|PersonEthnicity||American|DO|12OC12|||||||
+MERGE|PersonEthnicity||American|HN|12OC13|||||||
+MERGE|PersonEthnicity||American|SV|12OC14|||||||
+MERGE|PersonEthnicity||American|NI|12OC15|||||||
+MERGE|PersonEthnicity||American|CR|12OC16|||||||
+MERGE|PersonEthnicity||American|PA|12OC17|||||||
+MERGE|PersonEthnicity||American|PR|12OC03|||||||
+MERGE|PersonEthnicity||American|JM|12OC04|||||||
+MERGE|PersonEthnicity||American|TT|12OC05|||||||
+MERGE|PersonEthnicity||American|GP|12OC07|||||||
+MERGE|PersonEthnicity||American|BS|12OC18|||||||
+MERGE|PersonEthnicity||American|BZ|12OC19|||||||
+MERGE|PersonEthnicity||American|BB|12OC06|||||||
+MERGE|PersonEthnicity||American|LC|12OC20|||||||
+
+METADATA|PersonLegislativeData|PersonLegislativeId|LegislationCode|PersonNumber|PersonId|EffectiveEndDate|EffectiveStartDate|Sex|HighestEducationLevel|MaritalStatus|MaritalStatusDate|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonLegislativeData||US|12OC09||Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)|Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)|MALE|MASTER DEGREE|MARRIED|Fri Jun 20 2008 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||MX|12OC10||Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)|MALE|GRADUATE|UNMARRIED||||
+MERGE|PersonLegislativeData||CA|12OC01||Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|FEMALE|MASTER DEGREE|MARRIED|Fri Apr 23 2010 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||GT|12OC11||Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)|Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|MASTER DEGREE|MARRIED|Wed Feb 06 2008 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||CU|12OC02||Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|GRADUATE|UNMARRIED||||
+MERGE|PersonLegislativeData||HT|12OC08||Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|GRADUATE|UNMARRIED||||
+MERGE|PersonLegislativeData||DO|12OC12||Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|GRADUATE|UNMARRIED||||
+MERGE|PersonLegislativeData||HN|12OC13||Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)|Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)|MALE|GRADUATE|UNMARRIED||||
+MERGE|PersonLegislativeData||SV|12OC14||Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)|Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)|MALE|GRADUATE|UNMARRIED||||
+MERGE|PersonLegislativeData||NI|12OC15||Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)|MALE|GRADUATE|UNMARRIED||||
+MERGE|PersonLegislativeData||CR|12OC16||Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|MALE|MASTER DEGREE|UNMARRIED||||
+MERGE|PersonLegislativeData||PA|12OC17||Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|MASTER DEGREE|UNMARRIED||||
+MERGE|PersonLegislativeData||PR|12OC03||Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|MASTER DEGREE|MARRIED|Fri Jun 20 2008 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||JM|12OC04||Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|MASTER DEGREE|MARRIED|Fri May 21 2010 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||TT|12OC05||Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)|Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)|MALE|MASTER DEGREE|MARRIED|Wed Feb 06 2008 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||GP|12OC07||Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)|FEMALE|MASTER DEGREE|MARRIED|Wed Feb 06 2008 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||BS|12OC18||Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)|Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)|FEMALE|MASTER DEGREE|MARRIED|Fri Jun 20 2008 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||BZ|12OC19||Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)|FEMALE|MASTER DEGREE|MARRIED|Fri May 21 2010 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||BB|12OC06||Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)|FEMALE|MASTER DEGREE|MARRIED|Mon Apr 23 2012 00:00:00 GMT+0530 (India Standard Time)|||
+MERGE|PersonLegislativeData||LC|12OC20||Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)|Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)|FEMALE|GRADUATE|UNMARRIED||||
+
+METADATA|PersonName|PersonNameId|NameType|PersonNumber|PersonId|EffectiveEndDate|EffectiveStartDate|CharSetContext|FirstName|Honors|LastName|LegislationCode|MiddleNames|MilitaryRank|NameInformation1|NameInformation10|NameInformation11|NameInformation12|NameInformation13|NameInformation14|NameInformation15|NameInformation16|NameInformation17|NameInformation18|NameInformation19|NameInformation20|NameInformation21|NameInformation22|NameInformation23|NameInformation24|NameInformation25|NameInformation26|NameInformation27|NameInformation28|NameInformation29|NameInformation3|NameInformation30|NameInformation4|NameInformation5|NameInformation6|NameInformation7|NameInformation8|NameInformation9|KnownAs|PreNameAdjunct|PreviousLastName|Suffix|Title|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonName|||12OC09||Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)|Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)||James||Butt|US|Nicka|||||||||||||||||||||||||||||||Butt|Mr|James|Sr|Mr|||
+MERGE|PersonName|||12OC10||Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)||Josephine||Darakjy|MX|Inouye|||||||||||||||||||||||||||||||Darakjy|Mr|Josephine|Sr|Mr|||
+MERGE|PersonName|||12OC01||Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)||Art||Venere|CA|Kolmetz|||||||||||||||||||||||||||||||Venere|Mrs|Art|Sr|Mrs|||
+MERGE|PersonName|||12OC11||Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)|Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)||Lenna||Paprocki|GT|Royster|||||||||||||||||||||||||||||||Paprocki|Mr|Lenna|Sr|Mr|||
+MERGE|PersonName|||12OC02||Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)||Donette||Foller|CU|Slusarski|||||||||||||||||||||||||||||||Foller|Mr|Donette|Sr|Mr|||
+MERGE|PersonName|||12OC08||Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)||Simona||Morasca|HT|Iturbide|||||||||||||||||||||||||||||||Morasca|Mr|Simona|Sr|Mr|||
+MERGE|PersonName|||12OC12||Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)||Mitsue||Tollner|DO|Caudy|||||||||||||||||||||||||||||||Tollner|Mr|Mitsue|Sr|Mr|||
+MERGE|PersonName|||12OC13||Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)|Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)||Leota||Dilliard|HN|Chui|||||||||||||||||||||||||||||||Dilliard|Mr|Leota|Sr|Mr|||
+MERGE|PersonName|||12OC14||Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)|Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)||Sage||Wieser|SV|Kusko|||||||||||||||||||||||||||||||Wieser|Mr|Sage|Sr|Mr|||
+MERGE|PersonName|||12OC15||Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)||Kris||Marrier|NI|Figeroa|||||||||||||||||||||||||||||||Marrier|Mr|Kris|Sr|Mr|||
+MERGE|PersonName|||12OC16||Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)||Minna||Amigon|CR|Corrio|||||||||||||||||||||||||||||||Amigon|Mr|Minna|Sr|Mr|||
+MERGE|PersonName|||12OC17||Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)||Abel||Maclead|PA|Vocelka|||||||||||||||||||||||||||||||Maclead|Mr|Abel|Sr|Mr|||
+MERGE|PersonName|||12OC03||Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)||Kiley||Caldarera|PR|Stenseth|||||||||||||||||||||||||||||||Caldarera|Mr|Kiley|Sr|Mr|||
+MERGE|PersonName|||12OC04||Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)||Graciela||Ruta|JM|Glick|||||||||||||||||||||||||||||||Ruta|Mr|Graciela|Sr|Mr|||
+MERGE|PersonName|||12OC05||Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)|Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)||Cammy||Albares|TT|Sergi|||||||||||||||||||||||||||||||Albares|Mr|Cammy|Sr|Mr|||
+MERGE|PersonName|||12OC07||Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)||Mattie||Poquette|GP|Shinko|||||||||||||||||||||||||||||||Poquette|Mrs|Mattie|Jr|Mrs|||
+MERGE|PersonName|||12OC18||Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)|Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)||Meaghan||Garufi|BS|Stockham|||||||||||||||||||||||||||||||Garufi|Mrs|Meaghan|Sr|Mrs|||
+MERGE|PersonName|||12OC19||Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)||Gladys||Rim|BZ|Ostrosky|||||||||||||||||||||||||||||||Rim|Mrs|Gladys|Sr|Mrs|||
+MERGE|PersonName|||12OC06||Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)||Yuki||Whobrey|BB|Gillian|||||||||||||||||||||||||||||||Whobrey|Mrs|Yuki|Sr|Mrs|||
+MERGE|PersonName|||12OC20||Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)|Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)||Fletcher||Flosi|LC|Rulapaugh|||||||||||||||||||||||||||||||Flosi|Mrs|Fletcher|Sr|Mrs|||
+
+METADATA|PersonPhone|PhoneId|PhoneNumber|PersonNumber|PhoneType|PersonId|AreaCode|CountryCodeNumber|DateFrom|DateTo|Extension|LegislationCode|PrimaryFlag|SpeedDialNumber|Validity|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonPhone||504-621-8927|12OC09|Work||70116|1|Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)|Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|US|Y|1||||
+MERGE|PersonPhone||810-292-9388|12OC10|Work||48116|52|Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|MX|Y|3||||
+MERGE|PersonPhone||856-636-8749|12OC01|Work||8014|1|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)|noneed|CA|Y|5||||
+MERGE|PersonPhone||907-385-4412|12OC11|Work||99501|502|Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)|Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)|noneed|GT|Y|6||||
+MERGE|PersonPhone||513-570-1893|12OC02|Work||45011|53|Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)|Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|CU|Y|4||||
+MERGE|PersonPhone||419-503-2484|12OC08|Home||44805|509|Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|HT|Y|9||||
+MERGE|PersonPhone||773-573-6914|12OC12|Home||60632|809|Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)|noneed|DO|Y|8||||
+MERGE|PersonPhone||408-752-3500|12OC13|Home||95111|504|Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)|Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)|noneed|HN|Y|9||||
+MERGE|PersonPhone||605-414-2147|12OC14|Home||57105|503|Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)|Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|SV|Y|2||||
+MERGE|PersonPhone||410-655-8723|12OC15|Work||21224|505|Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|NI|Y|5||||
+MERGE|PersonPhone||215-874-1229|12OC16|Work||19443|506|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)|noneed|CR|Y|6||||
+MERGE|PersonPhone||631-335-3414|12OC17|Work||11953|507|Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|PA|Y|9||||
+MERGE|PersonPhone||310-498-5651|12OC03|Work||90034|1|Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|PR|Y|8||||
+MERGE|PersonPhone||440-780-8425|12OC04|Home||44023|876|Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)|Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)|noneed|JM|Y|4||||
+MERGE|PersonPhone||956-537-6195|12OC05|Home||78045|868|Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)|Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)|noneed|TT|Y|6||||
+MERGE|PersonPhone||602-277-4385|12OC07|Home||85013|590|Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|GP|Y|2||||
+MERGE|PersonPhone||931-313-9635|12OC18|Home||37110|1242|Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)|Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|BS|Y|5||||
+MERGE|PersonPhone||414-661-9598|12OC19|Work||53207|501|Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|BZ|Y|9||||
+MERGE|PersonPhone||313-288-7937|12OC06|Work||48180|1246|Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|noneed|BB|Y|3||||
+MERGE|PersonPhone||815-828-2147|12OC20|Work||52120|7|Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)|noneed|LC|Y|1||||
+
+METADATA|Assignment|AssignmentId|AssignmentNumber|WorkTermsAssignmentId|WorkTermsNumber|EffectiveEndDate|EffectiveLatestChange|EffectiveSequence|EffectiveStartDate|ActionCode|AssignmentCategory|AssignmentName|AssignmentStatusTypeCode|AssignmentStatusTypeId|AssignmentType|BargainingUnitCode|BusinessUnitShortCode|BusinessUnitId|CollectiveAgreementIdCode|CollectiveAgreementId|DefaultExpenseAccount|DepartmentName|BillingTitle|InternalLocation|ProjectTitle|EndTime|EstablishmentId|ExpenseCheckSendToAddress|FreezeStartDate|FreezeUntilDate|Frequency|FullPartTime|GradeCode|GradeId|GradeLadderPgmId|GradeLadderPgmName|GspEligibilityFlag|HourlySalariedCode|InternalBuilding|InternalFloor|InternalMailstop|InternalOfficeNumber|JobCode|JobId|LabourUnionMemberFlag|LegalEmployerName|LocationCode|LocationId|ManagerFlag|NoticePeriod|NoticePeriodUOM|OrganizationId|PositionOverrideFlag|OvertimePeriodName|PeopleGroup|PeriodOfServiceId|PersonId|PersonNumber|PersonTypeCode|PersonTypeId|PositionCode|PositionId|PrimaryFlag|PrimaryAssignmentFlag|DateProbationEnd|ProbationPeriod|ProbationUnit|ProjectedEndDate|ProjectedStartDate|ProposedUserPersonType|ProposedWorkerType|ReasonCode|PermanentTemporary|ReportingEstablishment|RetirementAge|RetirementDate|SeniorityBasis|SpecialCeilingStep|SpecialCeilingStepId|NormalHours|DateStart|StartTime|SystemPersonType|TaxAddressId|UnionId|UnionName|WorkAtHomeFlag|WorkerCategory|WorkerType|SourceSystemId|SourceSystemOwner|GUID
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+MERGE|Assignment
+
+METADATA|AssignmentSupervisor|AssignmentSupervisorId|AssignmentNumber|ManagerAssignmentNumber|ManagerPersonNumber|ManagerType|AssignmentId|EffectiveEndDate|EffectiveStartDate|ActionCode|ManagerId|NewManagerAssignmentNumber|NewManagerPersonNumber|NewManagerType|PersonId|PrimaryFlag|ReasonCode|ManagerAssignmentId|SourceSystemId|SourceSystemOwner|GUID
+MERGE|AssignmentSupervisor||12009|13009||Line Manager||Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)|Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12010|13010||Line Manager||Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12001|13001||Line Manager||Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12011|13011||Dotted Line Manager||Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)|Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12002|13002||Dotted Line Manager||Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12008|13008||Line Manager||Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12014|13014||Line Manager||Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)|Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12015|13015||Dotted Line Manager||Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12016|13016||Dotted Line Manager||Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12017|13017||Line Manager||Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12003|13003||Line Manager||Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12004|13004||Line Manager||Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12012|13012||Line Manager||Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12013|13013||Line Manager||Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)|Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12005|13005||Line Manager||Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)|Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12007|13007||Dotted Line Manager||Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12018|13018||Dotted Line Manager||Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)|Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12019|13019||Line Manager||Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)|Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+MERGE|AssignmentSupervisor||12006|13006||Line Manager||Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)|conversion|||||||delay||||
+MERGE|AssignmentSupervisor||12020|13020||Line Manager||Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)|Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)|termination|||||||delay||||
+
+METADATA|AssignmentWorkMeasure|AssignWorkMeasureId|AssignmentNumber|Unit|AssignmentId|EffectiveEndDate|EffectiveStartDate|ActionCode|NewUnit|ReasonCode|Value|SourceSystemId|SourceSystemOwner|GUID
+MERGE|AssignmentWorkMeasure||12009||||Wed May 22 2013 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12010||||Thu Jun 05 2014 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12001||||Thu Jun 12 2014 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12011||||Fri Jan 23 2015 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12002||||Wed Feb 12 2014 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12008||||Fri Mar 06 2015 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12014||||Mon May 23 2016 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12015||||Sat Jun 06 2015 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12016||||Fri Jun 12 2015 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12017||||Sat Jan 24 2015 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12003||||Sat Feb 13 2016 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12004||||Sat Mar 07 2015 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12012||||Fri Mar 28 2014 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12013||||Thu Apr 23 2015 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12005||||Sun Mar 29 2015 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12007||||Sun Apr 24 2016 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12018||||Sun May 24 2015 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12019||||Wed Jun 07 2017 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+MERGE|AssignmentWorkMeasure||12006||||Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|conversion||delay||||
+MERGE|AssignmentWorkMeasure||12020||||Sun Jan 25 2015 00:00:00 GMT+0530 (India Standard Time)|termination||delay||||
+

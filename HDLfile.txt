@@ -1,0 +1,89 @@
+METADATA|worker|PersonNumber|EffectiveStartDate|PersonId|EffectiveEndDate|ActionCode|BloodType|CorrespondenceLanguage|CountryOfBirth|DateOfBirth|DateOfDeath|PersonDuplicateCheck
+MERGE|worker|12OC09|Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)|12OC09|Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|B+|English|United States|Sun Jun 20 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC10|Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)|12OC10|Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)|termination|B-|English| Mexico|Mon May 21 1984 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC01|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|12OC01|Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)|conversion|B+|English|Canada|Wed Apr 23 1986 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC11|Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)|12OC11|Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)|termination|B+|English|Guatemala|Sat Feb 06 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC02|Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)|12OC02|Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|B-|English|Cuba|Mon Jun 21 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC08|Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)|12OC08|Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)|termination|A+|English|Haiti|Tue May 22 1984 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC14|Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)|12OC14|Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|O-|English|El Salvador|Tue Jun 22 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC15|Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)|12OC15|Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)|termination|AB+|English|Nicaragua 	
+|Wed May 23 1984 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC16|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|12OC16|Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)|conversion|O+|English| Costa Rica|Fri Apr 25 1986 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC17|Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)|12OC17|Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)|termination|AB-|English|Panama|Mon Feb 08 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC03|Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)|12OC03|Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|A+|English|Puerto Rico|Tue Jun 22 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC04|Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)|12OC04|Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)|termination|AB+|English|Jamaica|Thu May 24 1984 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC12|Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)|12OC12|Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)|conversion|A-|English|Dominican Republic|Thu Apr 24 1986 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC13|Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)|12OC13|Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)|termination|O+|English|Honduras |Sun Feb 07 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC05|Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)|12OC05|Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)|conversion|B+|English|Trinidad and Tobago|Sat Apr 26 1986 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC07|Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)|12OC07|Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)|termination|O+|English|Guadeloupe |Tue Feb 09 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC18|Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)|12OC18|Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|AB-|English|Bahamas|Wed Jun 23 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC19|Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)|12OC19|Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)|termination|A+|English|Belize |Fri May 25 1984 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC06|Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)|12OC06|Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|conversion|A+|English|Barbados|Sun Apr 27 1986 00:00:00 GMT+0530 (India Standard Time)|null|null
+MERGE|worker|12OC20|Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)|12OC20|Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)|termination|AB+|English|Saint Lucia|Wed Feb 10 1982 00:00:00 GMT+0530 (India Standard Time)|null|null
+
+METADATA|PersonCitizenship|CitizenshipId|LegislationCode|PersonNumber|PersonId|CitizenshipStatus|DateFrom|DateTo|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonCitizenship|null|US|12OC09|null|Active|Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|MX|12OC10|null|Inactive |Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Wed May 21 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|CA|12OC01|null|Inactive |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|GT|12OC11|null|Inactive |Sun Feb 06 2000 00:00:00 GMT+0530 (India Standard Time)|Thu Feb 06 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|CU|12OC02|null|Active |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|HT|12OC08|null|Active|Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|DO|12OC12|null|Active |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|HN|12OC13|null|Active|Sun Feb 06 2000 00:00:00 GMT+0530 (India Standard Time)|Thu Feb 06 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|SV|12OC14|null|Active |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|NI|12OC15|null|Active|Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|CR|12OC16|null|Active |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|PA|12OC17|null|Active|Fri Feb 06 2004 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 06 2029 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|PR|12OC03|null|Active |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|JM|12OC04|null|Active|Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|TT|12OC05|null|Active |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|GP|12OC07|null|Active|Sun Feb 06 2000 00:00:00 GMT+0530 (India Standard Time)|Thu Feb 06 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|BS|12OC18|null|Inactive |Tue Jun 20 2000 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 20 2025 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|BZ|12OC19|null|Inactive |Tue May 21 2002 00:00:00 GMT+0530 (India Standard Time)|Fri May 21 2027 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|BB|12OC06|null|Inactive |Fri Apr 23 2004 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2029 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+MERGE|PersonCitizenship|null|LC|12OC20|null|Inactive |Fri Feb 06 2004 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 06 2029 00:00:00 GMT+0530 (India Standard Time)|null|null|null
+
+METADATA|PersonDriversLicence|DriversLicenseId|LegislationCode|LicenseNumber|LicenseType|PersonNumber|PersonId|DateFrom|DateTo|IssuingAuthority|IssuingCountry|IssuingLocation|LicenseSuspended|NumberOfPoints|SuspendedFromDate|SuspendedToDate|DateTo|Violations|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+MERGE|PersonDriversLicence
+
+METADATA|PersonEmail|EmailAddressId|EmailAddress|EmailType|PersonNumber|PersonId|DateFrom|DateTo|PrimaryFlag|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonEmail|null|jbutt@gmail.com|Work|12OC09|null|Tue May 22 2012 00:00:00 GMT+0530 (India Standard Time)|Tue May 22 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|josephine_darakjy@darakjy.org|Work|12OC10|null|Tue Jun 05 2012 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 05 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|art@venere.org|Work|12OC01|null|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|Mon Jun 12 2017 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|lpaprocki@hotmail.com|Work|12OC11|null|Wed Jan 23 2013 00:00:00 GMT+0530 (India Standard Time)|Wed Jan 23 2019 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|donette.foller@cox.net|Work|12OC02|null|Tue Feb 12 2013 00:00:00 GMT+0530 (India Standard Time)|Mon Feb 12 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|simona@morasca.com|Work|12OC08|null|Wed Mar 06 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Mar 06 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|mitsue_tollner@yahoo.com|Work|12OC12|null|Thu Mar 28 2013 00:00:00 GMT+0530 (India Standard Time)|Thu Mar 28 2019 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|leota@hotmail.com|Work|12OC13|null|Wed Apr 23 2014 00:00:00 GMT+0530 (India Standard Time)|Tue Apr 23 2019 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|sage_wieser@cox.net|Work|12OC14|null|Wed May 23 2012 00:00:00 GMT+0530 (India Standard Time)|Wed May 23 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|kris@gmail.com|Work|12OC15|null|Wed Jun 06 2012 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 06 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|minna_amigon@yahoo.com|Work|12OC16|null|Tue Jun 12 2012 00:00:00 GMT+0530 (India Standard Time)|Wed Jun 12 2019 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|amaclead@gmail.com|Work|12OC17|null|Thu Jan 24 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Jan 23 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|kiley.caldarera@aol.com|Work|12OC03|null|Wed Feb 13 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Feb 13 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|gruta@cox.net|Work|12OC04|null|Thu Mar 07 2013 00:00:00 GMT+0530 (India Standard Time)|Wed Mar 06 2019 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|calbares@gmail.com|Work|12OC05|null|Fri Mar 29 2013 00:00:00 GMT+0530 (India Standard Time)|Fri Mar 29 2019 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|mattie@aol.com|Work|12OC07|null|Thu Apr 24 2014 00:00:00 GMT+0530 (India Standard Time)|Mon Apr 23 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|meaghan@hotmail.com|Home|12OC18|null|Thu May 24 2012 00:00:00 GMT+0530 (India Standard Time)|Thu May 24 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|gladys.rim@rim.org|Home|12OC19|null|Thu Jun 07 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jun 07 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|yuki_whobrey@aol.com|Home|12OC06|null|Wed Jun 12 2013 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 12 2018 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+MERGE|PersonEmail|null|fletcher.flosi@yahoo.com|Home|12OC20|null|Fri Jan 25 2013 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 24 2019 00:00:00 GMT+0530 (India Standard Time)|null|null|null|null
+

@@ -1,0 +1,103 @@
+METADATA|worker|PersonNumber|EffectiveStartDate|PersonId|EffectiveEndDate|ActionCode|BloodType|CorrespondenceLanguage|CountryOfBirth|DateOfBirth|DateOfDeath|PersonDuplicateCheck
+
+METADATA|PersonAddress|PersonAddrUsageId|AddressLine1|PersonNumber|PersonId|EffectiveEndDate|EffectiveStartDate|AddlAddressAttribute1|AddlAddressAttribute2|AddlAddressAttribute3|AddlAddressAttribute4|AddlAddressAttribute5|AddressId|AddressLine2|AddressLine3|AddressLine4|AddressType|Country|LongPostalCode|PostalCode|PrimaryFlag|Region1|Region2|Region3|TownOrCity|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|PersonCitizenship|CitizenshipId|LegislationCode|PersonNumber|PersonId|CitizenshipStatus|DateFrom|DateTo|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|PersonDriversLicence|DriversLicenseId|LegislationCode|LicenseNumber|LicenseType|PersonNumber|PersonId|DateFrom|IssuingAuthority|IssuingCountry|IssuingLocation|LicenseSuspended|NumberOfPoints|SuspendedFromDate|SuspendedToDate|DateTo|Violations|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|PersonEmail|EmailAddressId|EmailAddress|EmailType|PersonNumber|PersonId|DateFrom|DateTo|PrimaryFlag|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|PersonEthnicity|EthnicityId|Ethnicity|LegislationCode|PersonNumber|PersonId|DeclarerId|DeclarerPersonNumber|PrimaryFlag|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonEthnicity||AMERICAN|US|1|||||||
+MERGE|PersonEthnicity||AMERICAN|US|2|||||||
+MERGE|PersonEthnicity||AMERICAN|US|3|||||||
+MERGE|PersonEthnicity||AMERICAN|US|4|||||||
+MERGE|PersonEthnicity||AMERICAN|US|5|||||||
+MERGE|PersonEthnicity||AMERICAN|US|6|||||||
+MERGE|PersonEthnicity||AMERICAN|US|7|||||||
+MERGE|PersonEthnicity||AMERICAN|US|8|||||||
+MERGE|PersonEthnicity||AMERICAN|US|9|||||||
+MERGE|PersonEthnicity||AMERICAN|US|10|||||||
+MERGE|PersonEthnicity||AMERICAN|US|11|||||||
+MERGE|PersonEthnicity||AMERICAN|US|13|||||||
+MERGE|PersonEthnicity||AMERICAN|US|14|||||||
+MERGE|PersonEthnicity||AMERICAN|US|15|||||||
+MERGE|PersonEthnicity||AMERICAN|US|16|||||||
+MERGE|PersonEthnicity||AMERICAN|US|17|||||||
+MERGE|PersonEthnicity||AMERICAN|US|18|||||||
+MERGE|PersonEthnicity||AMERICAN|US|19|||||||
+MERGE|PersonEthnicity||AMERICAN|US|20|||||||
+MERGE|PersonEthnicity||AMERICAN|US|21|||||||
+MERGE|PersonEthnicity||AMERICAN|US|22|||||||
+MERGE|PersonEthnicity||AMERICAN|US|23|||||||
+MERGE|PersonEthnicity||AMERICAN|US|24|||||||
+MERGE|PersonEthnicity||AMERICAN|BE|25|||||||
+MERGE|PersonEthnicity||AMERICAN|BE|1|||||||
+MERGE|PersonEthnicity||AMERICAN|US|2|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|3|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|4|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|5|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|6|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|7|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|8|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|9|||||||
+MERGE|PersonEthnicity||AMERICAN|GB|10|||||||
+MERGE|PersonEthnicity||AMERICAN|US|11|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|13|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|14|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|15|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|16|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|17|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|18|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|19|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|20|||||||
+MERGE|PersonEthnicity||AMERICAN|MX|21|||||||
+MERGE|PersonEthnicity||AMERICAN|US|22|||||||
+MERGE|PersonEthnicity||AMERICAN|US|23|||||||
+MERGE|PersonEthnicity||AMERICAN|US|24|||||||
+MERGE|PersonEthnicity||AMERICAN|US|25|||||||
+
+METADATA|PersonLegislativeData|PersonLegislativeId|LegislationCode|PersonNumber|PersonId|EffectiveEndDate|EffectiveStartDate|Sex|HighestEducationLevel|MaritalStatus|MaritalStatusDate|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|PersonName|PersonNameId|NameType|PersonNumber|PersonId|EffectiveEndDate|EffectiveStartDate|CharSetContext|FirstName|Honors|LastName|LegislationCode|MiddleNames|MilitaryRank|NameInformation1|NameInformation10|NameInformation11|NameInformation12|NameInformation13|NameInformation14|NameInformation15|NameInformation16|NameInformation17|NameInformation18|NameInformation19|NameInformation20|NameInformation21|NameInformation22|NameInformation23|NameInformation24|NameInformation25|NameInformation26|NameInformation27|NameInformation28|NameInformation29|NameInformation3|NameInformation30|NameInformation4|NameInformation5|NameInformation6|NameInformation7|NameInformation8|NameInformation9|KnownAs|PreNameAdjunct|PreviousLastName|Suffix|Title|SourceSystemId|SourceSystemOwner|GUID
+MERGE|PersonName|||1||Thu Sep 30 1999 00:00:00 GMT+0530 (India Standard Time)|Wed Dec 04 1996 00:00:00 GMT+0530 (India Standard Time)||Susan||Smith|US|Marie|||||||||||||||||||||||||||||||Sue||||MS.|||
+MERGE|PersonName|||2||Thu Sep 30 1999 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Susan||Smith|US||||||||||||||||||||||||||||||||||||MS.|||
+MERGE|PersonName|||3||Thu Sep 30 1999 00:00:00 GMT+0530 (India Standard Time)|Sun Jan 01 1995 00:00:00 GMT+0530 (India Standard Time)||Robert||O'Malley|US|G|||||||||||||||||||||||||||||||Rob||||MR.|||
+MERGE|PersonName|||4||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Wed Dec 14 1994 00:00:00 GMT+0530 (India Standard Time)||Kenneth||Walker|US||||||||||||||||||||||||||||||||Ken||||MR.|||
+MERGE|PersonName|||5||Thu Sep 30 1999 00:00:00 GMT+0530 (India Standard Time)|Sat Jun 12 1993 00:00:00 GMT+0530 (India Standard Time)||Sandra||Pierson|US||||||||||||||||||||||||||||||||Sandy||||MS.|||
+MERGE|PersonName|||6||Thu Sep 30 1999 00:00:00 GMT+0530 (India Standard Time)|Mon Feb 21 1994 00:00:00 GMT+0530 (India Standard Time)||MaryBeth||Richards|US||||||||||||||||||||||||||||||||MaryBeth||||MRS.|||
+MERGE|PersonName|||7||Thu Jan 18 2001 00:00:00 GMT+0530 (India Standard Time)|Mon Feb 05 1996 00:00:00 GMT+0530 (India Standard Time)||Carol||Bradford|US||||||||||||||||||||||||||||||||Carol||||MS.|||
+MERGE|PersonName|||8||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Sun Jan 01 1995 00:00:00 GMT+0530 (India Standard Time)||Timothy||Connors|US|Peter|||||||||||||||||||||||||||||||Tim||||MR.|||
+MERGE|PersonName|||9||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Sat Nov 12 1994 00:00:00 GMT+0530 (India Standard Time)||Peter||Knapp|US|James|||||||||||||||||||||||||||||||Pete||||MR.|||
+MERGE|PersonName|||10||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Tue Jun 23 1998 00:00:00 GMT+0530 (India Standard Time)||Camille||Heiden|US|Serena|||||||||||||||||||||||||||||||Cammie||||MS.|||
+MERGE|PersonName|||11||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Sun Jan 01 1995 00:00:00 GMT+0530 (India Standard Time)||Britta||Daniels|US|Michelle|||||||||||||||||||||||||||||||Britta||||MRS.|||
+MERGE|PersonName|||13||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Feb 03 1994 00:00:00 GMT+0530 (India Standard Time)||Pamela||Hamilton|US|Ann|||||||||||||||||||||||||||||||Pam||||MS.|||
+MERGE|PersonName|||14||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Sun May 02 1993 00:00:00 GMT+0530 (India Standard Time)||Tracy||Peters|US|Marie|||||||||||||||||||||||||||||||Tracy||||MS.|||
+MERGE|PersonName|||15||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Sun Jul 25 1993 00:00:00 GMT+0530 (India Standard Time)||Paul||Carlen|US|David|||||||||||||||||||||||||||||||Paul||||MR.|||
+MERGE|PersonName|||16||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Tue Apr 03 1962 00:00:00 GMT+0530 (India Standard Time)||Doug||Simpson|US||||||||||||||||||||||||||||||||Doug||||MR.|||
+MERGE|PersonName|||17||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Sat Jan 22 1994 00:00:00 GMT+0530 (India Standard Time)||Terrence||Schreiber|US|Fritz|||||||||||||||||||||||||||||||Terry||||MR.|||
+MERGE|PersonName|||18||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Dec 15 1960 00:00:00 GMT+0530 (India Standard Time)||Kurt||Elkins|US|Bradley|||||||||||||||||||||||||||||||Kurt||||MR.|||
+MERGE|PersonName|||19||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Tue Mar 17 1998 00:00:00 GMT+0530 (India Standard Time)||Hans||Frans|US|Fritz|||||||||||||||||||||||||||||||Hans||||MR.|||
+MERGE|PersonName|||20||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Mon Aug 28 1995 00:00:00 GMT+0530 (India Standard Time)||Carl||Douglas|US|Lawrence|||||||||||||||||||||||||||||||Carl||||MR.|||
+MERGE|PersonName|||21||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Fri May 22 1964 00:00:00 GMT+0530 (India Standard Time)||Rebecca||Schmidt|US|Deborah|||||||||||||||||||||||||||||||Becky||||MS.|||
+MERGE|PersonName|||22||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Mon Oct 24 1994 00:00:00 GMT+0530 (India Standard Time)||Michelle||Devereaux|US|Andrea|||||||||||||||||||||||||||||||Michelle||||MRS.|||
+MERGE|PersonName|||23||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Terry||Green|US||||||||||||||||||||||||||||||||||||MR.|||
+MERGE|PersonName|||24||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Pat||Stock|US||||||||||||||||||||||||||||||||||||MS.|||
+MERGE|PersonName|||25||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Chris||Black|US||||||||||||||||||||||||||||||||||||MR.|||
+MERGE|PersonName|||1||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Alex||Johnson|US||||||||||||||||||||||||||||||||||||MS.|||
+MERGE|PersonName|||2||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Samuel||Peters|US||||||||||||||||||||||||||||||||||||MR.|||
+MERGE|PersonName|||3||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Connor||Horton|US|||||||||||||||||||||||||||||||||||Esq.|MS.|||
+MERGE|PersonName|||4||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Kim||Brock|US||||||||||||||||||||||||||||||||||||MR.|||
+MERGE|PersonName|||6||Wed May 14 1997 00:00:00 GMT+0530 (India Standard Time)|Thu Jan 01 1987 00:00:00 GMT+0530 (India Standard Time)||Jamie||Frost|US||||||||||||||||||||||||||||||||||||MR.|||
+MERGE|PersonName|||6||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Thu May 15 1997 00:00:00 GMT+0530 (India Standard Time)||Jamie||Frost|US||||||||||||||||||||||||||||||||||||MR.|||
+MERGE|PersonName|||7||Mon Dec 31 2012 00:00:00 GMT+0530 (India Standard Time)|Fri Jun 13 1997 00:00:00 GMT+0530 (India Standard Time)||Kerry||Jones|US||||||||||||||||||||||||||||||||||||MS.|||
+
+METADATA|PersonPhone|PhoneId|PhoneNumber|PersonNumber|PhoneType|PersonId|AreaCode|CountryCodeNumber|DateFrom|DateTo|Extension|LegislationCode|PrimaryFlag|SpeedDialNumber|Validity|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|Assignment|AssignmentId|AssignmentNumber|WorkTermsAssignmentId|WorkTermsNumber|EffectiveEndDate|EffectiveLatestChange|EffectiveSequence|EffectiveStartDate|ActionCode|AssignmentCategory|AssignmentName|AssignmentStatusTypeCode|AssignmentStatusTypeId|AssignmentType|BargainingUnitCode|BusinessUnitShortCode|BusinessUnitId|CollectiveAgreementIdCode|CollectiveAgreementId|DefaultExpenseAccount|DepartmentName|BillingTitle|InternalLocation|ProjectTitle|EndTime|EstablishmentId|ExpenseCheckSendToAddress|FreezeStartDate|FreezeUntilDate|Frequency|FullPartTime|GradeCode|GradeId|GradeLadderPgmId|GradeLadderPgmName|GspEligibilityFlag|HourlySalariedCode|InternalBuilding|InternalFloor|InternalMailstop|InternalOfficeNumber|JobCode|JobId|LabourUnionMemberFlag|LegalEmployerName|LocationCode|LocationId|ManagerFlag|NoticePeriod|NoticePeriodUOM|OrganizationId|PositionOverrideFlag|OvertimePeriodName|PeopleGroup|PeriodOfServiceId|PersonId|PersonNumber|PersonTypeCode|PersonTypeId|PositionCode|PositionId|PrimaryFlag|PrimaryAssignmentFlag|DateProbationEnd|ProbationPeriod|ProbationUnit|ProjectedEndDate|ProjectedStartDate|ProposedUserPersonType|ProposedWorkerType|ReasonCode|PermanentTemporary|ReportingEstablishment|RetirementAge|RetirementDate|SeniorityBasis|SpecialCeilingStep|SpecialCeilingStepId|NormalHours|DateStart|StartTime|SystemPersonType|TaxAddressId|UnionId|UnionName|WorkAtHomeFlag|WorkerCategory|WorkerType|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|AssignmentSupervisor|AssignmentSupervisorId|AssignmentNumber|ManagerAssignmentNumber|ManagerPersonNumber|ManagerType|AssignmentId|EffectiveEndDate|EffectiveStartDate|ActionCode|ManagerId|NewManagerAssignmentNumber|NewManagerPersonNumber|NewManagerType|PersonId|PrimaryFlag|ReasonCode|ManagerAssignmentId|SourceSystemId|SourceSystemOwner|GUID
+
+METADATA|AssignmentWorkMeasure|AssignWorkMeasureId|AssignmentNumber|Unit|AssignmentId|EffectiveEndDate|EffectiveStartDate|ActionCode|NewUnit|ReasonCode|Value|SourceSystemId|SourceSystemOwner|GUID
+

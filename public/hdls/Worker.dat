@@ -1,0 +1,5 @@
+METADATA|Worker|PersonNumber|EffectiveStartDate|PersonId|EffectiveEndDate|ActionCode|BloodType|CorrespondenceLanguage|CountryOfBirth|DateOfBirth|DateOfDeath|PersonDuplicateCheck
+MERGE|Worker|4|1994/12/14|4|2012/12/31|HIRE||||1960/12/12||
+MERGE|Worker|25|1987/01/01|25|2012/12/31|HIRE||||1958/11/24||
+
+METADATA|PersonAddress|PersonAddrUsageId|AddressLine1|PersonNumber|PersonId|EffectiveEndDate|EffectiveStartDate|AddlAddressAttribute1|AddlAddressAttribute2|AddlAddressAttribute3|AddlAddressAttribute4|AddlAddressAttribute5|AddressId|AddressLine2|AddressLine3|AddressLine4|AddressType|Country|LongPostalCode|PostalCode|PrimaryFlag|Region1|Region2|Region3|TownOrCity|SourceSystemId|SourceSystemOwner|GUID
