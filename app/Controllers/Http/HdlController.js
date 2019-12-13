@@ -190,39 +190,7 @@ class HdlController {
 
                         
                         
-                        //  var rowName = Object.keys(result[row])
-
-                        //trying 
-                        // var dateFormats = [];
-                        // var dateKeys = [];
-                        // var changedFormats = [];
-
-                        // var dateObject = {
-                        //     start_date : result[row].START_DATE,
-                        //     date_of_birth : result[row].DATE_OF_BIRTH,
-                        //     date_of_death : result[row].DATE_OF_DEATH,
-                        //     effective_start_date : result[row].EFFECTIVE_START_DATE,
-                        //     effective_end_date : result[row].EFFECTIVE_END_DATE,
-                        //     date_from :  result[row].DATE_FROM,
-                        //     date_to: result[row].DATE_TO,
-                        //     efeectiveenddate : result[row].EFFECTIVEENDDATE,
-                        //     effective_date : result[row].EFFECTIVE_DATE,
-                        //     projected_termination_date : result[row].PROJECTED_TERMINATION_DATE,
-                        //     projectedstartdate : result[row].PROJECTEDSTARTDATE
-                        // }
-
-                        // dateFormats.push(dateObject);
-                        // var dateKeys = Object.keys(dateFormats);
-                        // var dateRows = Object.values(dateFormats);
-                        // for(var i=0; i<dateKeys.length; i++){
-                        // for(var k=0; k<dateRows.length; k++){
-                        //     if(dateKeys.length == dateRows.length){
-
-                        //     }
-                        // }
-
-                        // }
-                        // console.log(dateFormats);
+                        
 
                         function convert1() {
                             if (result[row].START_DATE == null) {
