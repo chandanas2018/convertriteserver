@@ -84,10 +84,22 @@ module.exports = {
     connection: {
       host: Env.get('DB_HOST', 'localhost'),
       port: Env.get('DB_PORT', ''),
-      user: Env.get('DB_USER', 'chandana'),
-      password: Env.get('DB_PASSWORD', 'inlightdata123'),
-      database: Env.get('DB_DATABASE', 'ORCL')
+      user: Env.get('DB_USER', ''),
+      password: Env.get('DB_PASSWORD', ''),
+      database: Env.get('DB_DATABASE', 'adonis')
       
     }
   }
+
+  // oracledb: {
+  //   client: 'oracledb',
+  //   connection: {
+  //     host: '172.16.0.55',
+  //     port: '1523',
+  //     user: 'CONVERSION_TOOL_TEST_DB',
+  //     password: 'inlightdata123',
+  //     database: 'EBSFSD'
+      
+  //   }
+  // }
 }
