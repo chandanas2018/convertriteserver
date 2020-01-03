@@ -1,6 +1,7 @@
 'use strict'
 const Database = use('Database');
 const moment = use('moment');
+const Logger = use('Logger');
 // const Helpers = use('Helpers');
 const fs = require('fs');
 
@@ -10,8 +11,11 @@ const DataTransferRulesForDefaultTransfers = [
         DestinationColumns: ['PersonNumber', 'EffectiveStartDate', 'PersonId', 'EffectiveEndDate', 'ActionCode', 'BloodType', 'CorrespondenceLanguage', 'CountryOfBirth', 'DateOfBirth', 'DateOfDeath', 'PersonDuplicateCheck'],
         SourceColumns: ['PersonNumber', 'START_DATE', 'PersonID', 'EFFECTIVE_END_DATE', 'ACTION', 'BLOOD_TYPE', 'CORRESPONDENCE_LANGUAGE', 'COUNTRY_OF_BIRTH', 'DATE_OF_BIRTH', 'DATE_OF_DEATH', 'PERSONDUPLICATECHECK'],
         //   SourceColumnInfo:[{entity:'',column:''},{entity:'PERSON',column:'PERSON_NUMBER'},{entity:'PERSON_NAME',column:'EFFECTIVE_END_DATE'},{entity:'PERSON',column:'START_DATE'},{entity:'ASSIGNMENT',column:'ACTION'},{entity:'PERSON',column:'BLOOD_TYPE'},{entity:'PERSON',column:'CORRESPONDENCE_LANGUAGE'},{entity:'PERSON',column:'COUNTRY_OF_BIRTH'},{entity:'PERSON',column:'DATE_OF_BIRTH'},{entity:'PERSON',column:'DATE_OF_DEATH'},{entity:'',column:''}],    
-        SourceQuery: "select PERSON_NUMBER as PersonNumber,START_DATE,PERSON_NUMBER as PersonId ,EFFECTIVE_END_DATE,ACTION,BLOOD_TYPE,CORRESPONDENCE_LANGUAGE,COUNTRY_OF_BIRTH,DATE_OF_BIRTH,DATE_OF_DEATH, '' as  PERSONDUPLICATECHECK from PERSON, PERSON_NAME, ASSIGNMENT " +
-            "WHERE PERSON.UNIQUE_IDENTIFIER = PERSON_NAME.UNIQUE_IDENTIFIER AND PERSON_NAME.UNIQUE_IDENTIFIER = ASSIGNMENT.UNIQUE_IDENTIFIER"
+        SourceQuery: "SELECT P.EFFECTIVE_START_DATE AS EffectiveStartDate,P.EFFECTIVE_END_DATE AS EffectiveEndDate,P.PERSON_NUMBER AS PersonNumber,P.BLOOD_TYPE AS BloodType, " +
+            "P.CORRESPONDENCE_LANGUAGE AS CorrespondenceLanguage, P.START_DATE AS StartDate,P.DATE_OF_BIRTH AS DateOfBirth, P.DATE_OF_DEATH AS DateOfDeath, " +
+            "P.COUNTRY_OF_BIRTH AS CountryOfBirth, P.REGION_OF_BIRTH AS RegionOfBirth, P.TOWN_OF_BIRTH AS TownOfBirth, 'EBS' As SourceSystemOwner,"+
+            "'PERSON' || '_' || P.PERSON_NUMBER  \"SOURCE_SYSTEM_ID\", P.PERSON_ID AS PERSONID FROM PERSON P "+
+            "WHERE P.PERSON_ID is not NULL"
 
     },
 
@@ -118,7 +122,6 @@ const DataTransferRulesForDefaultTransfers = [
 
 
 class HdlController {
-
     async convert() {
         try {
             var HDLEntries = [];
@@ -126,6 +129,7 @@ class HdlController {
 
 
             for (var i = 0; i < DataTransferRulesForDefaultTransfers.length; i++) {
+                Logger.info('Started writing to HDL File %s', DataTransferRulesForDefaultTransfers.length)
                 var rule = DataTransferRulesForDefaultTransfers[i];
 
                 var metadataline = "METADATA|" + rule.DestinationEntity
@@ -156,7 +160,7 @@ class HdlController {
                         }
 
                         var keys = [];
-
+                        //Changing some values in Result object from DB to match the Resultant HDL Schema
                         var keys = Object.keys(result[row]);
                         for(var k=0; k<keys.length; k++){
                            
