@@ -14,7 +14,7 @@ const DataTransferRulesForDefaultTransfers = [
         SourceQuery: "SELECT P.EFFECTIVE_START_DATE AS EffectiveStartDate,P.EFFECTIVE_END_DATE AS EffectiveEndDate,P.PERSON_NUMBER AS PersonNumber,P.BLOOD_TYPE AS BloodType, " +
             "P.CORRESPONDENCE_LANGUAGE AS CorrespondenceLanguage, P.START_DATE AS StartDate,P.DATE_OF_BIRTH AS DateOfBirth, P.DATE_OF_DEATH AS DateOfDeath, " +
             "P.COUNTRY_OF_BIRTH AS CountryOfBirth, P.REGION_OF_BIRTH AS RegionOfBirth, P.TOWN_OF_BIRTH AS TownOfBirth, 'EBS' As SourceSystemOwner,"+
-            "'PERSON' || '_' || P.PERSON_NUMBER  \"SOURCE_SYSTEM_ID\", P.PERSON_ID AS PERSONID FROM PERSON P "+
+            "'PERSON' || '_' || P.PERSON_ID  \"SOURCE_SYSTEM_ID\" FROM PERSON P "+
             "WHERE P.PERSON_ID is not NULL"
 
     },
@@ -29,6 +29,16 @@ const DataTransferRulesForDefaultTransfers = [
         //   SourceColumnInfo:[{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_1'},{entity:'PERSON',column:'PERSON_NUMBER'},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'EFFECTIVE_END_DATE'},{entity:'PERSON_ADDRESS',column:'EFFECTIVE_START_DATE'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_2'},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_3'},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_4'},{entity:'PERSON_ADDRESS',column:'ADDRESS_TYPE'},{entity:'PERSON_ADDRESS',column:'COUNTRY'},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'POSTAL_CODE'},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'REGION_1'},{entity:'PERSON_ADDRESS',column:'REGION_2'},{entity:'PERSON_ADDRESS',column:'REGION_3'},{entity:'PERSON_ADDRESS',column:'TOWN_OR_CITY'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
         SourceQuery: "SELECT '' as PersonAddrUsageId,b.ADDRESS_LINE_1,a.PERSON_NUMBER,'' as PersonId,b.EFFECTIVE_END_DATE,b.EFFECTIVE_START_DATE,'' as AddlAddressAttribute1,'' as AddlAddressAttribute2,'' as AddlAddressAttribute3,'' as AddlAddressAttribute4, '' as AddlAddressAttribute5,'' as AddressId,    a.PERSON_NUMBER,   b.ADDRESS_LINE_2, b.ADDRESS_LINE_3," +
             "b.ADDRESS_LINE_4,b.ADDRESS_TYPE,b.COUNTRY,'' as LongPostalCode,b.POSTAL_CODE,'' as Primaryflag,b.REGION_1,b.REGION_2,b.REGION_3,b.TOWN_OR_CITY,'' as SourceSystemId,'' as SourceSystemOwner,'' as GUID " + " FROM PERSON a,PERSON_ADDRESS b WHERE a.UNIQUE_IDENTIFIER = b.UNIQUE_IDENTIFIER"
+    },
+    {
+        DestinationEntity: "PersonLegislativeData",
+        DestinationColumns: ['PersonNumber', 'EffectiveStartDate', 'EffectiveEndDate', 'LegislationCode', 'HighestEducationLevel', 'MaritalStatus', 'Sex', 'MaritalStatusDate', 'SourceSystemOwner', 'SourceSystemId'],
+        SourceColumns: ['PERSON_NUMBER','EFFECTIVE_START_DATE','EFFECTIVE_END_DATE','Legislation_Code','Highest_Education_Level','Marital_Status','Sex','Marital_Status_Date','SOURCE_SYSTEM_OWNER','SOURCE_SYSTEM_ID'],
+      
+        SourceQuery: "SELECT  PLI.PERSON_NUMBER AS PersonNumber,PLI.EFFECTIVE_START_DATE AS EffectiveStartDate,PLI.EFFECTIVE_END_DATE AS EffectiveEndDate,PLI.Legislation_Code AS " +
+            "LegislationCode,PLI.Highest_Education_Level AS HighestEducationLevel,PLI.Marital_Status AS MaritalStatus, PLI.Sex, PLI.Marital_Status_Date AS MaritalStatusDate,'EBS' AS SourceSystemOwner " +
+            "'PERSON_LEGISLATIVE_DATA' || '_' || PLI.PERSON_ID  \"SOURCE_SYSTEM_ID\"" +
+            " FROM PERSON_LEGISLATIVE_INFO PLI INNER JOIN PERSON P ON PLI.PERSON_ID = P.PERSON_ID"
     },
 
     {
