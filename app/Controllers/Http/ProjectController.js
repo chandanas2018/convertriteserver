@@ -92,7 +92,7 @@ class ProjectController {
             //return response.json(entities)
         }
         catch(err){
-            return response.status(400).send({success:false, data:null, msg:'Error while get the list', error:err});
+            return response. status(400).send({success:false, data:null, msg:'Error while get the list', error:err});
         }
 
         
