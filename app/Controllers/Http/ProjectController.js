@@ -1,5 +1,5 @@
 'use strict'
-
+const config = require("../../../config/Configuration");
 const Database = use('Database')
  
 //const Projects = use('App/Models/Projects');
@@ -96,6 +96,11 @@ class ProjectController {
         }
 
         
+     }
+
+     async testConfig({request,response,error}){
+           var obj = await config.getConfigValueByKey("StagingConn")
+           return response.status(200).send(obj);
      }
 }
 

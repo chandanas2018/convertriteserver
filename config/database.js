@@ -6,6 +6,8 @@ const Env = use('Env')
 /** @type {import('@adonisjs/ignitor/src/Helpers')} */
 const Helpers = use('Helpers')
 
+const config = require("../config/Configuration");
+
 module.exports = {
   /*
   |--------------------------------------------------------------------------
@@ -82,11 +84,11 @@ module.exports = {
   oracledb: {
     client: 'oracledb',
     connection: {
-      host: Env.get('DB_HOST', 'localhost'),
-      port: Env.get('DB_PORT', ''),
-      user: Env.get('DB_USER', ''),
-      password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
+      host: config.getConfigValueByKey("StagingConn").host,//Env.get('DB_HOST', 'localhost'),
+     // port: config.getConfigValueByKey("StagingConn").port,//Env.get('DB_PORT', ''),
+      user: config.getConfigValueByKey("StagingConn").user,//Env.get('DB_USER', ''),
+      password: config.getConfigValueByKey("StagingConn").password,//Env.get('DB_PASSWORD', ''),
+      database: config.getConfigValueByKey("StagingConn").database//Env.get('DB_DATABASE', 'adonis')
       
     }
   }
