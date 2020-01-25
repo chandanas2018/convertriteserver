@@ -68,6 +68,11 @@ Route.group(() =>
  Route.post('/api/v1/source/columns', 'TestController.previewFile')
  Route.post('/api/v1/oracle/errors', 'FileController.errorlistFile')
 
+
+ //for testing ebs controller methods 
+ Route.get('/ebsdata','EbsController.datamigration')
+ Route.get('/csv', 'Ebscontroller.csvFile')
+
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 
 // }).prefix('api')

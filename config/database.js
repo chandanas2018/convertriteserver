@@ -91,17 +91,17 @@ module.exports = {
       database: config.getConfigValueByKey("StagingConn").database//Env.get('DB_DATABASE', 'adonis')
       
     }
-  }
+  },
 
-  // oracledb: {
-  //   client: 'oracledb',
-  //   connection: {
-  //     host: '172.16.0.55',
-  //     port: '1523',
-  //     user: 'CONVERSION_TOOL_TEST_DB',
-  //     password: 'inlightdata123',
-  //     database: 'EBSFSD'
+  ebsoracledb: {
+    client: 'oracledb',
+    Connection: {
+      host: config.getConfigValueByKey("ebsDbConn").host,
+      //port:config.getConfigValueByKey("ebsDbConn").port,
+      user: config.getConfigValueByKey("ebsDbConn").user,
+      password: config.getConfigValueByKey("ebsDbConn").password,
+      database: config.getConfigValueByKey("ebsDbConn").database
       
-  //   }
-  // }
+    }
+  }
 }
