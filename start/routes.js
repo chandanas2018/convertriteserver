@@ -27,6 +27,7 @@ Route.group(() =>
     Route.delete('/delete/projects', 'ProjectController.deleteProject') 
     //Route.post('/file/transactions', 'ProjectController.saveTransactions')
     Route.get('/upload/extracts','ProjectController.uploadExtracts')
+    Route.get('/projects/testConfig', 'ProjectController.testConfig')
 }).prefix('api/v1')
 
 //Routes for entity mappings
@@ -66,6 +67,11 @@ Route.group(() =>
  Route.get('/api/v1/download/hdl', 'HdlController.download')
  Route.post('/api/v1/source/columns', 'TestController.previewFile')
  Route.post('/api/v1/oracle/errors', 'FileController.errorlistFile')
+
+
+ //for testing ebs controller methods 
+ Route.get('/ebsdata','EbsController.datamigration')
+ Route.get('/csv', 'Ebscontroller.csvFile')
 
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 

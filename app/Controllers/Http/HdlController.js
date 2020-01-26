@@ -69,7 +69,7 @@ class HdlController {
         try {
             var HDLEntries = [];
 
-
+           // var connection = Database.connection('oracledb')
 
             for (var i = 0; i < DataTransferRulesForDefaultTransfers.length; i++) {
                 Logger.info('Started writing to HDL File %s', DataTransferRulesForDefaultTransfers.length)
@@ -84,8 +84,9 @@ class HdlController {
 
 
 
-                var result = await Database.raw(rule.SourceQuery)
+                var result = await Database.connection('oracledb').raw(rule.SourceQuery);
                 console.log(result);
+               
 
                 for (var j = 0; j < rule.DestinationColumns.length; j++) {
                     metadataline = metadataline + "|" + rule.DestinationColumns[j]  
@@ -241,6 +242,9 @@ class HdlController {
             console.log(err);
             return { data: null, error: err }
         }
+        finally{
+            Database.close(['oracledb']);
+          }
     }
 
     async download({ request, response, error }) {
@@ -297,7 +301,7 @@ class HdlController {
                 }
 
             })
-            return response.send({ loc: filepath })
+            return response.send( {loc: filepath })
         }
         catch (error) {
             response.send(JSON.stringify(error))
