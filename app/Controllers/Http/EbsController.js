@@ -4,6 +4,8 @@ const Database = use('Database');
 const fs = require('fs');
 const {parseAsync} = require('json2csv');
 var csvWriter = require('csv-write-stream')
+const config = require('../../../config/Configuration');
+//var csv = require('csv')
 
 
 class EbsController {
@@ -58,14 +60,13 @@ class EbsController {
        
     }
 
-    async personCsv(){
+    async dataForCSV(entity){
         try{
             // var y = await this.datamigration.qry1;
             // console.log(y);
-            var qry1 = await Database.connection('oracledb').raw("SELECT to_char(effective_start_date,'DD-MM-RRRR') as EFFECTIVE_START_DATE, to_char(effective_end_date,'DD-MM-RRRR') as EFFECTIVE_END_DATE, person_id , employee_number AS PERSON_NUMBER, blood_type, "
-            + "correspondence_language,TO_CHAR(start_date,'DD-MM-RRRR') AS START_DATE , TO_CHAR(date_of_birth,'DD-MM-RRRR') AS DATE_OF_BIRTH, TO_CHAR(date_of_death,'DD-MM-RRRR') AS DATE_OF_DEATH, " +
-            " country_of_birth , region_of_birth , town_of_birth , '' AS source_system_owner, '' AS source_system_id ,  '' AS action_code, '' AS reason_code, attribute12 as person_duplicate_check FROM per_all_people_f WHERE sysdate BETWEEN effective_start_date AND effective_end_date" +
-            " AND per_information_category = 'US' " + " AND person_id is not null and employee_number is not null  ORDER BY 1 DESC " )
+            var qry = await config.getQueryByEntityAsync(entity);
+            console.log(qry);
+            var qry1 = await Database.connection('oracledb').raw(qry)
             console.log(qry1);
             return qry1;
         }
@@ -73,7 +74,7 @@ class EbsController {
             console.log(error);
         }
         finally{
-          Database.close(['oracledb']);
+          //Database.close(['oracledb']);
           console.log('hello');
         }
     }
@@ -81,31 +82,15 @@ class EbsController {
 
     async csvFile({request,response,error}){
         try{
-          var data = await this.personCsv();
+          var entity = request.qs.entity;  
+          console.log(entity);
+          var data = await this.dataForCSV(entity);
           console.log(data);
-          const fields = ['EFFECTIVE_START_DATE', 
-          'EFFECTIVE_END_DATE', 
-          'PERSON_ID',
-           'PERSON_NUMBER', 
-           'BLOOD_TYPE', 
-           'CORRESPONDENCE_LANGUAGE' ,
-          'START_DATE',
-          'DATE_OF_BIRTH', 
-          'DATE_OF_DEATH',
-          'COUNTRY_OF_BIRTH' ,
-          'REGION_OF_BIRTH',
-          'TOWN_OF_BIRTH',
-          'SOURCESYSTEMOWNER',
-          'SOURCESYSTEMID',
-          'ACTIONCODE',
-          'REASONCODE',
-          'PERSONDUPLICATECHECK',
-          'RETIREMENTDATE'
-          ]
+          var fields = await config.getFieldsByEntityAsync(entity)
           const opts = {fields}
           var filename = 'person';
-          var fileloc = 'public/ebs/' + filename + '.csv'
-          var filepath = '/ebs/' + filename + '.csv';
+          var fileloc = 'public/ebs/' + entity + '.csv'
+          var filepath = '/ebs/' + entity + '.csv';
         //   const csv = parse(data, opts)
         if(fs.existsSync(fileloc)){
             fs.writeFile(fileloc, '', function(){console.log('done')})
@@ -131,6 +116,7 @@ class EbsController {
 
                     }
                 });
+
             })
      
         //  var csvFilename = "d:\some\path\myfile.csv";
@@ -138,13 +124,15 @@ class EbsController {
         //   writer.pipe(fs.createWriteStream(csvFilename))
         //   writer.write(csv)
         //   writer.end()
+
+        
             
         }).catch(err => {
             console.error(err);
-       
         });
         
         return response.send({loc:filepath});
+        
         }
         catch(error){
             console.log(error);
