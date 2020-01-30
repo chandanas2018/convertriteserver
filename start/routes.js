@@ -68,6 +68,10 @@ Route.group(() =>
  Route.post('/api/v1/source/columns', 'TestController.previewFile')
  Route.post('/api/v1/oracle/errors', 'FileController.errorlistFile')
 
+
+
+ Route.get('/bloodgroup','DataMigrationController.Bloodgroup')
+
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 
 // }).prefix('api')

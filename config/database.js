@@ -91,6 +91,18 @@ module.exports = {
       database: config.getConfigValueByKey("StagingConn").database//Env.get('DB_DATABASE', 'adonis')
       
     }
+  },
+
+  oracledb: {
+    client: 'oracledb',
+    connection: {
+      host: config.getConfigValueByKey("Testconn").host,//Env.get('DB_HOST', 'localhost'),
+     // port: config.getConfigValueByKey("StagingConn").port,//Env.get('DB_PORT', ''),
+      user: config.getConfigValueByKey("Testconn").user,//Env.get('DB_USER', ''),
+      password: config.getConfigValueByKey("Testconn").password,//Env.get('DB_PASSWORD', ''),
+      database: config.getConfigValueByKey("Testconn").database//Env.get('DB_DATABASE', 'adonis')
+      
+    }
   }
 
   // oracledb: {
