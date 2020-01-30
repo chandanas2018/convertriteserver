@@ -93,27 +93,15 @@ module.exports = {
     }
   },
 
-  oracledb: {
+  ebsoracledb: {
     client: 'oracledb',
-    connection: {
-      host: config.getConfigValueByKey("Testconn").host,//Env.get('DB_HOST', 'localhost'),
-     // port: config.getConfigValueByKey("StagingConn").port,//Env.get('DB_PORT', ''),
-      user: config.getConfigValueByKey("Testconn").user,//Env.get('DB_USER', ''),
-      password: config.getConfigValueByKey("Testconn").password,//Env.get('DB_PASSWORD', ''),
-      database: config.getConfigValueByKey("Testconn").database//Env.get('DB_DATABASE', 'adonis')
+    Connection: {
+      host: config.getConfigValueByKey("ebsDbConn").host,
+      //port:config.getConfigValueByKey("ebsDbConn").port,
+      user: config.getConfigValueByKey("ebsDbConn").user,
+      password: config.getConfigValueByKey("ebsDbConn").password,
+      database: config.getConfigValueByKey("ebsDbConn").database
       
     }
   }
-
-  // oracledb: {
-  //   client: 'oracledb',
-  //   connection: {
-  //     host: '172.16.0.55',
-  //     port: '1523',
-  //     user: 'CONVERSION_TOOL_TEST_DB',
-  //     password: 'inlightdata123',
-  //     database: 'EBSFSD'
-      
-  //   }
-  // }
 }

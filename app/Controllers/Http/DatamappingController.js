@@ -9,15 +9,19 @@ class DatamappingController {
     async identificationColumnList({ request, response, error }) {
         try {
             var data = request.body;
-            let identifications = await Database.select('IDENTIFICATION_STATUS', 'COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME').from('PROJ_ENTITY_IDENTIFICATION')
+            let identifications = await Database.connection('oracledb').select('IDENTIFICATION_STATUS', 'COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME').from('PROJ_ENTITY_IDENTIFICATION')
                 .where('ENTITY_ID', data.entityid);
             console.log(identifications);
+            Database.close(['oracledb']);
             return response.status(200).send({ success: true, data: identifications, msg: 'Successfully get the list', error: null });
 
         }
         catch (error) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: error });
         }
+        finally{
+            Database.close(['oracledb']);
+          }
     }
 
 
@@ -28,26 +32,26 @@ class DatamappingController {
             var checked = [];
             var unchecked = [];
             for (var i = 0; i < data1.data.length; i++) {
-                let qry = await Database.table('PROJ_ENTITY_IDENTIFICATION').where({ 'COLUMN_ID': data1.data[i].COLUMN_ID })
+                let qry = await Database.connection('oracledb').table('PROJ_ENTITY_IDENTIFICATION').where({ 'COLUMN_ID': data1.data[i].COLUMN_ID })
                     .update({ 'DISPLAY_NAME': data1.data[i].DISPLAY_NAME, 'IDENTIFICATION_STATUS': data1.data[i].IDENTIFICATION_STATUS });
                 console.log(qry);
                 checked.push(qry);
             }
             for (var i = 0; i < data1.unchecked.length; i++) {
-                let qry = await Database.table('PROJ_ENTITY_IDENTIFICATION').where({ 'COLUMN_ID': data1.unchecked[i].COLUMN_ID })
+                let qry = await Database.connection('oracledb').table('PROJ_ENTITY_IDENTIFICATION').where({ 'COLUMN_ID': data1.unchecked[i].COLUMN_ID })
                     .update({ 'DISPLAY_NAME': data1.unchecked[i].COLUMN_NAME, 'IDENTIFICATION_STATUS': data1.unchecked[i].IDENTIFICATION_STATUS });
                 console.log(qry);
                 unchecked.push(qry);
             }
             //to delete the unchecked mapping 
-            let fieldmappings = await Database.select('*').from('PROJ_COLUMN_MAPPING');
+            let fieldmappings = await Database.connection('oracledb').select('*').from('PROJ_COLUMN_MAPPING');
             console.log(fieldmappings);
 
             for (var i = 0; i < data1.unchecked.length; i++) {
                 for (var j = 0; j < fieldmappings.length; j++) {
                     if (data1.unchecked[i].COLUMN_NAME == fieldmappings[j].SOURCE_COLUMN_NAME) {
 
-                        let deletemapping = await Database.table('PROJ_COLUMN_MAPPING')
+                        let deletemapping = await Database.connection('oracledb').table('PROJ_COLUMN_MAPPING')
                             .where('SOURCE_COLUMN_ID', fieldmappings[j].SOURCE_COLUMN_ID).delete();
                         console.log(deletemapping);
                     }
@@ -58,14 +62,16 @@ class DatamappingController {
 
 
             }
-
-
+          
             return response.status(200).send({ success: true, data: checked, msg: 'Successfully update the data', err: null });
         }
         catch (error) {
             console.log(error);
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the data', err: error });
         }
+        finally{
+            Database.close(['oracledb']);
+          }
     }
 
 
@@ -79,20 +85,24 @@ class DatamappingController {
             var data1 = request.body;
             //to get the source data for source column mapped value
             //first to get the entity name from entityid 
-            let entityname = await Database.select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST')
+            let entityname = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST')
                 .where('ENTITY_ID', data1.data.SOURCE_ENTITY_ID);
             console.log(entityname);
-            let sourcedata = await Database.raw('SELECT DISTINCT ' + data1.data.SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME  from ' + entityname[0].ENTITY_NAME +  ' where ' +  data1.data.SOURCE_COLUMN_NAME + ' IS NOT NULL ');
+            let sourcedata = await Database.connection('oracledb').raw('SELECT DISTINCT ' + data1.data.SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME  from ' + entityname[0].ENTITY_NAME +  ' where ' +  data1.data.SOURCE_COLUMN_NAME + ' IS NOT NULL ');
             console.log(sourcedata);
             //to get the destination mapping data for dest mapped column
-            let destinationdata = await Database.select('*').from(data1.data.DESTINATION_COLUMN_NAME)
+            let destinationdata = await Database.connection('oracledb').select('*').from(data1.data.DESTINATION_COLUMN_NAME)
             console.log(destinationdata);
+    
             response.status(200).send({ success: true, data: { destdata: destinationdata, srcdata: sourcedata }, msg: 'Successfully get the list', error: null });
         }
         catch (error) {
             console.log(error)
             response.status(400).send({ success: false, data: null, msg: 'Successfully get the list', error: err });
         }
+        finally{
+            Database.close(['oracledb']);
+          }
     }
 
 
@@ -100,7 +110,7 @@ class DatamappingController {
     async saveDataMappings({ request, response, error }) {
         try {
             var data = request.body;
-            let datamappings = await Database.insert({
+            let datamappings = await Database.connection('oracledb').insert({
                 PROJECT_ID: data.projectid,
                 SOURCE_ENTITY_ID: data.sourceentityid,
                 SOURCE_COLUMN_ID: data.remainingdata.SOURCE_COLUMN_ID,
@@ -113,9 +123,9 @@ class DatamappingController {
             console.log(datamappings);
 
             //for maintaining  user log
-            let qry2 = await Database.select('PROJECT_CREATED_BY').from('LIST_OF_PROJECTS').where('PROJECT_ID', data.projectid);
+            let qry2 = await Database.connection('oracledb').select('PROJECT_CREATED_BY').from('LIST_OF_PROJECTS').where('PROJECT_ID', data.projectid);
             console.log(qry2);
-            let qry3 = await Database.select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', data.sourceentityid);
+            let qry3 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', data.sourceentityid);
             console.log(qry3);
             let transactions = await Database.insert({
                 PROJECT_ID: data.projectid,
@@ -125,11 +135,14 @@ class DatamappingController {
                 TRANSACTION_PERFORMED_BY: qry2[0].PROJECT_CREATED_BY
             }).into('PROJECT_TRANSACTIONS');
             console.log(transactions);
-
+            
             return response.status(200).send({ success: true, data: datamappings, msg: 'Successfully inserted ', error: null });
         }
         catch (error) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while inserting the data', error: err });
+        }
+        finally{
+            Database.close(['oracledb']);
         }
     }
 
@@ -138,13 +151,16 @@ class DatamappingController {
     async listofDataMappings({ request, response, error }) {
         try {
             var data = request.body;
-            let datafields = await Database.select('*').from('PROJ_DATA_MAPPINGS')
+            let datafields = await Database.connection('oracledb').select('*').from('PROJ_DATA_MAPPINGS')
                 .where('SOURCE_ENTITY_ID', data.sourceentityid);
-            console.log(datafields);
+            console.log(datafields);  
             return response.status(200).send({ success: true, data: datafields, msg: 'Successfully get the fields', err: null });
         }
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while getting the fields', error: err });
+        }
+        finally{
+            Database.close(['oracledb']);
         }
     }
 
@@ -152,18 +168,21 @@ class DatamappingController {
     async deleteIndividualDataMapping({ request, response, error }) {
         try {
             var data = request.body;
-            let deleteddatafield = await Database.table('PROJ_DATA_MAPPINGS')
+            let deleteddatafield = await Database.connection('oracledb').table('PROJ_DATA_MAPPINGS')
                 .where({
                     'SOURCE_ENTITY_ID': data.sourceentityid,
                     'SOURCE_DATA': data.sourcedataname,
                     'DESTINATION_DATA': data.destinationdataname
                 })
                 .delete();
-            console.log(deleteddatafield);
+            console.log(deleteddatafield);          
             return response.status(200).send({ success: true, data: deleteddatafield, msg: 'Successfully delete the fields', err: null });
         }
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while deleting the fields', error: err });
+        }
+        finally{
+            Database.close(['oracledb']);
         }
     }
 
@@ -173,7 +192,7 @@ class DatamappingController {
         try {
             var data = request.body;
 
-            let deleteddatamappings = await Database.table('PROJ_DATA_MAPPINGS')
+            let deleteddatamappings = await Database.connection('oracledb').table('PROJ_DATA_MAPPINGS')
                 .where('SOURCE_ENTITY_ID', data.sourceentityid).delete();
             console.log(deleteddatamappings);
 
@@ -191,13 +210,16 @@ class DatamappingController {
             }).into('PROJECT_TRANSACTIONS');
 
             console.log(transactions);
-
+           
 
             return response.status(200).send({ success: true, data: deleteddatamappings, msg: 'Successfully delete the fields', err: null });
         }
         catch (err) {
             console.log(err);
             return response.status(400).send({ success: false, data: null, msg: 'Error while deleting the fields', error: err });
+        }
+        finally{
+            Database.close(['oracledb']);
         }
     }
 
@@ -207,16 +229,16 @@ class DatamappingController {
         try {
             var data1 = [];
             var data = request.body;
-            let mappings = await Database.select('DISPLAY_NAME', 'SOURCE_COLUMN_NAME', 'DESTINATION_COLUMN_NAME').where('SOURCE_ENTITY_ID', data.entityid)
+            let mappings = await Database.connection('oracledb').select('DISPLAY_NAME', 'SOURCE_COLUMN_NAME', 'DESTINATION_COLUMN_NAME').where('SOURCE_ENTITY_ID', data.entityid)
                 .from('PROJ_COLUMN_MAPPING');
             console.log(mappings);
-            let qry1 = await Database.select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', data.entityid);
+            let qry1 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', data.entityid);
             console.log(qry1);
 
             for (var i = 0; i < mappings.length; i++) {
-                let qry2 = await Database.select('DEST_DATA_NAME').from(mappings[i].DESTINATION_COLUMN_NAME);
+                let qry2 = await Database.connection('oracledb').select('DEST_DATA_NAME').from(mappings[i].DESTINATION_COLUMN_NAME);
                 console.log(qry2);
-                let qry3 = await Database.raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + qry1[0].ENTITY_NAME);
+                let qry3 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + qry1[0].ENTITY_NAME);
                 console.log(qry3);
 
                 var mappeddata = {
@@ -228,12 +250,15 @@ class DatamappingController {
                 }
                 data1.push(mappeddata);
             }
-            console.log(data1);
+            console.log(data1);      
             return response.status(200).send({ success: true, data: data1, msg: 'Successfully get the list', error: null });
         }
         catch (err) {
             console.log(err);
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: err });
+        }
+        finally{
+            Database.close(['oracledb']);
         }
     }
 
@@ -254,7 +279,7 @@ class DatamappingController {
                     // for(let k=0; k<data.mappings[i].data[j].length; k++){
                     if (data.mappings[i].data[j].sourceData !== "" && data.mappings[i].data[j].desData !== "") {
 
-                        let datamappings = await Database.insert({
+                        let datamappings = await Database.connection('oracledb').insert({
                             PROJECT_ID: 2,
                             SOURCE_ENTITY_ID: 1,
                             SOURCE_COLUMN_NAME: sourceColumnName,
@@ -263,7 +288,7 @@ class DatamappingController {
                             DESTINATION_DATA: data.mappings[i].data[j].desData
                         }).into('PROJ_DATA_MAPPINGS');
                         console.log(datamappings);
-
+                       
                     } else {
 
                         console.log('not found');
@@ -282,6 +307,9 @@ class DatamappingController {
         catch (err) {
             console.log(err);
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: err });
+        }
+        finally{
+            Database.close(['oracledb']);
         }
     }
 

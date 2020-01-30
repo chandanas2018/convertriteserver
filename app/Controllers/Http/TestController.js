@@ -102,11 +102,12 @@ class TestController {
             // var mappings = await Database.select('*').from('PROJ_DATA_MAPPINGS');
             //   console.log(mappings); 
               
-              var data = await Database.raw('select entity_name, source_column_name, source_data, destination_data  from ' +
+              var data = await Database.connection('oracledb').raw('select entity_name, source_column_name, source_data, destination_data  from ' +
                '(select source_entity_id, source_column_id,source_column_name, proj_data_mappings.destination_data, source_data from PROJ_DATA_MAPPINGS order by source_entity_id) a, '  +
                 '(select entity_id, ENTITY_NAME from PROJECT_SOURCE_ENTITY_LIST where entity_id in( select DISTINCT  source_entity_id  from proj_data_mappings)) b ' + 
                 'where a.source_entity_id = b.entity_id');
                 console.log(data);
+             
                 for (var i=0; i<data.length; i++){
                   if(entity_column_mappings[data[i].ENTITY_NAME] === undefined){
                     entity_column_mappings[data[i].ENTITY_NAME] = {};
@@ -167,6 +168,10 @@ class TestController {
           console.log(err);
           return response.status(400).send({success:false, data:null, msg:'failure', err:error });
         }
+        finally{
+          Database.close(['oracledb']);
+      }
+   
     }
 
 

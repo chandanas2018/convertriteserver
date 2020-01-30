@@ -72,7 +72,7 @@ class FileController {
                 // console.log(str);
                 // var v = await Database.raw(str)
 
-                await Database.table(doc.toUpperCase())
+                await Database.connection('oracledb').table(doc.toUpperCase())
                     .delete()
 
                 var pageLength = 50;
@@ -110,7 +110,7 @@ class FileController {
 
 
 
-                    await Database.table(doc.toUpperCase())
+                    await Database.connection('oracledb').table(doc.toUpperCase())
                         .insert(page)
 
                     qstart = qstart + pageLength
@@ -125,7 +125,7 @@ class FileController {
                 if (results != null || results.length == 0) {
                     try {
                         // to update status of file      
-                        let qry = await Database.table('PROJECT_LEGACY_UPLOAD_STATUS').where({'ENTITY_NAME': doc, 'PROJECT_ID' : 2})
+                        let qry = await Database.connection('oracledb').table('PROJECT_LEGACY_UPLOAD_STATUS').where({'ENTITY_NAME': doc, 'PROJECT_ID' : 2})
                             .update({'UPLOAD_STATUS': 'UPLOADED', 'TIMESTAMP': new Date()});
                         console.log(qry)
                         //insert service for log data           
@@ -135,14 +135,14 @@ class FileController {
                             email: 'Linda@xyz.com',
                             status: 'uploaded'
                         }
-                        let transactions = await Database.insert({
+                        let transactions = await Database.connection('oracledb').insert({
                             PROJECT_ID: data1.projectid,
                             TRANSACTION_DATE: date,
                             ENTITIY_ACCESSED: doc,
                             TRANSACTION_STATUS: data1.status,
                             TRANSACTION_PERFORMED_BY: data1.email
                         }).into('PROJECT_TRANSACTIONS');
-                        console.log(transactions)
+                        console.log(transactions);
                     }
                     catch (err) {
                         console.log(err)
@@ -155,6 +155,9 @@ class FileController {
             catch (error) {
                 return response.status(200).send({ success: false, data: null, message: 'Error while inserting data', error: error });
 
+            }
+            finally{
+                Database.close(['oracledb']);
             }
 
         }

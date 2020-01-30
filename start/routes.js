@@ -69,8 +69,9 @@ Route.group(() =>
  Route.post('/api/v1/oracle/errors', 'FileController.errorlistFile')
 
 
-
- Route.get('/bloodgroup','DataMigrationController.Bloodgroup')
+ //for testing ebs controller methods 
+ Route.get('/ebsdata','EbsController.datamigration')
+ Route.get('/csv', 'Ebscontroller.csvFile')
 
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 
