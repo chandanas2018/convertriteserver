@@ -8,56 +8,88 @@ const fs = require('fs');
 const DataTransferRulesForDefaultTransfers = [
     {
         DestinationEntity: "Worker",
-        DestinationColumns: [ 'EffectiveStartDate',  'EffectiveEndDate',  'PersonNumber', 'BloodType', 'CorrespondenceLanguage', 'DateOfBirth',  'DateOfDeath', 'CountryOfBirth', 'RegionOfBirth', 'TownOfBirth', 'PersonDuplicateCheck','SourceSystemOwner','ActionCode', 'SourceSystemId'],
-        SourceColumns: ['PersonNumber', 'EffectiveStartDate', 'PersonID', 'EFFECTIVE_END_DATE', 'ActionCode', 'BLOOD_TYPE', 'CORRESPONDENCE_LANGUAGE', 'COUNTRY_OF_BIRTH', 'DATE_OF_BIRTH', 'DATE_OF_DEATH', 'PERSONDUPLICATECHECK'],
-        SourceQuery: "SELECT P.EFFECTIVE_START_DATE AS EffectiveStartDate, P.EFFECTIVE_END_DATE AS EffectiveEndDate,P.PERSON_NUMBER AS PersonNumber,P.BLOOD_TYPE AS BloodType, " +
-            "P.CORRESPONDENCE_LANGUAGE AS CorrespondenceLanguage,P.DATE_OF_BIRTH AS DateOfBirth, P.DATE_OF_DEATH AS DateOfDeath, " +
-            "P.COUNTRY_OF_BIRTH AS CountryOfBirth, P.REGION_OF_BIRTH AS RegionOfBirth, P.TOWN_OF_BIRTH AS TownOfBirth, P.PERSONDUPLICATECHECK as PersonDuplicateCheck, 'EBS' As SourceSystemOwner, 'HIRE' as ActionCode,"+
-           "'PERSON' || '_' || P.PERSON_ID  \"SOURCESYSTEMID\""  + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL"
+        DestinationColumns: [ 'SourceSystemOwner', 'SourceSystemId','EffectiveStartDate',  'EffectiveEndDate',  'PersonNumber', 'StartDate', 'DateOfBirth','ActionCode' ],
+        SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date','EFFECTIVE_END_DATE', 'Person_Number','Start_Date','DATE_OF_BIRTH', 'ActionCode'],
+        SourceQuery: "SELECT P.EFFECTIVE_START_DATE AS EffectiveStartDate, P.EFFECTIVE_END_DATE AS EffectiveEndDate,P.PERSON_NUMBER AS PersonNumber, P.Start_Date as StartDate, P.DATE_OF_BIRTH AS DateOfBirth, 'EBS' As SourceSystemOwner, 'HIRE' as ActionCode,"+
+           " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\""  + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL"
 
-    },
-
-    {
-        DestinationEntity: "PersonNationalIdentifier",
-        DestinationColumns: ['PersonNumber', 'LegislationCode', 'IssueDate', 'ExpirationDate', 'PlaceOfIssue', 'NationalIdentifierType', 'NationalIdentifierNumber', 'PrimaryFlag', 'SourceSystemOwner', 'SourceSystemId'],
-        SourceColumns: ['PERSON_NUMBER','Legislation_Code','Issue_Date','Expiration_Date','Place_Of_Issue','National_Identifier_Type','National_Identifier_Number','Primary_Flag','SOURCE_SYSTEM_OWNER','SOURCE_SYSTEM_ID'], 
-        SourceQuery: "select pni.PERSON_NUMBER as PersonNumber ,pni.Legislation_Code as LegislationCode ,pni.Issue_Date as IssueDate,pni.Expiration_Date as  ExpirationDate,pni.Place_Of_Issue as PlaceOfIssue,pni.National_Identifier_Type as NationalIdentifierType, pni.National_Identifier_Number as NationalIdentifierNumber, pni.Primary_Flag as PrimaryFlag, 'EBS' as SourceSystemOwner," +
-        "'PERSON_NATIONAL_IDENTIFIER' || '_' || pni.PERSON_ID \"SOURCESYSTEMID\"" + " FROM person_national_identifier pni inner join person p on p.person_id = pni.person_id"
-         
     },
 
     {
         DestinationEntity: 'PersonName',
-        DestinationColumns: ['EffectiveStartDate', 'EffectiveEndDate', 'PersonNumber', 'LegislationCode', 'NameType',  'FirstName', 'MiddleNames', 'LastName', 'Honors', 'KnownAs',  'PreNameAdjunct', 'MilitaryRank','PreviousLastName', 'Suffix',  'Title', 'CharSetContext', 'SourceSystemOwner', 'SourceSystemId',  'NameInformation1', 'NameInformation2', 'NameInformation3', 'NameInformation4', 'NameInformation5', 'NameInformation6', 'NameInformation7', 'NameInformation8', 'NameInformation9', 'NameInformation10', 'NameInformation11', 'NameInformation12', 'NameInformation13', 'NameInformation14', 'NameInformation15', 'NameInformation16', 'NameInformation17', 'NameInformation18', 'NameInformation19', 'NameInformation20', 'NameInformation21', 'NameInformation22', 'NameInformation23', 'NameInformation24', 'NameInformation25', 'NameInformation26', 'NameInformation27', 'NameInformation28', 'NameInformation29', 'NameInformation30'],
-        SourceColumns: ['effective_start_date', 'Effective_End_Date', 'PERSON_NUMBER', 'Legislation_Code', 'Name_Type', 'First_Name', 'Middle_Names', 'Last_Name', 'Honors', 'Known_As', 'Pre_Name_Adjunct', 'Military_Rank', 'Previous_Last_Name', 'Suffix', 'Title', 'CharSet_Context', 'SourceSystemOwner', 'SourceSystemId','NameInformation1', 'NameInformation2', 'NameInformation3', 'NameInformation4', 'NameInformation5', 'NameInformation6', 'NameInformation7', 'NameInformation8', 'NameInformation9', ' NameInformation10', 'NameInformation11', ' NameInformation12', ' NameInformation13', ' NameInformation14', ' NameInformation15', ' NameInformation16', ' NameInformation17', ' NameInformation18', ' NameInformation19', ' NameInformation20', ' NameInformation21', ' NameInformation22', ' NameInformation23', ' NameInformation24', 'NameInformation25', 'NameInformation26', 'NameInformation27', 'NameInformation28', 'NameInformation29', 'NameInformation30'],
-        SourceQuery: "SELECT pn.effective_start_date as effectivestartdate, pn.Effective_End_Date as EffectiveEndDate,pn. Person_Number as PersonNumber,pn. Legislation_Code as LegislationCode,pn.Name_Type as NameType, pn. First_Name as FirstName, pn. Middle_Names as MiddleNames," +
-        "pn. Last_Name as LastName, pn. Honors, pn. Known_As as KnownAs, pn.Pre_Name_Adjunct as PreNameAdjunct, pn.Military_Rank as MilitaryRank, pn.Previous_Last_Name as PreviousLastName , pn.Suffix , pn.Title, pn.CharSet_Context as CharSetContext , 'EBS' AS SourceSystemOwner," +
-        "pn. Name_Information1 as NameInformation1, pn.Name_Information2 as NameInformation2,pn.Name_Information3 as NameInformation3, pn.Name_Information4 as NameInformation4, pn.Name_Information5 as NameInformation5, pn.Name_Information6 as NameInformation6, pn. Name_Information7 as NameInformation7, pn.Name_Information8 as NameInformation8," +
-        " pn.Name_Information9 as NameInformation9, pn. Name_Information10 as NameInformation10,pn.Name_Information11 as NameInformation11, pn.Name_Information12 as NameInformation12, pn.Name_Information13 as NameInformation13, pn. Name_Information14 as NameInformation14,pn.Name_Information15 as NameInformation15, pn.Name_Information16 as NameInformation16, pn.Name_Information17 as NameInformation17, pn.Name_Information18 as NameInformation18,pn.Name_Information19 as NameInformation19, pn.Name_Information20 as NameInformation20," +
-         "pn.Name_Information21 as NameInformation21, pn.Name_Information22 as NameInformation22,pn. Name_Information23 as NameInformation23, pn.Name_Information24 as NameInformation24, pn. Name_Information25 as NameInformation25, pn.Name_Information26 as NameInformation26, pn.Name_Information27 as NameInformation27, pn.name_information28 as NameInformation28, pn.name_information29 as NameInformation29, pn. name_information30 as NameInformation30," +
-         "'PERSON_NAME' || '_' || P.PERSON_ID \"SOURCESYSTEMID\"" + " FROM PERSON_NAME pn INNER JOIN PERSON p on p.PERSON_ID = pn.PERSON_ID"
-        },
-
-
-        {
-            DestinationEntity: 'PersonPhone',
-            DestinationColumns: ['PhoneType', 'DateFrom' , 'DateTo','PersonNumber', 'CountryCodeNumber', 'AreaCode', 'PhoneNumber',  'Extension', 'LegislationCode', 'PrimaryFlag',   'SourceSystemOwner', 'SourceSystemId' ],
-            SourceColumns: ['Phone_Type', 'Date_From', 'Date_To', 'Person_Number', 'Country_Code_Number', 'AREA_CODE', 'Phone_Number', 'Extension', 'Legislation_Code', 'Primary_Flag', 'Source_System_Owner', 'Source_System_Id'],
-            SourceQuery: "SELECT pp.Phone_Type as PhoneType , pp.Date_From as DateFrom, pp.Date_To as DateTo, pp.Person_Number as PersonNumber, pp.Country_Code_Number as CountryCodeNumber, pp.AREA_CODE as AreaCode, pp.Phone_Number as PhoneNumber, pp.Extension as Extension, pp.Legislation_Code as LegislationCode, pp.Primary_Flag as PrimaryFlag, 'EBS' AS SourceSystemOwner," +
-            "'PERSON_PHONE'|| '_' || pp.PERSON_ID \"SourceSystemId\"" + " FROM PERSON_PHONE pp INNER JOIN PERSON p ON p.PERSON_ID = pp.PERSON_ID"
-          
-        },
-
+        DestinationColumns: ['SourceSystemOwner','SourceSystemId','EffectiveStartDate', 'EffectiveEndDate', 'PersonIdSourceSystemId','PersonNumber', 'LegislationCode', 'NameType',  'FirstName', 'MiddleNames', 'LastName',   'Title'],
+        SourceColumns: ['Source_System_Owner','Source_System_Id','Effective_Start_Date', 'Effective_End_Date', 'PersonIdSourceSystemId','PERSON_NUMBER', 'Legislation_Code', 'Name_Type', 'First_Name', 'Middle_Names', 'Last_Name','Title'],
+        SourceQuery: "SELECT pn.effective_start_date as effectivestartdate, pn.Effective_End_Date as EffectiveEndDate,"+"  P.PERSON_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\","+"pn. Person_Number as PersonNumber,pn. Legislation_Code as LegislationCode,'GLOBAL' as NameType, pn. First_Name as FirstName, pn. Middle_Names as MiddleNames," +
+        "pn. Last_Name as LastName, pn.title as Title, 'EBS' AS SourceSystemOwner," + "P.PERSON_NUMBER || '_' || 'PERSON_NAME'  \"SOURCESYSTEMID\"" + " FROM PERSON_NAME pn INNER JOIN PERSON p on p.PERSON_ID = pn.PERSON_ID"
+    
+    },
 
     {
         DestinationEntity: "PersonLegislativeData",
-        DestinationColumns: ['PersonNumber', 'EffectiveStartDate', 'EffectiveEndDate', 'LegislationCode', 'HighestEducationLevel', 'MaritalStatus', 'Sex', 'MaritalStatusDate', 'SourceSystemOwner', 'SourceSystemId'],
-        SourceColumns: ['PERSON_NUMBER','EFFECTIVE_START_DATE','EFFECTIVE_END_DATE','Legislation_Code','Highest_Education_Level','Marital_Status','Sex','Marital_Status_Date','SOURCE_SYSTEM_OWNER','SOURCE_SYSTEM_ID'], 
-        SourceQuery: "SELECT  PLI.PERSON_NUMBER AS PersonNumber,PLI.EFFECTIVE_START_DATE AS EffectiveStartDate,PLI.EFFECTIVE_END_DATE AS EffectiveEndDate,PLI.Legislation_Code AS " +
+        DestinationColumns: [ 'SourceSystemOwner', 'SourceSystemId','EffectiveStartDate', 'EffectiveEndDate', 'PersonIdSourceSystemId','LegislationCode', 'HighestEducationLevel', 'MaritalStatus', 'MaritalStatusDate', 'Sex', 'PersonNumber' ],
+        SourceColumns: ['SOURCE_SYSTEM_OWNER','SOURCE_SYSTEM_ID','EFFECTIVE_START_DATE','EFFECTIVE_END_DATE','PersonIdSourceSystemId','Legislation_Code','Highest_Education_Level','Marital_Status','Marital_Status_Date','Sex','PERSON_NUMBER'], 
+        SourceQuery: "SELECT  PLI.PERSON_NUMBER AS PersonNumber,PLI.EFFECTIVE_START_DATE AS EffectiveStartDate,PLI.EFFECTIVE_END_DATE AS EffectiveEndDate,"+" PLI.PERSON_NUMBER  || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\""+",PLI.Legislation_Code AS " +
             "LegislationCode,PLI.Highest_Education_Level AS HighestEducationLevel,PLI.Marital_Status AS MaritalStatus, PLI.Sex, PLI.Marital_Status_Date AS MaritalStatusDate,'EBS' AS SourceSystemOwner," +
-            "'PERSON_LEGISLATIVE_DATA' || '_' || PLI.PERSON_ID  \"SOURCESYSTEMID\"" +
+            " PLI.PERSON_NUMBER || '_' || 'PERSON_LEGISLATIVE_DATA'  \"SOURCESYSTEMID\"" +
             " FROM PERSON_LEGISLATIVE_INFO PLI INNER JOIN PERSON P ON PLI.PERSON_ID = P.PERSON_ID"
-    }
+    },
+
+
+    {
+        DestinationEntity: "WorkRelationship",
+        DestinationColumns: ['SourceSystemOwner','SourceSystemId', 'LegalEmployerName', 'DateStart','ActionCode','PrimaryFlag','WorkerType','PersonIdSourceSystemId'],
+        SourceColumns: ['Source_System_Owner','Source_System_Id', 'Legal_Employer_Name', 'Date_Start','Action_Code','Primary_Flag','Worker_Type','PersonIdSourceSystemId'],
+        SourceQuery: "select Source_System_Owner as SourceSystemOwner," +" PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'   \"SOURCESYSTEMID\"," + 
+        "Legal_Employer_Name as LegalEmployerName, Date_Start as DateStart, Action_Code as ActionCode, Primary_Flag as PrimaryFlag, Worker_Type as WorkerType," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\""
+        + " FROM WORK_RELATIONSHIP "
+         
+    },
+
+
+    {
+        DestinationEntity: "WorkTerms",
+        DestinationColumns: ['ActionCode','SourceSystemOwner','SourceSystemId','AssignmentName','AssignmentType','AssignmentNumber','AssignmentStatusTypeCode','EffectiveEndDate','EffectiveLatestChange','EffectiveSequence','EffectiveStartDate','SystemPersonType','BusinessUnitShortCode','LegalEmployerName','PersonIdSourceSystemId','PosIdSourceSystemId'],
+        SourceColumns: ['Action_Code','Source_System_Owner','Source_System_Id','Assignment_Name','Assignment_Type','Assignment_Number','Assignment_Status_Type_Code','Effective_End_Date','Effective_Latest_Change','Effective_Sequence','Effective_Start_Date','System_Person_Type','Business_Unit_Short_Code','Legal_Employer_Name','PersonIdSourceSystemId','PosIdSourceSystemId'],
+        SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ETERM' \"SOURCESYSTEMID\"" + ",Assignment_Name as AssignmentName,Assignment_Type as AssignmentType," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
+        + ", Assignment_Status_Type_Code as AssignmentStatusTypeCode, Effective_End_Date as EffectiveEndDate, Effective_Latest_Change as EffectiveLatestChange, Effective_Sequence as EffectiveSequence, Effective_Start_Date as EffectiveStartDate," 
+        + " System_Person_Type as SystemPersonType, Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer_Name as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ", PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\"" +
+        " FROM WORK_TERMS "
+    
+   
+    },
+    
+    {     DestinationEntity: "Assignment",
+    DestinationColumns: ['ActionCode','SourceSystemOwner','SourceSystemId','EffectiveStartDate','EffectiveEndDate','EffectiveSequence','EffectiveLatestChange','AssignmentType','AssignmentName','AssignmentNumber','AssignmentStatusTypeCode','BusinessUnitShortCode','LegalEmployerName','PosIdSourceSystemId','PersonIdSourceSystemId','PersonTypeCode','PrimaryFlag','SystemPersonType','WtaIdSourceSystemId','JobCode','DepartmentName','LocationCode'],
+    SourceColumns: ['Action_Code','Source_System_Owner','Source_System_Id','Effective_Start_Date','Effective_End_Date','Effective_Sequence','Effective_Latest_Change','Assignment_Type','Assignment_Name','Assignment_Number','Assignment_Status_Type_Code','Business_Unit_Short_Code','Legal_Employer','PosIdSourceSystemId','PersonIdSourceSystemId','Person_Type_Code','Primary_Flag','System_Person_Type','WtaIdSourceSystemId','Job_Code','Department_Name','Location_Code'],
+    SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"" + ",Effective_Start_Date as EffectiveStartDate,Effective_End_Date as EffectiveEndDate, Effective_Sequence as EffectiveSequence,"
+    + "Effective_Latest_Change as EffectiveLatestChange, Assignment_Type as AssignmentType,Assignment_Name as AssignmentName," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\"" 
+    + ",Assignment_Status_Type_Code as AssignmentStatusTypeCode,Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\"" 
+    + ", PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ",Person_Type_Code as PersonTypeCode, Primary_Flag as PrimaryFlag, System_Person_Type as SystemPersonType,"
+    + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",Job_Code as JobCode, Department_Name as DepartmentName, Location_Code as LocationCode " + " FROM ASSIGNMENTS_DEMO "
+
+}
+
+    // {
+    //     DestinationEntity: "PersonNationalIdentifier",
+    //     DestinationColumns: ['PersonNumber', 'LegislationCode', 'IssueDate', 'ExpirationDate', 'PlaceOfIssue', 'NationalIdentifierType', 'NationalIdentifierNumber', 'PrimaryFlag', 'SourceSystemOwner', 'SourceSystemId'],
+    //     SourceColumns: ['PERSON_NUMBER','Legislation_Code','Issue_Date','Expiration_Date','Place_Of_Issue','National_Identifier_Type','National_Identifier_Number','Primary_Flag','SOURCE_SYSTEM_OWNER','SOURCE_SYSTEM_ID'], 
+    //     SourceQuery: "select pni.PERSON_NUMBER as PersonNumber ,pni.Legislation_Code as LegislationCode ,pni.Issue_Date as IssueDate,pni.Expiration_Date as  ExpirationDate,pni.Place_Of_Issue as PlaceOfIssue,pni.National_Identifier_Type as NationalIdentifierType, pni.National_Identifier_Number as NationalIdentifierNumber, pni.Primary_Flag as PrimaryFlag, 'EBS' as SourceSystemOwner," +
+    //     "'PERSON_NATIONAL_IDENTIFIER' || '_' || pni.PERSON_ID \"SOURCESYSTEMID\"" + " FROM person_national_identifier pni inner join person p on p.person_id = pni.person_id"
+         
+    // },
+
+    
+    //     {
+    //         DestinationEntity: 'PersonPhone',
+    //         DestinationColumns: ['PhoneType', 'DateFrom' , 'DateTo','PersonNumber', 'CountryCodeNumber', 'AreaCode', 'PhoneNumber',  'Extension', 'LegislationCode', 'PrimaryFlag',   'SourceSystemOwner', 'SourceSystemId' ],
+    //         SourceColumns: ['Phone_Type', 'Date_From', 'Date_To', 'Person_Number', 'Country_Code_Number', 'AREA_CODE', 'Phone_Number', 'Extension', 'Legislation_Code', 'Primary_Flag', 'Source_System_Owner', 'Source_System_Id'],
+    //         SourceQuery: "SELECT pp.Phone_Type as PhoneType , pp.Date_From as DateFrom, pp.Date_To as DateTo, pp.Person_Number as PersonNumber, pp.Country_Code_Number as CountryCodeNumber, pp.AREA_CODE as AreaCode, pp.Phone_Number as PhoneNumber, pp.Extension as Extension, pp.Legislation_Code as LegislationCode, pp.Primary_Flag as PrimaryFlag, 'EBS' AS SourceSystemOwner," +
+    //         "'PERSON_PHONE'|| '_' || pp.PERSON_ID \"SourceSystemId\"" + " FROM PERSON_PHONE pp INNER JOIN PERSON p ON p.PERSON_ID = pp.PERSON_ID"
+          
+    //     },
+
+
+    
 
 
 
@@ -85,13 +117,30 @@ class HdlController {
 
 
                 var result = await Database.connection('oracledb').raw(rule.SourceQuery);
+                console.log(rule.SourceQuery);
                 console.log(result);
                
 
                 for (var j = 0; j < rule.DestinationColumns.length; j++) {
-                    metadataline = metadataline + "|" + rule.DestinationColumns[j]  
+                    if(rule.DestinationColumns[j] === 'PersonIdSourceSystemId'){
+                        metadataline = metadataline + "|" + "PersonId(SourceSystemId)"
+                    }else
+                        if(rule.DestinationColumns[j] === 'PosIdSourceSystemId'){
+                            metadataline = metadataline + "|" + "PeriodOfServiceId(SourceSystemId)"   
+                        }
+
+                     else
+                     if(rule.DestinationColumns[j] === 'WtaIdSourceSystemId'){
+                        metadataline = metadataline + "|" + "WorkTermsAssignmentId(SourceSystemId)"   
+                    }
+                    else{
+                        metadataline = metadataline + "|" + rule.DestinationColumns[j] 
+                    }
+                   
+                     
                     
                 }
+                
                     var mergelines = [];
 
                     for (var row = 0; row < result.length; row++) {
@@ -163,22 +212,30 @@ class HdlController {
 
                             }
                         }
-
                         function convert5(){
-                            if (result[row].DATEFROM == null) {
-                                result[row].DATEFROM = null
+                            if (result[row].STARTDATE == null ) {
+                                result[row].STARTDATE = null
                             } else {
-                                var c5 = moment(result[row].DATEFROM).format('YYYY/MM/DD');
-                                result[row].DATEFROM = c5;
+                                var c5 = moment(result[row].STARTDATE).format('YYYY/MM/DD');
+                                result[row].STARTDATE = c5;
                             }
                         }
 
                         function convert6(){
+                            if (result[row].DATESTART == null) {
+                                result[row].DATESTART = null
+                            } else {
+                                var c6 = moment(result[row].DATESTART).format('YYYY/MM/DD');
+                                result[row].DATESTART = c6;
+                            }
+                        }
+
+                        function convert7(){
                             if (result[row].DATETO == null ) {
                                 result[row].DATETO = null
                             } else {
                                 var c6 = moment(result[row].DATETO).format('YYYY/MM/DD');
-                                result[row].DATETO = c6;
+                                result[row].DATETO = c7;
                             }
                         }
                        
@@ -191,12 +248,13 @@ class HdlController {
                         convert4();
                         convert5();
                         convert6();
+                        // convert7();
                         
     
                         var newmergeline = mergeline;
                         if (rowData.length == rule.DestinationColumns.length) {
                             for (var j = 0; j < rowData.length; j++) {
-                                if(result[row][rule.DestinationColumns[j].toUpperCase()] == null){
+                                if(result[row][rule.DestinationColumns[j].toUpperCase()]=== null){
                                     newmergeline = newmergeline + "|"
                                 }
                                 else
@@ -257,8 +315,8 @@ class HdlController {
         var HDLEntries = convertStatus.data
 
         var projectname = "Worker"
-        var fileloc = 'public/hdls/' + projectname + '.dat';
-        var filepath = '/hdls/' + projectname + '.dat';
+        var fileloc = 'public/hdls/' + projectname +'.dat';
+        var filepath = '/hdls/' + projectname +'.dat';
 
 
         try {
