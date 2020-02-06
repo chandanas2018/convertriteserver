@@ -19,9 +19,9 @@ class DatamappingController {
         catch (error) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: error });
         }
-        finally{
-            Database.close(['oracledb']);
-          }
+        // finally{
+        //     Database.close(['oracledb']);
+        //   }
     }
 
 
@@ -69,9 +69,9 @@ class DatamappingController {
             console.log(error);
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the data', err: error });
         }
-        finally{
-            Database.close(['oracledb']);
-          }
+        // finally{
+        //     Database.close(['oracledb']);
+        //   }
     }
 
 
@@ -100,9 +100,9 @@ class DatamappingController {
             console.log(error)
             response.status(400).send({ success: false, data: null, msg: 'Successfully get the list', error: err });
         }
-        finally{
-            Database.close(['oracledb']);
-          }
+        // finally{
+        //     Database.close(['oracledb']);
+        //   }
     }
 
 
@@ -141,9 +141,9 @@ class DatamappingController {
         catch (error) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while inserting the data', error: err });
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
@@ -159,9 +159,9 @@ class DatamappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while getting the fields', error: err });
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
     }
 
     //to delete individual data mappings
@@ -181,9 +181,9 @@ class DatamappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while deleting the fields', error: err });
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
@@ -218,9 +218,9 @@ class DatamappingController {
             console.log(err);
             return response.status(400).send({ success: false, data: null, msg: 'Error while deleting the fields', error: err });
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
@@ -229,8 +229,8 @@ class DatamappingController {
         try {
             var data1 = [];
             var data = request.body;
-            let mappings = await Database.connection('oracledb').select('DISPLAY_NAME', 'SOURCE_COLUMN_NAME', 'DESTINATION_COLUMN_NAME').where('SOURCE_ENTITY_ID', data.entityid)
-                .from('PROJ_COLUMN_MAPPING');
+            let mappings = await Database.connection('oracledb').select('DISPLAY_NAME', 'SOURCE_COLUMN_NAME', 'DESTINATION_COLUMN_NAME').from('PROJ_COLUMN_MAPPING')
+                            .where('SOURCE_ENTITY_ID', data.entityid);
             console.log(mappings);
             let qry1 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', data.entityid);
             console.log(qry1);
@@ -239,7 +239,7 @@ class DatamappingController {
                 let qry2 = await Database.connection('oracledb').select('DEST_DATA_NAME').from(mappings[i].DESTINATION_COLUMN_NAME);
                 console.log(qry2);
                 let qry3 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + qry1[0].ENTITY_NAME);
-                console.log(qry3);
+                console.log(qry3); 
 
                 var mappeddata = {
                     sourcecolumnname: mappings[i].SOURCE_COLUMN_NAME,
@@ -257,9 +257,9 @@ class DatamappingController {
             console.log(err);
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: err });
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
@@ -308,9 +308,9 @@ class DatamappingController {
             console.log(err);
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: err });
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
     }
 
 

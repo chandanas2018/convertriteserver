@@ -72,6 +72,7 @@ Route.group(() =>
  //for testing ebs controller methods 
  Route.get('/ebsdata','EbsController.datamigration')
  Route.get('/csv', 'Ebscontroller.csvFile')
+ Route.get('/api/EbsExtracts','ExtractsController.ExtractByEntity')
 
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 

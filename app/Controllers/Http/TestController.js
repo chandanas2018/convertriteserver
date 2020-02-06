@@ -168,9 +168,9 @@ class TestController {
           console.log(err);
           return response.status(400).send({success:false, data:null, msg:'failure', err:error });
         }
-        finally{
-          Database.close(['oracledb']);
-      }
+      //   finally{
+      //     Database.close(['oracledb']);
+      // }
    
     }
 

@@ -157,7 +157,7 @@ class FileController {
 
             }
             finally{
-                Database.close(['oracledb']);
+               // Database.close(['oracledb']);
             }
 
         }

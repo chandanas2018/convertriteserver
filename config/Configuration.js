@@ -85,6 +85,39 @@ class Configuration {
                   console.log("No criteria matched for fetching fields!")  
           }
     }
+
+    async getEbsQueryByEntityAsync(entity){
+        var LocationQuery = "SELECT DISTINCT hlat.location_id As LocationId,hlat.location_code As LocationCode,hlat.description As LocationName,hlat.description As Description,"
+        + "hlit.active_inactive_flag As ActiveStatus,to_char(hla.creation_date,'YYYY/MM/DD') As EffectiveStartDate,hla.address_line_1 As AddressLine1,hla.address_line_2 As"
+        + " AddressLine2,hla.country As Country,hla.postal_code As PostalCode,hla.region_1 As Region1,hla.region_2 As Region2,hla.town_or_city As TownOrCity "
+        + "FROM apps.hr_locations_all_tl hlat,apps.hr_locations_all hla,apps.hr_location_info_types hlit,apps.HR_LOCATION_EXTRA_INFO hlei"
+        + " WHERE hlat.location_id = hla.location_id  AND hla.location_id = hlei.location_id AND hlei.information_type = hlit.information_type"
+
+        var JobsQuery = "SELECT b.job_id As JobCode, TO_CHAR(b.date_from,'YYYY/MM/DD') As EffectiveStartDate, t.name as Name "+
+                        "FROM apps.per_jobs b,apps.per_jobs_tl t WHERE t.job_id = b.job_id AND t.language = 'US'";
+        var OrganizationQuery = "SELECT TO_CHAR(o.DATE_FROM,'YYYY/MM/DD') As EffectiveStartDate,otl.organization_id,otl.name as Name " +
+                                "FROM apps.hr_all_organization_units o,apps.hr_all_organization_units_tl otl WHERE 1=1 "+
+                                "AND o.organization_id = otl.organization_id AND otl.language = 'US' AND TYPE ='DEP'";
+        switch(entity){
+            case "Location":
+                return new Promise((resolve,reject)=>{
+                    resolve(LocationQuery);
+                });
+                break;
+            case "Jobs":
+                return new Promise((resolve,reject)=>{
+                    resolve(JobsQuery);
+                });
+                break;
+            case "Organization":
+                return new Promise((resolve,reject)=>{
+                    resolve(OrganizationQuery);
+                });
+                break;
+            default:
+                console.log("No case matched");
+        }
+    }
 }
 
 module.exports = new Configuration();
