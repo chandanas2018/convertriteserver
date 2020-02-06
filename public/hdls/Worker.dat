@@ -1,23 +1,24 @@
-METADATA|Worker|EffectiveStartDate|EffectiveEndDate|PersonNumber|BloodType|CorrespondenceLanguage|DateOfBirth|DateOfDeath|CountryOfBirth|RegionOfBirth|TownOfBirth|PersonDuplicateCheck|SourceSystemOwner|ActionCode|SourceSystemId
-MERGE|Worker|1994/12/10|4712/12/31|160675|||1970/08/10||||||EBS|HIRE|PERSON_4
-MERGE|Worker|1994/12/15|4712/12/31|160674|||1970/08/20||||||EBS|HIRE|PERSON_3
-MERGE|Worker|1994/12/20|4712/12/31|160673|||1970/08/04||||||EBS|HIRE|PERSON_2
+METADATA|Worker|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|PersonNumber|StartDate|DateOfBirth|ActionCode
+MERGE|Worker|EBS|4_PERSON|1994/12/14|4712/12/31|4|1994/12/14|1960/12/12|HIRE
+MERGE|Worker|EBS|8_PERSON|1995/01/01|4712/12/31|8|1995/01/01|1959/07/12|HIRE
 
-METADATA|PersonNationalIdentifier|PersonNumber|LegislationCode|IssueDate|ExpirationDate|PlaceOfIssue|NationalIdentifierType|NationalIdentifierNumber|PrimaryFlag|SourceSystemOwner|SourceSystemId
-MERGE|PersonNationalIdentifier|2|US|||||122-22-9876||EBS|PERSON_NATIONAL_IDENTIFIER_3
-MERGE|PersonNationalIdentifier|3|US|||||335-45-2938||EBS|PERSON_NATIONAL_IDENTIFIER_4
-MERGE|PersonNationalIdentifier|1|US|||||232-23-1234||EBS|PERSON_NATIONAL_IDENTIFIER_2
+METADATA|PersonName|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|PersonId(SourceSystemId)|PersonNumber|LegislationCode|NameType|FirstName|MiddleNames|LastName|Title
+MERGE|PersonName|EBS|4_PERSON_NAME|1994/12/14|4712/12/31|4_PERSON|4|US|GLOBAL|Kenneth||Walker|
+MERGE|PersonName|EBS|8_PERSON_NAME|1995/01/01|4712/12/31|8_PERSON|8|US|GLOBAL|Timothy|Peter|Connors|
 
-METADATA|PersonName|EffectiveStartDate|EffectiveEndDate|PersonNumber|LegislationCode|NameType|FirstName|MiddleNames|LastName|Honors|KnownAs|PreNameAdjunct|MilitaryRank|PreviousLastName|Suffix|Title|CharSetContext|SourceSystemOwner|SourceSystemId|NameInformation1|NameInformation2|NameInformation3|NameInformation4|NameInformation5|NameInformation6|NameInformation7|NameInformation8|NameInformation9|NameInformation10|NameInformation11|NameInformation12|NameInformation13|NameInformation14|NameInformation15|NameInformation16|NameInformation17|NameInformation18|NameInformation19|NameInformation20|NameInformation21|NameInformation22|NameInformation23|NameInformation24|NameInformation25|NameInformation26|NameInformation27|NameInformation28|NameInformation29|NameInformation30
-MERGE|PersonName|1994/12/10|4712/12/31|160675|US||DAM||ROSE||DAMRO|||||||EBS|PERSON_NAME_4||||||||||||||||||||||||||||||
-MERGE|PersonName|1994/12/20|4712/12/31|160673|US||KARL||MARX||KARL|||||||EBS|PERSON_NAME_2||||||||||||||||||||||||||||||
-MERGE|PersonName|1994/12/15|4712/12/31|160674|US||KENEDY||JONES||JONES|||||||EBS|PERSON_NAME_3||||||||||||||||||||||||||||||
+METADATA|PersonLegislativeData|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|PersonId(SourceSystemId)|LegislationCode|HighestEducationLevel|MaritalStatus|MaritalStatusDate|Sex|PersonNumber
+MERGE|PersonLegislativeData|EBS|4_PERSON_LEGISLATIVE_DATA|1994/12/14|4712/12/31|4_PERSON|US||M|||4
+MERGE|PersonLegislativeData|EBS|8_PERSON_LEGISLATIVE_DATA|1995/01/01|4712/12/31|8_PERSON|US||M|||8
 
-METADATA|PersonPhone|PhoneType|DateFrom|DateTo|PersonNumber|CountryCodeNumber|AreaCode|PhoneNumber|Extension|LegislationCode|PrimaryFlag|SourceSystemOwner|SourceSystemId
-MERGE|PersonPhone|W1|1995/01/01||3|||312.555.4600||||EBS|
+METADATA|WorkRelationship|SourceSystemOwner|SourceSystemId|LegalEmployerName|DateStart|ActionCode|PrimaryFlag|WorkerType|PersonId(SourceSystemId)
+MERGE|WorkRelationship|EBS|4_PERIOD_OF_SERVICE|R Services, R.S.|1995/01/01|HIRE|Y|E|4_PERSON
+MERGE|WorkRelationship|EBS|8_PERIOD_OF_SERVICE|Evosys Newbury.|1994/12/14|HIRE|Y|E|8_PERSON
 
-METADATA|PersonLegislativeData|PersonNumber|EffectiveStartDate|EffectiveEndDate|LegislationCode|HighestEducationLevel|MaritalStatus|Sex|MaritalStatusDate|SourceSystemOwner|SourceSystemId
-MERGE|PersonLegislativeData|160675|1994/12/10|4712/12/31|US||M|||EBS|PERSON_LEGISLATIVE_DATA_4
-MERGE|PersonLegislativeData|160673|1994/12/20|4712/12/31|US||M|||EBS|PERSON_LEGISLATIVE_DATA_2
-MERGE|PersonLegislativeData|160674|1994/12/15|4712/12/31|US||M|||EBS|PERSON_LEGISLATIVE_DATA_3
+METADATA|WorkTerms|ActionCode|SourceSystemOwner|SourceSystemId|AssignmentName|AssignmentType|AssignmentNumber|AssignmentStatusTypeCode|EffectiveEndDate|EffectiveLatestChange|EffectiveSequence|EffectiveStartDate|SystemPersonType|BusinessUnitShortCode|LegalEmployerName|PersonId(SourceSystemId)|PeriodOfServiceId(SourceSystemId)
+MERGE|WorkTerms|HIRE|EBS|4_ETERM|ET1|ET|ET14|ACTIVE_PROCESS|4712/12/31|Y|1|1999/12/30|EMP|R Services BU|R Services, R.S.|4_PERSON|4_PERIOD_OF_SERVICE
+MERGE|WorkTerms|HIRE|EBS|8_ETERM|ET2|ET|ET28|ACTIVE_PROCESS|4712/12/31|Y|1|2001/01/19|EMP|Newbury US|Evosys Newbury.|8_PERSON|8_PERIOD_OF_SERVICE
+
+METADATA|Assignment|ActionCode|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|EffectiveSequence|EffectiveLatestChange|AssignmentType|AssignmentName|AssignmentNumber|AssignmentStatusTypeCode|BusinessUnitShortCode|LegalEmployerName|PeriodOfServiceId(SourceSystemId)|PersonId(SourceSystemId)|PersonTypeCode|PrimaryFlag|SystemPersonType|WorkTermsAssignmentId(SourceSystemId)|JobCode|DepartmentName|LocationCode
+MERGE|Assignment|HIRE|EBS|4_ASG|2000/08/29|4712/12/31|1|Y|E|E1|E14|ACTIVE_PROCESS|R Services BU|R Services, R.S.|4_PERIOD_OF_SERVICE|4_PERSON|Employee|Y|EMP|4_ETERM|Analyst|AB Department|CUU
+MERGE|Assignment|HIRE|EBS|8_ASG|1999/09/30|4712/12/31|1|Y|E|E2|E28|ACTIVE_PROCESS|Newbury US|Evosys Newbury|8_PERIOD_OF_SERVICE|8_PERSON|Employee|Y|EMP|8_ETERM|Senior Analyst|Store Operations|CUU
 

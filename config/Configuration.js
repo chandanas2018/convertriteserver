@@ -22,8 +22,6 @@ class Configuration {
                 }
             }
 
-
-
             // for(var i = 0; i < allKeys.length ; i++){
             //     if(allKeys[i] == key){
             //         retObj = appConfig[key];
