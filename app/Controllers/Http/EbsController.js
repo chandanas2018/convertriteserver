@@ -62,8 +62,6 @@ class EbsController {
 
     async dataForCSV(entity){
         try{
-            // var y = await this.datamigration.qry1;
-            // console.log(y);
             var qry = await config.getQueryByEntityAsync(entity);
             console.log(qry);
             var qry1 = await Database.connection('oracledb').raw(qry)
@@ -74,7 +72,7 @@ class EbsController {
             console.log(error);
         }
         finally{
-          //Database.close(['oracledb']);
+        //   Database.close(['oracledb']);
           console.log('hello');
         }
     }
@@ -124,8 +122,6 @@ class EbsController {
         //   writer.pipe(fs.createWriteStream(csvFilename))
         //   writer.write(csv)
         //   writer.end()
-
-        
             
         }).catch(err => {
             console.error(err);
@@ -140,6 +136,22 @@ class EbsController {
         }
     }
 
+
+    async dataLoading({request,response,error}){
+        try{
+            var result = await Database.connection('oracledb').raw("DECLARE p_directory   VARCHAR2(200);"+
+            " p_export      VARCHAR2(200);"+ "l_msg         VARCHAR2(200);"+
+        "BEGIN import_person_file('RT_DATA_UPLOAD', 'person_name_demo.csv', l_msg);" +
+         "END;")
+            console.log(result);
+            return response.status(200).send({success:true, data:result, msg:"Data loaded successfully", error:null});
+        }
+        catch(error){
+            console.log(error);
+            return response.status(400).send({success:false, data:null, msg:"Data loaded successfully", error:error});
+        }
+        
+    }
 
 }
 
