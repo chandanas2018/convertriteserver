@@ -73,6 +73,9 @@ Route.group(() =>
  Route.get('/ebsdata','EbsController.datamigration')
  Route.get('/csv', 'Ebscontroller.csvFile')
  Route.get('/data/loading','Ebscontroller.dataLoading')
+ 
+ //SetUpDataController
+ Route.get('/api/vi/GetSetupData','SetupDataController.GetDataForSetupByEntity')
 
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 
