@@ -83,13 +83,23 @@ class DatamappingController {
     async masterdataList({ request, response, error }) {
         try {
             var data1 = request.body;
-            //to get the source data for source column mapped value
+           
             //first to get the entity name from entityid 
-            let entityname = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST')
-                .where('ENTITY_ID', data1.data.SOURCE_ENTITY_ID);
-            console.log(entityname);
-            let sourcedata = await Database.connection('oracledb').raw('SELECT DISTINCT ' + data1.data.SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME  from ' + entityname[0].ENTITY_NAME +  ' where ' +  data1.data.SOURCE_COLUMN_NAME + ' IS NOT NULL ');
-            console.log(sourcedata);
+            // let entityname = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST')
+            //     .where('ENTITY_ID', data1.data.SOURCE_ENTITY_ID);
+            // console.log(entityname);
+            // let sourcedata = await Database.connection('oracledb').raw('SELECT DISTINCT ' + data1.data.SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME  from ' + entityname[0].ENTITY_NAME +  ' where ' +  data1.data.SOURCE_COLUMN_NAME + ' IS NOT NULL ');
+            // console.log(sourcedata);
+
+
+             //to get the source data for source column mapped value
+             let sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT flv.lookup_code as lookupcode, flv.lookup_type as lookuptype, flv.meaning as lookupmeaning " 
+             + " FROM APPS.fnd_lookup_values flv, APPS.fnd_lookup_types flt " + ' WHERE flt.LOOKUP_TYPE = ' + "'" + data1.data.SOURCE_COLUMN_NAME + "'"
+             +  " and flt.lookup_type = flv.lookup_type and flv.language ='US'")
+              console.log(sourcedata);
+
+
+
             //to get the destination mapping data for dest mapped column
             let destinationdata = await Database.connection('oracledb').select('*').from(data1.data.DESTINATION_COLUMN_NAME)
             console.log(destinationdata);

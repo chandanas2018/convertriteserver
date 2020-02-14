@@ -156,9 +156,9 @@ class FileController {
                 return response.status(200).send({ success: false, data: null, message: 'Error while inserting data', error: error });
 
             }
-            finally{
-               // Database.close(['oracledb']);
-            }
+            // finally{
+            //    // Database.close(['oracledb']);
+            // }
 
         }
 

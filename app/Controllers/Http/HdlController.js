@@ -112,10 +112,6 @@ class HdlController {
 
                 var noDataPresent = false;
 
-               
-
-
-
                 var result = await Database.connection('oracledb').raw(rule.SourceQuery);
                 console.log(rule.SourceQuery);
                 console.log(result);
@@ -136,9 +132,7 @@ class HdlController {
                     else{
                         metadataline = metadataline + "|" + rule.DestinationColumns[j] 
                     }
-                   
-                     
-                    
+                  
                 }
                 
                     var mergelines = [];
@@ -212,6 +206,7 @@ class HdlController {
 
                             }
                         }
+                        
                         function convert5(){
                             if (result[row].STARTDATE == null ) {
                                 result[row].STARTDATE = null
@@ -300,9 +295,9 @@ class HdlController {
             console.log(err);
             return { data: null, error: err }
         }
-        finally{
-            Database.close(['oracledb']);
-          }
+        // finally{
+        //     Database.close(['oracledb']);
+        //   }
     }
 
     async download({ request, response, error }) {

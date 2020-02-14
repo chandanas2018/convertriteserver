@@ -97,7 +97,7 @@ class Configuration {
                                 "FROM apps.hr_all_organization_units o,apps.hr_all_organization_units_tl otl WHERE 1=1 "+
                                 "AND o.organization_id = otl.organization_id AND otl.language = 'US' AND TYPE ='DEP'";
         switch(entity){
-            case "Location":
+            case "Locations":
                 return new Promise((resolve,reject)=>{
                     resolve(LocationQuery);
                 });
