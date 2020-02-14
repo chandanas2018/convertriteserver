@@ -35,9 +35,9 @@ class ProjectController {
         catch(error){
             return response.status(400).send({success:false, data:null, msg:'Successfully created the project', err:error});
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
        
     }
 
@@ -57,9 +57,9 @@ class ProjectController {
         catch(error){
          return response.status(400).send({success:false, data:null, msg:'Error while getting the projects list', err:error});
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
 
         
     }
@@ -92,9 +92,9 @@ class ProjectController {
         catch(error){
             return response.status(400).send({success:false, data:null,msg:'Error while deleting projects', err:error});
         }
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
      
     }
      
@@ -112,9 +112,10 @@ class ProjectController {
             return response.status(400).send({success:false, data:null, msg:'Error while get the list', error:err});
         }
 
-        finally{
-            Database.close(['oracledb']);
-        }
+        // finally{
+            
+        //     Database.close(['oracledb']);
+        // }
      
 
         

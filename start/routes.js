@@ -73,7 +73,7 @@ Route.group(() =>
  Route.get('/ebsdata','EbsController.datamigration')
  Route.get('/csv', 'Ebscontroller.csvFile')
  Route.get('/data/loading','Ebscontroller.dataLoading')
-
-// Route.group(() => {
+ Route.get('/hdl/dataMappings','HdlController.hdlMappings')
+ // Route.group(() => {
 //  Route.post('login', 'LoginController') 
 // }).prefix('api')
