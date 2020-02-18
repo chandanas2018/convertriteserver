@@ -30,7 +30,7 @@ class EntitymappingController {
         try {
             var data = request.body;
             //select the source fields which having identification status is checked and column status is true
-            let qry = await Database.connection('oracledb').select('COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME')
+            let qry = await Database.connection('oracledb').select('COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME', 'IS_MANDATORY')
                 .from('PROJ_ENTITY_IDENTIFICATION').where({ 'ENTITY_ID': data.id, 'IDENTIFICATION_STATUS': 'CHECKED', 'COLUMN_STATUS': 'TRUE' });
             console.log(qry);
             return response.status(200).send({ success: true, data: qry, msg: 'Successfully get the entity  column list', err: null });

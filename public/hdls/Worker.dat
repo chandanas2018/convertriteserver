@@ -1,24 +1,72 @@
-METADATA|Worker|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|PersonNumber|StartDate|DateOfBirth|ActionCode
-MERGE|Worker|EBS|4_PERSON|1994/12/14|4712/12/31|4|1994/12/14|1960/12/12|HIRE
-MERGE|Worker|EBS|8_PERSON|1995/01/01|4712/12/31|8|1995/01/01|1959/07/12|HIRE
+METADATA|Worker|ActionCode|BloodType|DateOfBirth|EffectiveEndDate|EffectiveStartDate|PersonNumber|SourceSystemId|SourceSystemOwner|StartDate
+MERGE|Worker|HIRE|B+|27/11/1957||1997/05/01|83|83_PERSON|EBS|1997/05/01
+MERGE|Worker|HIRE|B-|13/03/1961||1998/02/01|86|86_PERSON|EBS|1997/05/23
+MERGE|Worker|HIRE|O+|04/06/1938||1991/10/30|87|87_PERSON|EBS|1991/10/30
+MERGE|Worker|HIRE|O-|24/01/1960||1991/10/30|88|88_PERSON|EBS|1991/10/30
+MERGE|Worker|HIRE|B-|12/05/1957||2002/03/01|89|89_PERSON|EBS|1991/12/11
+MERGE|Worker|HIRE|A+|11/12/1971||1998/05/29|90|90_PERSON|EBS|1991/12/11
+MERGE|Worker|HIRE|O-|09/11/1952||1991/12/11|91|91_PERSON|EBS|1991/12/11
+MERGE|Worker|HIRE|AB+|31/10/1966||1991/12/19|92|92_PERSON|EBS|1991/12/19
+MERGE|Worker|HIRE|B+|02/09/1955||1993/03/30|93|93_PERSON|EBS|1993/03/30
+MERGE|Worker|HIRE|B+|22/11/1972||1993/03/30|94|94_PERSON|EBS|1993/03/30
 
-METADATA|PersonName|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|PersonId(SourceSystemId)|PersonNumber|LegislationCode|NameType|FirstName|MiddleNames|LastName|Title
-MERGE|PersonName|EBS|4_PERSON_NAME|1994/12/14|4712/12/31|4_PERSON|4|US|GLOBAL|Kenneth||Walker|
-MERGE|PersonName|EBS|8_PERSON_NAME|1995/01/01|4712/12/31|8_PERSON|8|US|GLOBAL|Timothy|Peter|Connors|
+METADATA|PersonName|EffectiveEndDate|EffectiveStartDate|FirstName|LastName|LegislationCode|MiddleNames|NameType|PersonId(SourceSystemId)|PersonNumber|SourceSystemId|SourceSystemOwner|Title
+MERGE|PersonName||1997/05/01|Dinesh|Shah|US||GLOBAL|83_PERSON|83|83_PERSON_NAME|EBS|MR.
+MERGE|PersonName||1997/05/23|Brad|Goodwin|US||GLOBAL|86_PERSON|86|86_PERSON_NAME|EBS|MR.
+MERGE|PersonName||1991/10/30|Harvey|Thomas|US||GLOBAL|87_PERSON|87|87_PERSON_NAME|EBS|MR.
+MERGE|PersonName||1991/10/30|Inga|Lang|US|R|GLOBAL|88_PERSON|88|88_PERSON_NAME|EBS|MS.
+MERGE|PersonName||1991/12/11|Terence|Bennett|US|G|GLOBAL|89_PERSON|89|89_PERSON_NAME|EBS|MR.
+MERGE|PersonName||1991/12/11|Lisa|Palmieri|US|G|GLOBAL|90_PERSON|90|90_PERSON_NAME|EBS|MS.
+MERGE|PersonName||1991/12/11|Anthony|DiRenzo|US|T|GLOBAL|91_PERSON|91|91_PERSON_NAME|EBS|MR.
+MERGE|PersonName||1991/12/19|Nancy|Gallagher|US|S|GLOBAL|92_PERSON|92|92_PERSON_NAME|EBS|MS.
+MERGE|PersonName||1993/03/30|Lee|Park|US||GLOBAL|93_PERSON|93|93_PERSON_NAME|EBS|MR.
+MERGE|PersonName||1993/03/30|Rhonda|Davis|US|C|GLOBAL|94_PERSON|94|94_PERSON_NAME|EBS|MS.
 
-METADATA|PersonLegislativeData|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|PersonId(SourceSystemId)|LegislationCode|HighestEducationLevel|MaritalStatus|MaritalStatusDate|Sex|PersonNumber
-MERGE|PersonLegislativeData|EBS|4_PERSON_LEGISLATIVE_DATA|1994/12/14|4712/12/31|4_PERSON|US||M|||4
-MERGE|PersonLegislativeData|EBS|8_PERSON_LEGISLATIVE_DATA|1995/01/01|4712/12/31|8_PERSON|US||M|||8
+METADATA|PersonLegislativeData|EffectiveEndDate|EffectiveStartDate|HighestEducationLevel|LegislationCode|MaritalStatus|MaritalStatusDate|PersonId(SourceSystemId)|PersonNumber|Sex|SourceSystemId|SourceSystemOwner
+MERGE|PersonLegislativeData||1997/05/01||US|||83_PERSON|83|M|83_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1997/05/01||US|||86_PERSON|86|M|86_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1991/10/30||US|||87_PERSON|87|M|87_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1991/10/30||US|||88_PERSON|88|F|88_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1991/12/11||US|||89_PERSON|89|M|89_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1991/12/11||US|||90_PERSON|90|F|90_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1991/12/11||US|||91_PERSON|91|M|91_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1991/12/19||US|||92_PERSON|92|F|92_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1993/03/30||US|||93_PERSON|93|M|93_PERSON_LEGISLATIVE_DATA|EBS
+MERGE|PersonLegislativeData||1993/03/30||US|||94_PERSON|94|F|94_PERSON_LEGISLATIVE_DATA|EBS
 
-METADATA|WorkRelationship|SourceSystemOwner|SourceSystemId|LegalEmployerName|DateStart|ActionCode|PrimaryFlag|WorkerType|PersonId(SourceSystemId)
-MERGE|WorkRelationship|EBS|4_PERIOD_OF_SERVICE|R Services, R.S.|1995/01/01|HIRE|Y|E|4_PERSON
-MERGE|WorkRelationship|EBS|8_PERIOD_OF_SERVICE|Evosys Newbury.|1994/12/14|HIRE|Y|E|8_PERSON
+METADATA|WorkRelationship|ActionCode|DateStart|LegalEmployerName|PersonId(SourceSystemId)|PrimaryFlag|SourceSystemId|SourceSystemOwner|WorkerType
+MERGE|WorkRelationship|HIRE|1997/05/01|Evosys Newbury|83_PERSON|Y|83_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1997/05/23|Evosys Newbury|86_PERSON|Y|86_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1991/10/30|Evosys Newbury|87_PERSON|Y|87_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1991/10/30|Evosys Newbury|88_PERSON|Y|88_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1991/12/11|Evosys Newbury|89_PERSON|Y|89_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1991/12/11|Evosys Newbury|90_PERSON|Y|90_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1991/12/11|Evosys Newbury|91_PERSON|Y|91_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1991/12/19|Evosys Newbury|92_PERSON|Y|92_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1993/03/30|Evosys Newbury|93_PERSON|Y|93_PERIOD_OF_SERVICE|EBS|E
+MERGE|WorkRelationship|HIRE|1993/03/30|Evosys Newbury|94_PERSON|Y|94_PERIOD_OF_SERVICE|EBS|E
 
-METADATA|WorkTerms|ActionCode|SourceSystemOwner|SourceSystemId|AssignmentName|AssignmentType|AssignmentNumber|AssignmentStatusTypeCode|EffectiveEndDate|EffectiveLatestChange|EffectiveSequence|EffectiveStartDate|SystemPersonType|BusinessUnitShortCode|LegalEmployerName|PersonId(SourceSystemId)|PeriodOfServiceId(SourceSystemId)
-MERGE|WorkTerms|HIRE|EBS|4_ETERM|ET1|ET|ET14|ACTIVE_PROCESS|4712/12/31|Y|1|1999/12/30|EMP|R Services BU|R Services, R.S.|4_PERSON|4_PERIOD_OF_SERVICE
-MERGE|WorkTerms|HIRE|EBS|8_ETERM|ET2|ET|ET28|ACTIVE_PROCESS|4712/12/31|Y|1|2001/01/19|EMP|Newbury US|Evosys Newbury.|8_PERSON|8_PERIOD_OF_SERVICE
+METADATA|WorkTerms|ActionCode|AssignmentName|AssignmentNumber|AssignmentStatusTypeCode|AssignmentType|BusinessUnitShortCode|EffectiveEndDate|EffectiveLatestChange|EffectiveSequence|EffectiveStartDate|LegalEmployerName|PersonId(SourceSystemId)|PeriodOfServiceId(SourceSystemId)|SourceSystemId|SourceSystemOwner|SystemPersonType
+MERGE|WorkTerms|HIRE||83|ACTIVE_PROCESS|ET|Newbury US||Y|1|1997/05/01|Evosys Newbury|83_PERSON|83_PERIOD_OF_SERVICE|83_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||86|ACTIVE_PROCESS|ET|Newbury US||Y|1|1997/05/23|Evosys Newbury|86_PERSON|86_PERIOD_OF_SERVICE|86_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||87|ACTIVE_PROCESS|ET|Newbury US||Y|1|1991/10/30|Evosys Newbury|87_PERSON|87_PERIOD_OF_SERVICE|87_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||88|ACTIVE_PROCESS|ET|Newbury US||Y|1|1991/10/30|Evosys Newbury|88_PERSON|88_PERIOD_OF_SERVICE|88_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||89|ACTIVE_PROCESS|ET|Newbury US||Y|1|1991/12/11|Evosys Newbury|89_PERSON|89_PERIOD_OF_SERVICE|89_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||90|ACTIVE_PROCESS|ET|Newbury US||Y|1|1991/12/11|Evosys Newbury|90_PERSON|90_PERIOD_OF_SERVICE|90_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||91|ACTIVE_PROCESS|ET|Newbury US||Y|1|1991/12/11|Evosys Newbury|91_PERSON|91_PERIOD_OF_SERVICE|91_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||92|ACTIVE_PROCESS|ET|Newbury US||Y|1|1991/12/19|Evosys Newbury|92_PERSON|92_PERIOD_OF_SERVICE|92_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||93|ACTIVE_PROCESS|ET|Newbury US||Y|1|1993/03/30|Evosys Newbury|93_PERSON|93_PERIOD_OF_SERVICE|93_ETERM|EBS|EMP
+MERGE|WorkTerms|HIRE||94|ACTIVE_PROCESS|ET|Newbury US||Y|1|1993/03/30|Evosys Newbury|94_PERSON|94_PERIOD_OF_SERVICE|94_ETERM|EBS|EMP
 
-METADATA|Assignment|ActionCode|SourceSystemOwner|SourceSystemId|EffectiveStartDate|EffectiveEndDate|EffectiveSequence|EffectiveLatestChange|AssignmentType|AssignmentName|AssignmentNumber|AssignmentStatusTypeCode|BusinessUnitShortCode|LegalEmployerName|PeriodOfServiceId(SourceSystemId)|PersonId(SourceSystemId)|PersonTypeCode|PrimaryFlag|SystemPersonType|WorkTermsAssignmentId(SourceSystemId)|JobCode|DepartmentName|LocationCode
-MERGE|Assignment|HIRE|EBS|4_ASG|2000/08/29|4712/12/31|1|Y|E|E1|E14|ACTIVE_PROCESS|R Services BU|R Services, R.S.|4_PERIOD_OF_SERVICE|4_PERSON|Employee|Y|EMP|4_ETERM|Analyst|AB Department|CUU
-MERGE|Assignment|HIRE|EBS|8_ASG|1999/09/30|4712/12/31|1|Y|E|E2|E28|ACTIVE_PROCESS|Newbury US|Evosys Newbury|8_PERIOD_OF_SERVICE|8_PERSON|Employee|Y|EMP|8_ETERM|Senior Analyst|Store Operations|CUU
+METADATA|Assignment|ActionCode|AssignmentName|AssignmentNumber|AssignmentStatusTypeCode|AssignmentType|BusinessUnitShortCode|DepartmentName|EffectiveEndDate|EffectiveLatestChange|EffectiveSequence|EffectiveStartDate|JobCode|LegalEmployerName|PersonId(SourceSystemId)|PersonTypeCode|PeriodOfServiceId(SourceSystemId)|PrimaryFlag|SourceSystemId|SourceSystemOwner|SystemPersonType|WorkTermsAssignmentId(SourceSystemId)
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name83|ACTIVE_PROCESS|E|Newbury US|||Y|1|1997/05/01||Evosys Newbury|US|83_PERSON|Employee|83_PERIOD_OF_SERVICE|Y|83_ASG|EBS|EMP|83_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name86|ACTIVE_PROCESS|E|Newbury US|||Y|1|1997/05/23||Evosys Newbury|DHL USER9 US Location 1|86_PERSON|Employee|86_PERIOD_OF_SERVICE|Y|86_ASG|EBS|EMP|86_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name87|ACTIVE_PROCESS|E|Newbury US|||Y|1|1991/10/30||Evosys Newbury|061|87_PERSON|Employee|87_PERIOD_OF_SERVICE|Y|87_ASG|EBS|EMP|87_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name88|ACTIVE_PROCESS|E|Newbury US|||Y|1|1991/10/30||Evosys Newbury|061|88_PERSON|Employee|88_PERIOD_OF_SERVICE|Y|88_ASG|EBS|EMP|88_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name89|ACTIVE_PROCESS|E|Newbury US|||Y|1|1991/12/11||Evosys Newbury|061|89_PERSON|Employee|89_PERIOD_OF_SERVICE|Y|89_ASG|EBS|EMP|89_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name90|ACTIVE_PROCESS|E|Newbury US|||Y|1|1991/12/11||Evosys Newbury|070|90_PERSON|Employee|90_PERIOD_OF_SERVICE|Y|90_ASG|EBS|EMP|90_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name91|ACTIVE_PROCESS|E|Newbury US|||Y|1|1991/12/11||Evosys Newbury|070|91_PERSON|Employee|91_PERIOD_OF_SERVICE|Y|91_ASG|EBS|EMP|91_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name92|ACTIVE_PROCESS|E|Newbury US|||Y|1|1991/12/19||Evosys Newbury|030|92_PERSON|Employee|92_PERIOD_OF_SERVICE|Y|92_ASG|EBS|EMP|92_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name93|ACTIVE_PROCESS|E|Newbury US|||Y|1|1993/03/30||Evosys Newbury|RC USA|93_PERSON|Employee|93_PERIOD_OF_SERVICE|Y|93_ASG|EBS|EMP|93_ETERM
+MERGE|Assignment|HIRE|Assignment Name|Assignment Name94|ACTIVE_PROCESS|E|Newbury US|||Y|1|1993/03/30||Evosys Newbury|RC USA|94_PERSON|Employee|94_PERIOD_OF_SERVICE|Y|94_ASG|EBS|EMP|94_ETERM
 
