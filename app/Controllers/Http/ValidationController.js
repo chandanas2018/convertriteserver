@@ -64,9 +64,9 @@ class ValidationController {
             // Errormanager.addError({ ruleinfo: 'rule1', data: null, msg: 'Error while excuting rule1', err: error })
             console.log(error);
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
@@ -103,9 +103,9 @@ class ValidationController {
         catch (err) {
             console.log(err);
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
 
     }
 
@@ -119,9 +119,9 @@ class ValidationController {
         catch (err) {
             console.log(err);
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
 
     }
 
@@ -230,9 +230,9 @@ class ValidationController {
             //return response.status(400).send({ success: false, data: null, msg: 'failure', err: error });
         }
 
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
 

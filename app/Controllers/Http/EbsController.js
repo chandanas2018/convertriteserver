@@ -71,10 +71,10 @@ class EbsController {
         catch(error){
             console.log(error);
         }
-        finally{
-        //   Database.close(['oracledb']);
-          console.log('hello');
-        }
+        // finally{
+        // //   Database.close(['oracledb']);
+        //   console.log('hello');
+        // }
     }
 
 
