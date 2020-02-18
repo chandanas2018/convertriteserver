@@ -33,10 +33,10 @@ class SetupDataController{
             console.log(respJson);
 
             //Insert Data from HCM into Staging Database
-            await new setUpHelper().InsertSetupData(entity,respJson.items);
+         var insertStatus =   await new setUpHelper().InsertSetupData(entity,respJson.items);
             //return response.status(200).send(respJson);
 
-
+         response.status(200).send(insertStatus.length);
         }
         catch(ex){
             response.status(500).send({error:"Error while fetching data!"})

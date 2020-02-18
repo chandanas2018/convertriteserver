@@ -90,6 +90,14 @@ module.exports = {
       password: config.getConfigValueByKey("StagingConn").password,//Env.get('DB_PASSWORD', ''),
       database: config.getConfigValueByKey("StagingConn").database//Env.get('DB_DATABASE', 'adonis')
       
+    },
+    pool:{
+      max:100,
+      min:2,
+      propagateCreateError: false
+      // idleTimeoutMillis: 30000,
+      // createTimeoutMillis: 30000,
+      // acquireTimeoutMillis: 30000
     }
   },
 
