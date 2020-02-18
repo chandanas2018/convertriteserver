@@ -107,7 +107,7 @@ class Configuration {
                     resolve(JobsQuery);
                 });
                 break;
-            case "Organization":
+            case "Organizations":
                 return new Promise((resolve,reject)=>{
                     resolve(OrganizationQuery);
                 });
