@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const btoa = require("btoa");
+const setUpHelper = require('../../Helpers/SetupdataHelpers');
 
 class SetupDataController{
     async GetDataForSetupByEntity({request,response,error}){
@@ -21,7 +22,7 @@ class SetupDataController{
                 }
             };
 
-            var requestUrl = HcmUrl + "/hcmRestApi/resources/11.13.18.05/" + entity;
+            var requestUrl = HcmUrl + "/hcmRestApi/resources/11.13.18.05/" + entity + "?limit=1000";
             // get_data = async(request,otherParams) => {
 
             // }
@@ -31,9 +32,11 @@ class SetupDataController{
 
             console.log(respJson);
 
-            return response.status(200).send(respJson);
+            //Insert Data from HCM into Staging Database
+         var insertStatus =   await new setUpHelper().InsertSetupData(entity,respJson.items);
+            //return response.status(200).send(respJson);
 
-
+         response.status(200).send(insertStatus.length);
         }
         catch(ex){
             response.status(500).send({error:"Error while fetching data!"})
