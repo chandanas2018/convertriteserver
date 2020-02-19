@@ -10,7 +10,7 @@ class DatamappingController {
         try {
             var data = request.body;
             let identifications = await Database.connection('oracledb').select('IDENTIFICATION_STATUS', 'COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME', 'IS_MANDATORY').from('PROJ_ENTITY_IDENTIFICATION')
-                .where('ENTITY_ID', data.entityid);
+                .where('ENTITY_ID', data.entityid).orderBy('IS_MANDATORY', 'desc');
             console.log(identifications);
             Database.close(['oracledb']);
             return response.status(200).send({ success: true, data: identifications, msg: 'Successfully get the list', error: null });
@@ -19,9 +19,9 @@ class DatamappingController {
         catch (error) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: error });
         }
-    //    finally {
-    //         Database.close(['oracledb']);
-    //       }
+        //    finally {
+        //         Database.close(['oracledb']);
+        //       }
     }
 
 
@@ -62,7 +62,7 @@ class DatamappingController {
 
 
             }
-          
+
             return response.status(200).send({ success: true, data: checked, msg: 'Successfully update the data', err: null });
         }
         catch (error) {
@@ -83,7 +83,9 @@ class DatamappingController {
     async masterdataList({ request, response, error }) {
         try {
             var data1 = request.body;
-           
+           var  SourceData = [];
+           var  DestinationData = [];
+
             //first to get the entity name from entityid 
             // let entityname = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST')
             //     .where('ENTITY_ID', data1.data.SOURCE_ENTITY_ID);
@@ -92,35 +94,39 @@ class DatamappingController {
             // console.log(sourcedata);
 
             //TODO REFACTOR AFTER THE DEMO
-             if(data1.data.SOURCE_COLUMN_NAME == 'LOCATION_CODE'){
-                var sourcedata1 = await Database.connection('oracledb').raw("SELECT DISTINCT hlat.location_id as source_data_id, hlat.location_code as source_data_code," 
-                + " hlat.description as source_data_name FROM apps.hr_locations_all_tl hlat, apps.hr_locations_all hla, apps.hr_location_info_types hlit, apps.HR_LOCATION_EXTRA_INFO hlei"
-                + " WHERE hlat.description IS NOT NULL " + "AND hla.location_id = hlei.location_id " + " AND hlat.location_id = hla.location_id " + " AND hla.country = 'US' " + "and hlei.information_type = hlit.information_type");
-                console.log(sourcedata1);
-            }
-            else{
-                var  sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT flv.lookup_code as source_data_id, flv.lookup_type as source_data_code, flv.meaning as source_data_name "
-                + " FROM APPS.fnd_lookup_values flv,APPS.fnd_lookup_types flt" +" WHERE flt.LOOKUP_TYPE ='"+ data1.data.SOURCE_COLUMN_NAME + "'and flt.lookup_type = flv.lookup_type and flv.language ='US'");   
+            if (data1.data.SOURCE_COLUMN_NAME == "LOCATION_CODE") {
+                var sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT hlat.location_id as source_data_id, hlat.location_code as source_data_code,"
+                    + " hlat.description as source_data_name FROM apps.hr_locations_all_tl hlat, apps.hr_locations_all hla, apps.hr_location_info_types hlit, apps.HR_LOCATION_EXTRA_INFO hlei"
+                    + " WHERE hlat.description IS NOT NULL " + "AND hla.location_id = hlei.location_id " + " AND hlat.location_id = hla.location_id " + " AND hla.country = 'US' " + "and hlei.information_type = hlit.information_type");
                 console.log(sourcedata);
+                SourceData = sourcedata;
             }
-            
-            
-            
+            else {
+                var sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT flv.lookup_code as source_data_id, flv.lookup_type as source_data_code, flv.meaning as source_data_name "
+                    + " FROM APPS.fnd_lookup_values flv,APPS.fnd_lookup_types flt" + " WHERE flt.LOOKUP_TYPE ='" + data1.data.SOURCE_COLUMN_NAME + "'and flt.lookup_type = flv.lookup_type and flv.language ='US'");
+                console.log(sourcedata);
+                SourceData = sourcedata;
+            }
+
+
+
             //to get the destination mapping data for dest mapped column
             //  TODO REFACTOR AFTER THE DEMO
-            if(data1.data.DESTINATION_COLUMN_NAME == 'LOCATION_CODE'){
+            if (data1.data.DESTINATION_COLUMN_NAME == "LOCATION_CODE") {
                 data1.data.DESTINATION_COLUMN = 'Locations'
-             var destinationdata1 = await Database.connection('oracledb').raw("select  locationid , locationcode as DEST_DATA_ID , locationname as DEST_DATA_NAME from "
-             + data1.data.DESTINATION_COLUMN + " where country = 'US'");
-            console.log(destinationdata1);
+                var destinationdata = await Database.connection('oracledb').raw("select  locationid , locationcode as DEST_DATA_ID , locationname as DEST_DATA_NAME from "
+                    + data1.data.DESTINATION_COLUMN + " where country = 'US'");
+                console.log(destinationdata);
+                DestinationData = destinationdata;
             }
-            else{
+            else {
                 var destinationdata = await Database.connection('oracledb').select('*').from(data1.data.DESTINATION_COLUMN_NAME)
                 console.log(destinationdata);
+                DestinationData = destinationdata;
             }
-           
-    
-            response.status(200).send({ success: true, data: { destdata: destinationdata, destdata1:destinationdata1, srcdata: sourcedata, srcdata1:sourcedata1 }, msg: 'Successfully get the list', error: null });
+
+
+            response.status(200).send({ success: true, data: { destdata: DestinationData,  srcdata: SourceData }, msg: 'Successfully get the list', error: null });
         }
         catch (error) {
             console.log(error)
@@ -136,8 +142,10 @@ class DatamappingController {
     async saveDataMappings({ request, response, error }) {
         try {
             var data = request.body;
+
+            var dataMappings = [];
             //Todo refactor after the demo
-            if(data.remainingdata.SOURCE_COLUMN_NAME === "LOCATION_CODE"){
+            if (data.remainingdata.SOURCE_COLUMN_NAME === "LOCATION_CODE") {
                 let datamappings = await Database.connection('oracledb').insert({
                     PROJECT_ID: data.projectid,
                     SOURCE_ENTITY_ID: data.sourceentityid,
@@ -146,11 +154,15 @@ class DatamappingController {
                     DESTINATION_COLUMN_ID: data.remainingdata.DESTINATION_COLUMN_ID,
                     DESTINATION_COLUMN_NAME: data.remainingdata.DESTINATION_COLUMN_NAME,
                     SOURCE_DATA: data.sourcedatacode,
-                    DESTINATION_DATA: data.destinationdataid
+                    SOURCE_DISPLAY_NAME:data.sourcedisplayname,
+                    DESTINATION_DATA: data.destinationdataid,
+                    DESTINATION_DISPLAY_NAME:data.destinationdataname
                 }).into('PROJ_DATA_MAPPINGS');
                 console.log(datamappings);
+                dataMappings = datamappings;
+
             }
-            else{
+            else {
                 let datamappings = await Database.connection('oracledb').insert({
                     PROJECT_ID: data.projectid,
                     SOURCE_ENTITY_ID: data.sourceentityid,
@@ -159,11 +171,15 @@ class DatamappingController {
                     DESTINATION_COLUMN_ID: data.remainingdata.DESTINATION_COLUMN_ID,
                     DESTINATION_COLUMN_NAME: data.remainingdata.DESTINATION_COLUMN_NAME,
                     SOURCE_DATA: data.sourcedataname,
-                    DESTINATION_DATA: data.destinationdataname
+                    SOURCE_DISPLAY_NAME:data.sourcedisplayname,
+                    DESTINATION_DATA: data.destinationdataname,
+                    DESTINATION_DISPLAY_NAME:data.destinationdataname
                 }).into('PROJ_DATA_MAPPINGS');
                 console.log(datamappings);
+
+                dataMappings = datamappings;
             }
-           
+
 
             //for maintaining  user log
             let qry2 = await Database.connection('oracledb').select('PROJECT_CREATED_BY').from('LIST_OF_PROJECTS').where('PROJECT_ID', data.projectid);
@@ -178,8 +194,8 @@ class DatamappingController {
                 TRANSACTION_PERFORMED_BY: qry2[0].PROJECT_CREATED_BY
             }).into('PROJECT_TRANSACTIONS');
             console.log(transactions);
-            
-            return response.status(200).send({ success: true, data: datamappings,  msg: 'Successfully inserted ', error: null });
+
+            return response.status(200).send({ success: true, data: dataMappings, msg: 'Successfully inserted ', error: null });
         }
         catch (error) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while inserting the data', error: err });
@@ -190,54 +206,14 @@ class DatamappingController {
     }
 
 
-    // async saveLocations({request, response, error}){
-    //     try {
-    //         var data = request.body;
-    //         //Todo refactor after the demo
-    //         if(data.remainingdata.SOURCE_COLUMN_NAME === "LOCATION_CODE"){
-    //             let datamappings = await Database.connection('oracledb').insert({
-    //                 PROJECT_ID: data.projectid,
-    //                 SOURCE_ENTITY_ID: data.sourceentityid,
-    //                 SOURCE_COLUMN_ID: data.remainingdata.SOURCE_COLUMN_ID,
-    //                 SOURCE_COLUMN_NAME: data.remainingdata.SOURCE_COLUMN_NAME,
-    //                 DESTINATION_COLUMN_ID: data.remainingdata.DESTINATION_COLUMN_ID,
-    //                 DESTINATION_COLUMN_NAME: data.remainingdata.DESTINATION_COLUMN_NAME,
-    //                 SOURCE_DATA: data.sourcedatacode,
-    //                 DESTINATION_DATA: data.destinationdataid
-    //             }).into('PROJ_DATA_MAPPINGS');
-    //             console.log(datamappings);
-    //         }            
-    //         //for maintaining  user log
-    //         let qry2 = await Database.connection('oracledb').select('PROJECT_CREATED_BY').from('LIST_OF_PROJECTS').where('PROJECT_ID', data.projectid);
-    //         console.log(qry2);
-    //         let qry3 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', data.sourceentityid);
-    //         console.log(qry3);
-    //         let transactions = await Database.insert({
-    //             PROJECT_ID: data.projectid,
-    //             TRANSACTION_DATE: date,
-    //             ENTITIY_ACCESSED: qry3[0].ENTITY_NAME,
-    //             TRANSACTION_STATUS: 'Data mapping fields',
-    //             TRANSACTION_PERFORMED_BY: qry2[0].PROJECT_CREATED_BY
-    //         }).into('PROJECT_TRANSACTIONS');
-    //         console.log(transactions);
-            
-    //         return response.status(200).send({ success: true, data: datamappings,  msg: 'Successfully inserted ', error: null });
-    //     }
-    //     catch (error) {
-    //         return response.status(400).send({ success: false, data: null, msg: 'Error while inserting the data', error: err });
-    //     }
-    // }
-
+    
     //to get list of mappings
-   
-   
-   
     async listofDataMappings({ request, response, error }) {
         try {
             var data = request.body;
             let datafields = await Database.connection('oracledb').select('*').from('PROJ_DATA_MAPPINGS')
                 .where('SOURCE_ENTITY_ID', data.sourceentityid);
-            console.log(datafields);  
+            console.log(datafields);
             return response.status(200).send({ success: true, data: datafields, msg: 'Successfully get the fields', err: null });
         }
         catch (err) {
@@ -259,7 +235,7 @@ class DatamappingController {
                     'DESTINATION_DATA': data.destinationdataname
                 })
                 .delete();
-            console.log(deleteddatafield);          
+            console.log(deleteddatafield);
             return response.status(200).send({ success: true, data: deleteddatafield, msg: 'Successfully delete the fields', err: null });
         }
         catch (err) {
@@ -294,7 +270,7 @@ class DatamappingController {
             }).into('PROJECT_TRANSACTIONS');
 
             console.log(transactions);
-           
+
 
             return response.status(200).send({ success: true, data: deleteddatamappings, msg: 'Successfully delete the fields', err: null });
         }
@@ -314,7 +290,7 @@ class DatamappingController {
             var data1 = [];
             var data = request.body;
             let mappings = await Database.connection('oracledb').select('DISPLAY_NAME', 'SOURCE_COLUMN_NAME', 'DESTINATION_COLUMN_NAME').from('PROJ_COLUMN_MAPPING')
-                            .where('SOURCE_ENTITY_ID', data.entityid);
+                .where('SOURCE_ENTITY_ID', data.entityid);
             console.log(mappings);
             let qry1 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', data.entityid);
             console.log(qry1);
@@ -323,7 +299,7 @@ class DatamappingController {
                 let qry2 = await Database.connection('oracledb').select('DEST_DATA_NAME').from(mappings[i].DESTINATION_COLUMN_NAME);
                 console.log(qry2);
                 let qry3 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + qry1[0].ENTITY_NAME);
-                console.log(qry3); 
+                console.log(qry3);
 
                 var mappeddata = {
                     sourcecolumnname: mappings[i].SOURCE_COLUMN_NAME,
@@ -334,7 +310,7 @@ class DatamappingController {
                 }
                 data1.push(mappeddata);
             }
-            console.log(data1);      
+            console.log(data1);
             return response.status(200).send({ success: true, data: data1, msg: 'Successfully get the list', error: null });
         }
         catch (err) {
@@ -372,7 +348,7 @@ class DatamappingController {
                             DESTINATION_DATA: data.mappings[i].data[j].desData
                         }).into('PROJ_DATA_MAPPINGS');
                         console.log(datamappings);
-                       
+
                     } else {
 
                         console.log('not found');

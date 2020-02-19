@@ -257,7 +257,7 @@ class HdlController {
               return  ({ data: HDLEntries, error: null }) ;
             
         }
-
+ 
         catch (err) {
             console.log(err);
             return ({ data: null, error: err });
@@ -296,16 +296,16 @@ class HdlController {
                 else {
                     var failed = false
                     for (var i = 0; i < HDLEntries.length; i++) {
-                        fs.appendFile(file, HDLEntries[i].header + "\n", function (error) {
+                        fs.appendFileSync(file, HDLEntries[i].header + "\n", function (error) {
                             console.log(error);
                             failed = false
                         })
                         for (var j = 0; j < HDLEntries[i].data.length; j++) {
-                            fs.appendFile(file, HDLEntries[i].data[j] + "\n", function (error) {
+                            fs.appendFileSync(file, HDLEntries[i].data[j] + "\n", function (error) {
                                 console.log(error);
                             })
                         }
-                        fs.appendFile(file, "\n", function (error) {
+                        fs.appendFileSync(file, "\n", function (error) {
                             console.log(error);
                         })
                     }
