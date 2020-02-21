@@ -74,6 +74,8 @@ Route.group(() =>
  Route.get('/csv', 'Ebscontroller.csvFile')
  Route.get('/api/EbsExtracts','ExtractsController.ExtractByEntity')
  Route.get('/data/loading','Ebscontroller.dataLoading')
+ Route.get('/hdl/dataMappings','HdlController.hdlMappings')
+ // Route.group(() => {
  
  //SetUpDataController
  Route.get('/api/vi/GetSetupData','SetupDataController.GetDataForSetupByEntity')
