@@ -18,10 +18,10 @@ class EntitymappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the details', error: err });
         }
-        finally {
-            Database.close(['oracledb']);
+        // finally {
+        //     Database.close(['oracledb']);
 
-        }
+        // }
     }
 
     //get service to display source entity field names
@@ -30,7 +30,7 @@ class EntitymappingController {
         try {
             var data = request.body;
             //select the source fields which having identification status is checked and column status is true
-            let qry = await Database.connection('oracledb').select('COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME')
+            let qry = await Database.connection('oracledb').select('COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME', 'IS_MANDATORY')
                 .from('PROJ_ENTITY_IDENTIFICATION').where({ 'ENTITY_ID': data.id, 'IDENTIFICATION_STATUS': 'CHECKED', 'COLUMN_STATUS': 'TRUE' });
             console.log(qry);
             return response.status(200).send({ success: true, data: qry, msg: 'Successfully get the entity  column list', err: null });
@@ -39,10 +39,10 @@ class EntitymappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the details', error: err });
         }
-        finally {
-            Database.close(['oracledb']);
+        // finally {
+        //     Database.close(['oracledb']);
 
-        }
+        // }
     }
 
     //get service to display destination entity names
@@ -55,9 +55,9 @@ class EntitymappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the details', error: err });
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
@@ -74,9 +74,9 @@ class EntitymappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while get the details', error: err });
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
@@ -118,9 +118,9 @@ class EntitymappingController {
             console.log(error);
             return response.status(400).send({ success: false, data: null, msg: 'Error while getting the mapping fields', err: error });
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
     //to get the list of map fields
@@ -135,9 +135,9 @@ class EntitymappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while getting the fields', error: err });
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
     //to delete all  mapped fields using source entity id
@@ -171,9 +171,9 @@ class EntitymappingController {
             console.log(err);
             return response.status(400).send({ success: false, data: null, msg: 'Error while deleting the fields', error: err });
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
     //to delete individual mapped field
@@ -193,9 +193,9 @@ class EntitymappingController {
         catch (err) {
             return response.status(400).send({ success: false, data: null, msg: 'Error while deleting the fields', error: err });
         }
-        finally {
-            Database.close(['oracledb']);
-        }
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
     }
 
 
