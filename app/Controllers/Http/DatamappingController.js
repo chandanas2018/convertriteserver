@@ -446,16 +446,16 @@ class DatamappingController {
     async uploadDataMappingFromExcel({request, response, error}) {
         try {
             var data = request.body;
-
+            console.log('upload data--->',data);    
             for (let i = 0; i < data.mappings.length; i++) {
 
                 for (let j = 0; j < data.mappings[i].data.length; j++) {
                     let projectQry = await Database.connection('oracledb').select('PROJECT_ID').from('LIST_OF_PROJECTS').where('PROJECT_NAME', data.mappings[i].data[j].ProjectName);
 
-                    let qry2 = await Database.connection('oracledb').select('ENTITY_ID', 'COLUMN_ID', 'DISPLAY_NAME').from('PROJ_ENTITY_IDENTIFICATION').where('COLUMN_NAME', data.mappings[i].data[j].sourceColumnName);
+                    let qry2 = await Database.connection('oracledb').select('ENTITY_ID', 'COLUMN_ID', 'DISPLAY_NAME').from('PROJ_ENTITY_IDENTIFICATION').where('COLUMN_NAME', data.mappings[i].data[j].SourceColumnName);
 
-                    let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_NAME', data.mappings[i].data[j].destinationcolumnname);
-
+                    let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_NAME', data.mappings[i].data[j].DestinationColumnName);
+                    
                     let datamappings = await Database.connection('oracledb').insert({
                         PROJECT_ID: projectQry[0].PROJECT_ID,
                         SOURCE_ENTITY_ID: qry2[0].ENTITY_ID,
@@ -478,7 +478,7 @@ class DatamappingController {
             return response.status(200).send({ success: true, data: 'datamappings', msg: 'Successfully get the list', error: null });
         }
         catch (error) {
-
+            console.log(error);
         }
     }
 
