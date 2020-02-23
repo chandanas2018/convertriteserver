@@ -322,6 +322,48 @@ class DatamappingController {
         // }
     }
 
+    //format to download excel data mapping template  in data mapping screen 
+    async excelDownloadDataMappingTemplate({ request, response, error }) {
+        try {
+            var data1 = [];
+            var data = request.body;
+            let mappings = await Database.connection('oracledb').select('PROJECT_ID', 'SOURCE_COLUMN_ID', 'SOURCE_DATA', 'SOURCE_COLUMN_NAME', 'SOURCE_ENTITY_ID', 'SOURCE_DISPLAY_NAME', 'DESTINATION_COLUMN_ID', 'DESTINATION_DATA', 'DESTINATION_COLUMN_NAME', 'DESTINATION_DISPLAY_NAME').from('PROJ_DATA_MAPPINGS')
+                .where('SOURCE_ENTITY_ID', data.entityid);
+            console.log(mappings);
+            
+            for (var i = 0; i < mappings.length; i++) {
+                let qry1 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', mappings[i].SOURCE_ENTITY_ID);
+                console.log(qry1);
+                let qry2 = await Database.connection('oracledb').select('PROJECT_NAME').from('LIST_OF_PROJECTS').where('PROJECT_ID', mappings[i].PROJECT_ID);
+                console.log(qry2);
+                let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_ID', mappings[i].DESTINATION_COLUMN_ID);
+                console.log(qry3);
+                let qry4 = await Database.connection('oracledb').select('DEST_ENTITY_NAME').from('PROJ_DATATYPE_ENTITY_LIST').where('DEST_ENTITY_ID', qry3[0].DEST_ENTITY_ID);
+                console.log(qry3);
+
+                var mappeddata = {
+                    projectname: qry2[0].PROJECT_NAME,
+                    sourceentityname: qry1[0].ENTITY_NAME,
+                    sourcecolumnname: mappings[i].SOURCE_COLUMN_NAME,
+                    sourcedata: mappings[i].SOURCE_DATA,
+                    destinationentity: qry4[0].DEST_ENTITY_NAME,
+                    destinationcolumnname: mappings[i].DESTINATION_COLUMN_NAME,
+                    destinationdata: mappings[i].DESTINATION_DATA
+                }
+                data1.push(mappeddata);
+            }
+            console.log(data1);
+            return response.status(200).send({ success: true, data: data1, msg: 'Successfully get the list', error: null });
+        }
+        catch (err) {
+            console.log(err);
+            return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: err });
+        }
+        // finally{
+        //     Database.close(['oracledb']);
+        // }
+    }
+
 
     //format to upload excel template in data mapping screen
     async excelUploadTemplate({ request, response, error }) {
@@ -400,6 +442,45 @@ class DatamappingController {
     //     }
     // }
 
+    //To get all data store in PROJ_DATA_MAPPINGS from Upload Data Mappings excel. 
+    async uploadDataMappingFromExcel({request, response, error}) {
+        try {
+            var data = request.body;
+
+            for (let i = 0; i < data.mappings.length; i++) {
+
+                for (let j = 0; j < data.mappings[i].data.length; j++) {
+                    let projectQry = await Database.connection('oracledb').select('PROJECT_ID').from('LIST_OF_PROJECTS').where('PROJECT_NAME', data.mappings[i].data[j].ProjectName);
+
+                    let qry2 = await Database.connection('oracledb').select('ENTITY_ID', 'COLUMN_ID', 'DISPLAY_NAME').from('PROJ_ENTITY_IDENTIFICATION').where('COLUMN_NAME', data.mappings[i].data[j].sourceColumnName);
+
+                    let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_NAME', data.mappings[i].data[j].destinationcolumnname);
+
+                    let datamappings = await Database.connection('oracledb').insert({
+                        PROJECT_ID: projectQry[0].PROJECT_ID,
+                        SOURCE_ENTITY_ID: qry2[0].ENTITY_ID,
+                        SOURCE_COLUMN_ID: qry2[0].COLUMN_ID,
+                        SOURCE_COLUMN_NAME: data.mappings[i].data[j].SourceColumnName,
+                        SOURCE_DISPLAY_NAME: qry2[0].DISPLAY_NAME,
+                        DESTINATION_COLUMN_ID: qry3[0].COLUMN_ID,
+                        DESTINATION_COLUMN_NAME: data.mappings[i].data[j].DestinationColumnName,
+                        SOURCE_DATA: data.mappings[i].data[j].SourceData,
+                        DESTINATION_DATA: data.mappings[i].data[j].DestinationData,
+                        DESTINATION_DISPLAY_NAME: qry2[0].DISPLAY_NAME
+                    }).into('PROJ_DATA_MAPPINGS');
+
+                }
+
+            }
+
+
+            //console.log(data);
+            return response.status(200).send({ success: true, data: 'datamappings', msg: 'Successfully get the list', error: null });
+        }
+        catch (error) {
+
+        }
+    }
 
 
 }
