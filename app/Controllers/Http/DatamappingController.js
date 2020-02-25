@@ -114,7 +114,7 @@ class DatamappingController {
             //  TODO REFACTOR AFTER THE DEMO
             if (data1.data.DESTINATION_COLUMN_NAME == "LOCATION_CODE") {
                 data1.data.DESTINATION_COLUMN = 'Locations'
-                var destinationdata = await Database.connection('oracledb').raw("select  locationid , locationcode as DEST_DATA_ID , locationname as DEST_DATA_NAME from "
+                var destinationdata = await Database.connection('oracledb').raw("select  location_id , location_code as DEST_DATA_ID , location_name as DEST_DATA_NAME from "
                     + data1.data.DESTINATION_COLUMN + " where country = 'US'");
                 console.log(destinationdata);
                 DestinationData = destinationdata;
@@ -213,7 +213,8 @@ class DatamappingController {
             var data = request.body;
             let datafields = await Database.connection('oracledb').select('*').from('PROJ_DATA_MAPPINGS')
                 .where('SOURCE_ENTITY_ID', data.sourceentityid);
-            console.log(datafields);
+              //  console.log(data.sourceentityid);
+            //console.log('sdsddsf',datafields);
             return response.status(200).send({ success: true, data: datafields, msg: 'Successfully get the fields', err: null });
         }
         catch (err) {
@@ -339,16 +340,22 @@ class DatamappingController {
                 let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_ID', mappings[i].DESTINATION_COLUMN_ID);
                 console.log(qry3);
                 let qry4 = await Database.connection('oracledb').select('DEST_ENTITY_NAME').from('PROJ_DATATYPE_ENTITY_LIST').where('DEST_ENTITY_ID', qry3[0].DEST_ENTITY_ID);
-                console.log(qry3);
+                console.log(qry4);
+                var source_table_name = 'SOURCE_'+qry4[0].DEST_ENTITY_NAME;
+                console.log('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
+                let qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
+                console.log(qry5);
+                let qry6 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].DESTINATION_COLUMN_NAME + ' AS DEST_DATA_NAME from ' +qry4[0].DEST_ENTITY_NAME);
+                //console.log('qry5--->','SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + qry1[0].ENTITY_NAME);
 
                 var mappeddata = {
                     projectname: qry2[0].PROJECT_NAME,
                     sourceentityname: qry1[0].ENTITY_NAME,
                     sourcecolumnname: mappings[i].SOURCE_COLUMN_NAME,
-                    sourcedata: mappings[i].SOURCE_DATA,
+                    sourcedata: qry5,
                     destinationentity: qry4[0].DEST_ENTITY_NAME,
                     destinationcolumnname: mappings[i].DESTINATION_COLUMN_NAME,
-                    destinationdata: mappings[i].DESTINATION_DATA
+                    destinationdata: qry6
                 }
                 data1.push(mappeddata);
             }
@@ -446,30 +453,45 @@ class DatamappingController {
     async uploadDataMappingFromExcel({request, response, error}) {
         try {
             var data = request.body;
-            console.log('upload data--->',data);    
-            for (let i = 0; i < data.mappings.length; i++) {
+            for (let i in data.mappings) {
 
-                for (let j = 0; j < data.mappings[i].data.length; j++) {
-                    let projectQry = await Database.connection('oracledb').select('PROJECT_ID').from('LIST_OF_PROJECTS').where('PROJECT_NAME', data.mappings[i].data[j].ProjectName);
+                    let source_table_name = 'SOURCE_'+data.mappings[i].DestinationEntity;
+                    let alias_column_name = data.mappings[i].DestinationEntity;
+                    alias_column_name = alias_column_name.substr(0, alias_column_name.length - 1);
 
-                    let qry2 = await Database.connection('oracledb').select('ENTITY_ID', 'COLUMN_ID', 'DISPLAY_NAME').from('PROJ_ENTITY_IDENTIFICATION').where('COLUMN_NAME', data.mappings[i].data[j].SourceColumnName);
+                    let projectQry = await Database.connection('oracledb').select('PROJECT_ID').from('LIST_OF_PROJECTS').where('PROJECT_NAME', data.mappings[i].ProjectName);
 
-                    let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_NAME', data.mappings[i].data[j].DestinationColumnName);
-                    
-                    let datamappings = await Database.connection('oracledb').insert({
-                        PROJECT_ID: projectQry[0].PROJECT_ID,
-                        SOURCE_ENTITY_ID: qry2[0].ENTITY_ID,
-                        SOURCE_COLUMN_ID: qry2[0].COLUMN_ID,
-                        SOURCE_COLUMN_NAME: data.mappings[i].data[j].SourceColumnName,
-                        SOURCE_DISPLAY_NAME: qry2[0].DISPLAY_NAME,
-                        DESTINATION_COLUMN_ID: qry3[0].COLUMN_ID,
-                        DESTINATION_COLUMN_NAME: data.mappings[i].data[j].DestinationColumnName,
-                        SOURCE_DATA: data.mappings[i].data[j].SourceData,
-                        DESTINATION_DATA: data.mappings[i].data[j].DestinationData,
-                        DESTINATION_DISPLAY_NAME: qry2[0].DISPLAY_NAME
-                    }).into('PROJ_DATA_MAPPINGS');
+                    let qry2 = await Database.connection('oracledb').select('ENTITY_ID', 'COLUMN_ID', 'DISPLAY_NAME').from('PROJ_ENTITY_IDENTIFICATION').where('COLUMN_NAME', data.mappings[i].SourceColumnName);
 
-                }
+                    let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_NAME', data.mappings[i].DestinationColumnName);
+                    console.log('sourcedata--->',data.mappings[i].SourceData);
+                    if (data.mappings[i].SourceData !== "" && data.mappings[i].DestinationData !== "") {
+                        let qry4 = await Database.connection('oracledb').raw('SELECT '+alias_column_name+'_NAME as source_display_name FROM '+source_table_name+' WHERE '+data.mappings[i].SourceColumnName+"='"+data.mappings[i].SourceData+"'");
+                        let qry5 = await Database.connection('oracledb').raw('SELECT '+alias_column_name+'_NAME as dest_display_name FROM '+data.mappings[i].DestinationEntity+' WHERE '+data.mappings[i].DestinationColumnName+"='"+data.mappings[i].DestinationData+"'");
+                        console.log(qry4[0].SOURCE_DISPLAY_NAME);
+                        console.log(qry5[0].DEST_DISPLAY_NAME);
+                        let qry6 = await Database.connection('oracledb').raw("SELECT count(*) as COUNT_MAPPINGS from PROJ_DATA_MAPPINGS WHERE SOURCE_DATA='"+data.mappings[i].SourceData+"' AND DESTINATION_DATA='"+data.mappings[i].DestinationData+"'");
+                        if(qry6[0].COUNT_MAPPINGS == 0){
+                            let datamappings = await Database.connection('oracledb').insert({
+                                PROJECT_ID: projectQry[0].PROJECT_ID,
+                                SOURCE_ENTITY_ID: qry2[0].ENTITY_ID,
+                                SOURCE_COLUMN_ID: qry2[0].COLUMN_ID,
+                                SOURCE_COLUMN_NAME: data.mappings[i].SourceColumnName,
+                                SOURCE_DISPLAY_NAME: qry4[0].SOURCE_DISPLAY_NAME,
+                                DESTINATION_COLUMN_ID: qry3[0].COLUMN_ID,
+                                DESTINATION_COLUMN_NAME: data.mappings[i].DestinationColumnName,
+                                SOURCE_DATA: data.mappings[i].SourceData,
+                                DESTINATION_DATA: data.mappings[i].DestinationData,
+                                DESTINATION_DISPLAY_NAME: qry5[0].DEST_DISPLAY_NAME
+                            }).into('PROJ_DATA_MAPPINGS');
+                        }
+                        else{
+                            console.log('already record exists.');
+                        }
+                    }
+                    else {
+                        console.log('not found');
+                    }
 
             }
 
@@ -479,6 +501,7 @@ class DatamappingController {
         }
         catch (error) {
             console.log(error);
+            return response.status(400).send({ success: false, data: null, msg: 'Error while get the list', error: error });
         }
     }
 
