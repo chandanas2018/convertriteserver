@@ -1,7 +1,7 @@
 
 const Database = use('Database');
 
-
+//used in generation of hdl
 class hdlDataMappings{
 
     constructor(){

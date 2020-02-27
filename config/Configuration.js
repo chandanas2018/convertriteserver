@@ -21,14 +21,7 @@ class Configuration {
                         break;
                 }
             }
-
-            // for(var i = 0; i < allKeys.length ; i++){
-            //     if(allKeys[i] == key){
-            //         retObj = appConfig[key];
-            //     }
-            // }
-            //resolve(elemOj);
-           // console.log(elemObj);
+           
             return elemObj;
       //  });
            
@@ -96,6 +89,10 @@ class Configuration {
         var OrganizationQuery = "SELECT TO_CHAR(o.DATE_FROM,'YYYY/MM/DD') As EffectiveStartDate,otl.organization_id,otl.name as Name " +
                                 "FROM apps.hr_all_organization_units o,apps.hr_all_organization_units_tl otl WHERE 1=1 "+
                                 "AND o.organization_id = otl.organization_id AND otl.language = 'US' AND TYPE ='DEP'";
+
+        var GradesQuery = "SELECT TO_CHAR(pg.date_from,'YYYY/MM/DD'), pg.grade_id, gdt.name FROM per_grades_tl gdt, per_grades pg " +
+        "WHERE gdt.grade_id  = pg.grade_id AND  gdt.language (+) = 'US'"
+
         switch(entity){
             case "Locations":
                 return new Promise((resolve,reject)=>{
@@ -112,6 +109,11 @@ class Configuration {
                     resolve(OrganizationQuery);
                 });
                 break;
+            case "Grades":
+                    return new Promise((resolve,reject)=>{
+                        resolve(GradesQuery);
+                    });
+                    break;
             default:
                 console.log("No case matched");
         }
