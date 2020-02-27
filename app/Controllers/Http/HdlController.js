@@ -1,9 +1,9 @@
 'use strict'
 const Database = use('Database');
-const moment = use('moment');
 const Logger = use('Logger');
 const toPascalCase = require('js-pascalcase');
 // const Helpers = use('Helpers');
+
 const fs = require('fs');
 var hdlMappings = require('../../DataServices/HdlMappings');
 
@@ -91,6 +91,7 @@ const DataTransferRulesForDefaultTransfers = [
 
     //     },
 ]
+
 
 var lookupObj = {
     PERSON : "Worker",
