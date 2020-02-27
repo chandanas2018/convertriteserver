@@ -334,20 +334,25 @@ class DatamappingController {
             
             for (var i = 0; i < mappings.length; i++) {
                 let qry1 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', mappings[i].SOURCE_ENTITY_ID);
-                console.log(qry1);
+                //console.log(qry1);
                 let qry2 = await Database.connection('oracledb').select('PROJECT_NAME').from('LIST_OF_PROJECTS').where('PROJECT_ID', mappings[i].PROJECT_ID);
-                console.log(qry2);
+                //console.log(qry2);
                 let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_ID', mappings[i].DESTINATION_COLUMN_ID);
-                console.log(qry3);
+                //console.log(qry3);
                 let qry4 = await Database.connection('oracledb').select('DEST_ENTITY_NAME').from('PROJ_DATATYPE_ENTITY_LIST').where('DEST_ENTITY_ID', qry3[0].DEST_ENTITY_ID);
-                console.log(qry4);
+                //console.log(qry4);
                 var source_table_name = 'SOURCE_'+qry4[0].DEST_ENTITY_NAME;
-                console.log('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
-                let qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
-                console.log(qry5);
-                let qry6 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].DESTINATION_COLUMN_NAME + ' AS DEST_DATA_NAME from ' +qry4[0].DEST_ENTITY_NAME);
-                //console.log('qry5--->','SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + qry1[0].ENTITY_NAME);
-
+                let qry5 = '',qry6 = '';
+                if(qry4[0].DEST_ENTITY_NAME == 'LOOKUPS') {
+                    source_table_name = qry1[0].ENTITY_NAME;
+                    qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
+                    qry6 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].DESTINATION_COLUMN_NAME + ' AS DEST_DATA_NAME from ' +source_table_name);
+                }
+                else {
+                    qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
+                    console.log('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
+                    qry6 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].DESTINATION_COLUMN_NAME + ' AS DEST_DATA_NAME from ' +qry4[0].DEST_ENTITY_NAME);
+                }    
                 var mappeddata = {
                     projectname: qry2[0].PROJECT_NAME,
                     sourceentityname: qry1[0].ENTITY_NAME,
@@ -486,10 +491,28 @@ class DatamappingController {
                             }).into('PROJ_DATA_MAPPINGS');
                         }
                         else{
+                            let validations = await Database.connection('oracledb').insert({
+                                PROJECTID: projectQry[0].PROJECT_ID,
+                                TYPE: 'Warning',
+                                SOURCE_ENTITY: source_table_name,
+                                SOURCE_FIELD: data.mappings[i].SourceColumnName,
+                                DESTINATION_ENTITY: alias_column_name,
+                                DESTINATION_FIELD: data.mappings[i].DestinationColumnName,
+                                MESSAGE: 'SourceData and DestinationData is already exists it will not insert.'
+                            }).into('VALIDATIONS');
                             console.log('already record exists.');
                         }
                     }
                     else {
+                        let validations = await Database.connection('oracledb').insert({
+                            PROJECTID: projectQry[0].PROJECT_ID,
+                            TYPE: 'Error',
+                            SOURCE_ENTITY: source_table_name,
+                            SOURCE_FIELD: data.mappings[i].SourceColumnName,
+                            DESTINATION_ENTITY: alias_column_name,
+                            DESTINATION_FIELD: data.mappings[i].DestinationColumnName,
+                            MESSAGE: 'Either SourceData or DestinationData is null then it will not insert.'
+                        }).into('VALIDATIONS');
                         console.log('not found');
                     }
 
