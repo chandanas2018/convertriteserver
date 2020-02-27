@@ -56,6 +56,8 @@ Route.group(() =>
     Route.delete('/removeall/datamappings', 'DatamappingController.removeDataMappings')
     Route.post('/exceldata', 'DatamappingController.excelDownloadTemplate')
     Route.post('/exceldataupload', 'DatamappingController.excelUploadTemplate')
+    Route.post('/exceldatamapping', 'DatamappingController.excelDownloadDataMappingTemplate')
+    Route.post('/uploaddatamappings', 'DatamappingController.uploadDataMappingFromExcel')
     
  }).prefix('api/v1')
 
