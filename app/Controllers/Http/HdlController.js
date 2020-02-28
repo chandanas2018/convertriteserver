@@ -373,17 +373,21 @@ class HdlController {
     }
 
 
-    async ProcessSupervisor(){
+    async processSupervisor(){
         //Get Data from Supervisor Mappings table
-
+        try{
         var SupervisorMappings = await Database.connection('oracledb').select('*').from('SUPERVISOR_MAPPINGS');
         for(var i =0 ; i < SupervisorMappings.length; i++){
-            var empNumber = SupervisorMappings.EMPLOYEENUMBER;
-            var mgrNumber = SupervisorMappings.SUPERVISORNAME; //ToDo Change in Table and then in code
-            var empAssignmentObj = await Database.connection('oracledb').select('*')
-                                        .from('ASSIGNMENT').where('PERSON_NUMBER',empNumber);
-             var mgrAssignmentObj = await Database.connection('oraledb').select('*')
-                                    .from('ASSIGNMENT').where('PERSON_NUMBER',mgrNumber);           
+            var empNumber = SupervisorMappings[i].EMPLOYEENUMBER;
+            var mgrNumber = SupervisorMappings[i].SUPERVISORNUMBER;
+            var assignmentObj = await Database.connection('oracledb').select('*')
+                                .from('ASSIGNMENT');
+            var empAssignmentObj = assignmentObj.find(a=>a.PERSON_NUMBER === empNumber);
+            var mgrAssignmentObj = assignmentObj.find(a=>a.PERSON_NUMBER === mgrNumber);
+            // var empAssignmentObj = await Database.connection('oracledb').select('*')
+            //                             .from('ASSIGNMENT').where('PERSON_NUMBER',empNumber);
+            //  var mgrAssignmentObj = await Database.connection('oraledb').select('*')
+            //                         .from('ASSIGNMENT').where('PERSON_NUMBER',mgrNumber);           
 
             //Get Assignment SOurce SystemId for the Employee
             //Format : " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"
@@ -399,17 +403,30 @@ class HdlController {
 
             var spvsrObj = {
                 ASSIGNMENT_NUMBER : empNumber,
-                EFFECTIVE_START_DATE: effectiveStartDate,
-                Effective_End_Date: effectiveEndDate,
+                //EFFECTIVE_START_DATE: effectiveStartDate,
+                //Effective_End_Date: effectiveEndDate,
                 MANAGER_ID: mgrId,
                 MANAGER_ASSIGNMENT_NUMBER: mgrAssignmentNumber,
                 MANAGER_TYPE: mgrType
             };
-            var insStatus = await Database.connection('oraledb').insert(spvsrObj)
+            var insStatus = await Database.connection('oracledb').insert(spvsrObj)
                             .into('SUPERVISOR');
 
             console.log(insStatus);
+
+            return ({data:"Successfully inserted",error:null});
             
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+    }
+
+    async GetSupervisorHdl(){
+        var SupervisorHdlMetadataObj = {
+            DestinationEntity: 'Supervisor',
+            SourceColumns:['']
         }
     }
 
