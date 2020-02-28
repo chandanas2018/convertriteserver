@@ -6,6 +6,7 @@
 const Helpers = use('Helpers')
 const csv = require('csv-parser')
 const fs = require('fs')
+const moment = require('moment');
 
 var results = []
 
@@ -118,15 +119,15 @@ class FileController {
                 }
 
                 //for returning number of rows inserted 
-                var rowCount =  await Database.from(doc).count('* as total');
+                var rowCount = await Database.from(doc).count('* as total');
                 console.log(rowCount);
 
 
                 if (results != null || results.length == 0) {
                     try {
                         // to update status of file      
-                        let qry = await Database.connection('oracledb').table('PROJECT_LEGACY_UPLOAD_STATUS').where({'ENTITY_NAME': doc, 'PROJECT_ID' : 2})
-                            .update({'UPLOAD_STATUS': 'UPLOADED', 'TIMESTAMP': new Date()});
+                        let qry = await Database.connection('oracledb').table('PROJECT_LEGACY_UPLOAD_STATUS').where({ 'ENTITY_NAME': doc, 'PROJECT_ID': 2 })
+                            .update({ 'UPLOAD_STATUS': 'UPLOADED', 'TIMESTAMP': new Date() });
                         console.log(qry)
                         //insert service for log data           
                         var date = new Date();
@@ -149,7 +150,7 @@ class FileController {
                         return response.send({ success: false, data: null, msg: 'DeprecationWarning', error: err });
                     }
                 }
-                return response.status(200).send({ success: true, data: { data: file.fileName + ' ' + new Date().toLocaleString(), status: 'uploaded' , count:rowCount }, message: 'Data inserted successfully', error: null })
+                return response.status(200).send({ success: true, data: { data: file.fileName + ' ' + new Date().toLocaleString(), status: 'uploaded', count: rowCount }, message: 'Data inserted successfully', error: null })
             }
 
             catch (error) {
@@ -164,23 +165,115 @@ class FileController {
 
     }
 
+    //upload extracts new service
+    async uploadData({ request, response, error }) {
+        var data = request.body;
+        console.log(data);
+        var rows = JSON.parse(data.data);
+        console.log(rows);
+
+        try {
+            //deleting table data 
+
+
+            await Database.connection('oracledb').table(data.filename)
+                .delete()
+
+
+            for (var i = 0; i < rows.length; i++) {
+                console.log(rows[i]);
+
+                // var dateobj = {
+                //     DATE_OF_BIRTH:rows[i].DATE_OF_BIRTH,
+                //     EFFECTIVE_START_DATE:rows[i].EFFECTIVE_START_DATE,
+                //     START_DATE:rows[i].START_DATE
+                // }
+
+                if (data.filename === "PERSON") {
+
+                    rows[i].DATE_OF_BIRTH = moment(Date.parse(rows[i].DATE_OF_BIRTH.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    rows[i].EFFECTIVE_START_DATE = moment(Date.parse(rows[i].EFFECTIVE_START_DATE.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    rows[i].START_DATE = moment(Date.parse(rows[i].START_DATE.split('-').reverse().join(' '))).format('DD-MMM-YY');
+
+                }
+
+                else if (data.filename === "PERSON_NAME" ||
+                    data.filename === "PERSON_LEGISLATIVE_INFO" ||
+                    data.filename === "ASSIGNMENT" ||
+                    data.filename === 'WORK_TERMS') {
+                    rows[i].EFFECTIVE_START_DATE = moment(Date.parse(rows[i].EFFECTIVE_START_DATE.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                }
+
+                else if (data.filename === "WORK_RELATIONSHIP") {
+                    rows[i].DATE_START = moment(Date.parse(rows[i].DATE_START.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                }
+
+
+
+
+                var insertedData = await Database.connection('oracledb').table(data.filename.toUpperCase())
+                    .insert(rows[i]);
+                console.log(insertedData);
+
+            }
+
+            //for returning number of rows inserted 
+            var rowCount = await Database.from(data.filename.toUpperCase()).count('* as total');
+            console.log(rowCount);
+
+            if (rows != null || rows.length == 0) {
+                try {
+                    // to update status of file      
+                    let qry = await Database.connection('oracledb').table('PROJECT_LEGACY_UPLOAD_STATUS').where({ 'ENTITY_NAME': data.filename, 'PROJECT_ID': 2 })
+                        .update({ 'UPLOAD_STATUS': 'UPLOADED', 'TIMESTAMP': new Date() });
+                    console.log(qry)
+                    //insert service for log data           
+                    var date = new Date();
+                    var data1 = {
+                        projectid: 2,
+                        email: 'Linda@xyz.com',
+                        status: 'UPLOADED'
+                    }
+                    let transactions = await Database.connection('oracledb').insert({
+                        PROJECT_ID: data1.projectid,
+                        TRANSACTION_DATE: date,
+                        ENTITIY_ACCESSED: data.filename,
+                        TRANSACTION_STATUS: data1.status,
+                        TRANSACTION_PERFORMED_BY: data1.email
+                    }).into('PROJECT_TRANSACTIONS');
+                    console.log(transactions);
+                }
+                catch (err) {
+                    console.log(err)
+                    return response.send({ success: false, data: null, msg: 'DeprecationWarning', error: err });
+                }
+            }
+
+
+            return response.status(200).send({ success: true, data: { data1: insertedData, status: 'uploaded', count: rowCount[0].total }, message: 'Data inserted successfully', error: null })
+        }
+        catch (error) {
+            console.log(error);
+            return response.status(200).send({ success: false, data: null, message: 'Error while inserting data', error: error });
+        }
+    }
 
     //post service for maintaing error list
-    async errorlistFile({  request, response, error }) {
+    async errorlistFile({ request, response, error }) {
         try {
             let rawdata = fs.readFileSync('././././public/errorlist.json');
             let errorsList = JSON.parse(rawdata);
             console.log(errorsList);
             response.status(200).send({ success: true, data: errorsList, msg: 'Successfully load the errorlist file', err: null });
-              
+
         }
-        
+
         catch (error) {
             response.status(400).send({ success: false, data: null, msg: 'Error while loading the errorlist file', err: error });
         }
-        
-      
-        
+
+
+
     }
 
 }

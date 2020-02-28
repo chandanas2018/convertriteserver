@@ -1,9 +1,9 @@
 'use strict'
 const Database = use('Database');
-const moment = use('moment');
 const Logger = use('Logger');
 const toPascalCase = require('js-pascalcase');
 // const Helpers = use('Helpers');
+
 const fs = require('fs');
 var hdlMappings = require('../../DataServices/HdlMappings');
 
@@ -91,6 +91,7 @@ const DataTransferRulesForDefaultTransfers = [
 
     //     },
 ]
+
 
 var lookupObj = {
     PERSON : "Worker",
@@ -372,7 +373,62 @@ class HdlController {
     }
 
 
+    async processSupervisor(){
+        //Get Data from Supervisor Mappings table
+        try{
+        var SupervisorMappings = await Database.connection('oracledb').select('*').from('SUPERVISOR_MAPPINGS');
+        for(var i =0 ; i < SupervisorMappings.length; i++){
+            var empNumber = SupervisorMappings[i].EMPLOYEENUMBER;
+            var mgrNumber = SupervisorMappings[i].SUPERVISORNUMBER;
+            var assignmentObj = await Database.connection('oracledb').select('*')
+                                .from('ASSIGNMENT');
+            var empAssignmentObj = assignmentObj.find(a=>a.PERSON_NUMBER === empNumber);
+            var mgrAssignmentObj = assignmentObj.find(a=>a.PERSON_NUMBER === mgrNumber);
+            // var empAssignmentObj = await Database.connection('oracledb').select('*')
+            //                             .from('ASSIGNMENT').where('PERSON_NUMBER',empNumber);
+            //  var mgrAssignmentObj = await Database.connection('oraledb').select('*')
+            //                         .from('ASSIGNMENT').where('PERSON_NUMBER',mgrNumber);           
 
+            //Get Assignment SOurce SystemId for the Employee
+            //Format : " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"
+            var assignmentSourceSystemId = empNumber + "_ASG";
+            var effectiveStartDate = empAssignmentObj.EFFECTIVE_START_DATE;
+            var effectiveEndDate = empAssignmentObj.EFFECTIVE_END_DATE;
+            var mgrAssignmentNumber = mgrNumber + "_ASG";
+            var mgrId = mgrNumber + "_PERSON";
+            var mgrType = mgrAssignmentObj.ASSIGNMENT_NAME;
+            var primaryFlag = mgrAssignmentObj.PRIMARY_FLAG;
+
+            // Insert into Supervisor table from which we read and generate the HDL
+
+            var spvsrObj = {
+                ASSIGNMENT_NUMBER : empNumber,
+                //EFFECTIVE_START_DATE: effectiveStartDate,
+                //Effective_End_Date: effectiveEndDate,
+                MANAGER_ID: mgrId,
+                MANAGER_ASSIGNMENT_NUMBER: mgrAssignmentNumber,
+                MANAGER_TYPE: mgrType
+            };
+            var insStatus = await Database.connection('oracledb').insert(spvsrObj)
+                            .into('SUPERVISOR');
+
+            console.log(insStatus);
+
+            return ({data:"Successfully inserted",error:null});
+            
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+    }
+
+    async GetSupervisorHdl(){
+        var SupervisorHdlMetadataObj = {
+            DestinationEntity: 'Supervisor',
+            SourceColumns:['']
+        }
+    }
 
 
 
