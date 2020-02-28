@@ -301,7 +301,7 @@ class TestController {
 
     async previewFile({request, response, err}){
     try{
-      response.status(200).send({success:true, data:MigratedData, msg:'Successfully get the data', error:null});
+      response.status(200).send({success:true, data:DataTransferRulesForDefaultTransfers, msg:'Successfully get the data', error:null});
     }catch(err){
       response.status(400).send({success:false, data:null, msg:'Error while get the data', error:err});
     }
