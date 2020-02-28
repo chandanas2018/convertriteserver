@@ -18,7 +18,7 @@ const Route = use('Route')
 
 Route.on('/').render('')
 Route.on ('/api/v1/uploadfile').render('file')
-Route.post('/api/v1/uploadfile', 'FileController.store')
+Route.post('/api/v1/uploadfile', 'FileController.uploadData')
 
 //Routes for project creations and upload extracts
 Route.group(() => 
