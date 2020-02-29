@@ -18,7 +18,7 @@ const Route = use('Route')
 
 Route.on('/').render('')
 Route.on ('/api/v1/uploadfile').render('file')
-Route.post('/api/v1/uploadfile', 'FileController.store')
+Route.post('/api/v1/uploadfile', 'FileController.uploadData')
 
 //Routes for project creations and upload extracts
 Route.group(() => 
@@ -66,6 +66,7 @@ Route.group(() =>
  Route.get('/api/v1/test', 'TestController.test')
 //  Route.post('/api/v1/onetoone/mappings','TestController.onetoOneMappings')
  Route.post('/api/v1/destinationdata', 'HdlController.convert')
+ Route.post('/api/v1/processSupervisor','HdlController.processSupervisor')
  Route.get('/api/v1/download/hdl', 'HdlController.download')
  Route.post('/api/v1/source/columns', 'TestController.previewFile')
  Route.post('/api/v1/oracle/errors', 'FileController.errorlistFile')
