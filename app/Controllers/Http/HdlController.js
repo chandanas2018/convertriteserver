@@ -2,6 +2,7 @@
 const Database = use('Database');
 const Logger = use('Logger');
 const toPascalCase = require('js-pascalcase');
+const moment = require('moment');
 // const Helpers = use('Helpers');
 
 const fs = require('fs');
@@ -10,7 +11,7 @@ var hdlMappings = require('../../DataServices/HdlMappings');
 const DataTransferRulesForDefaultTransfers = [
     {
         DestinationEntity: "Worker",
-        DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonNumber', 'StartDate', 'DateOfBirth', 'ActionCode','BloodType'],
+        DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonNumber', 'StartDate', 'DateOfBirth', 'ActionCode', 'BloodType'],
         SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'EFFECTIVE_END_DATE', 'Person_Number', 'Start_Date', 'DATE_OF_BIRTH', 'ActionCode', 'Blood_type'],
         SourceQuery: "SELECT to_char(P.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate,  to_char(P.EFFECTIVE_END_DATE,'YYYY/MM/DD') AS EffectiveEndDate, P.PERSON_NUMBER AS PersonNumber, to_char(P.Start_Date,'YYYY/MM/DD') as StartDate, to_char(P.DATE_OF_BIRTH, 'DD/MM/YYYY') AS DateOfBirth, 'EBS' As SourceSystemOwner, actioncode as ActionCode, p.blood_type as BloodType," +
             " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\"" + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL"
@@ -68,7 +69,7 @@ const DataTransferRulesForDefaultTransfers = [
             + "Effective_Latest_Change as EffectiveLatestChange, Assignment_Type as AssignmentType,Assignment_Name as AssignmentName," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
             + ",Assignment_Status_Type_Code as AssignmentStatusTypeCode,Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\""
             + ", PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ",Person_Type_Code as PersonTypeCode, Primary_Flag as PrimaryFlag, System_Person_Type as SystemPersonType,"
-            + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",Job_Code as JobCode, Department_Name as DepartmentName, Location_Code as Location_Code " + " FROM ASSIGNMENTS_DEMO "
+            + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",Job_Code as JobCode, Department_Name as DepartmentName, Location_Code as Location_Code " + " FROM ASSIGNMENT "
 
     }
 
@@ -94,14 +95,14 @@ const DataTransferRulesForDefaultTransfers = [
 
 
 var lookupObj = {
-    PERSON : "Worker",
-    PERSON_NAME : "PersonName",
-    PERSON_LEGISLATIVE_INFO : "PersonLegislativeData",
-    PERSON_NID:"PersonNationalIdentifier",
-    PERSON_ADDRESS : "PersonAddress",
-    WORK_RELATIONSHIP:"WorkRelationship",
-    WORK_TERMS :"WorkTerms",
-    ASSIGNMENT : "Assignment"
+    PERSON: "Worker",
+    PERSON_NAME: "PersonName",
+    PERSON_LEGISLATIVE_INFO: "PersonLegislativeData",
+    PERSON_NID: "PersonNationalIdentifier",
+    PERSON_ADDRESS: "PersonAddress",
+    WORK_RELATIONSHIP: "WorkRelationship",
+    WORK_TERMS: "WorkTerms",
+    ASSIGNMENT: "Assignment"
 }
 
 
@@ -112,100 +113,86 @@ class HdlController {
     async convert() {
         try {
             var HDLEntries = [];
-
-         
             //Iterating over array collection of entities
-            const PromiseEntries = DataTransferRulesForDefaultTransfers.map(async(rule) =>{
+            const PromiseEntries = DataTransferRulesForDefaultTransfers.map(async (rule) => {
                 //Get Data for each entity defined in arry of objects
                 var dbResult = await Database.connection('oracledb').raw(rule.SourceQuery);
                 console.log(dbResult);
-                
+
                 //Initi the entities to be written to file
                 var metadataLine = "METADATA|" + rule.DestinationEntity
 
-                var mergelineObjecta = [];
+                var mergelineObject = [];
 
                 //including data mapping values in hdl generation
 
                 var mappings = [];
 
-                 var dataMappings = await hdlMappings.getMappingsByEntityId()
-                 console.log(dataMappings);
+                var dataMappings = await hdlMappings.getMappingsByEntityId()
+                console.log(dataMappings);
 
-                
-           
                 // var entity = "Person_name"
                 var MappedEntity = dataMappings.filter(e => {
-                 
+
                     var entity = lookupObj[e.ENTITY_NAME];
-                    // var entity = lookupObj.e.ENTITY_NAME;
+
                     console.log(entity);
-                        if (entity.toUpperCase() === rule.DestinationEntity.toUpperCase())
-                        return e 
-                     
-                    })
-                  console.log(MappedEntity);
-                    var mapData = MappedEntity.map(me => 
-                    { 
-                    return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA , 'SourceColumn':me.SOURCE_COLUMN_NAME, 'Entity':me.ENTITY_NAME} 
-                    });
+                    if (entity.toUpperCase() === rule.DestinationEntity.toUpperCase())
+                        return e
+
+                })
+                console.log(MappedEntity);
+                var mapData = MappedEntity.map(me => {
+                    return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA, 'SourceColumn': me.SOURCE_COLUMN_NAME, 'Entity': me.ENTITY_NAME }
+                });
                 console.log(mapData);
-                // mappings.push(mapData);
 
                 //sorting keys for each entity in array collection
-                if(dbResult){
+                if (dbResult) {
                     var keys = Object.keys(dbResult[0]).sort();
-                    console.log(keys);  
+                    console.log(keys);
 
 
-                    for(var i = 0; i<keys.length;i++){
+                    for (var i = 0; i < keys.length; i++) {
                         if (keys[i] === 'PERSONIDSOURCESYSTEMID') {
                             metadataLine = metadataLine + "|" + "PersonId(SourceSystemId)"
                         } else
                             if (keys[i] === 'POSIDSOURCESYSTEMID') {
                                 metadataLine = metadataLine + "|" + "PeriodOfServiceId(SourceSystemId)"
                             }
-    
+
                             else
                                 if (keys[i] === 'WTAIDSOURCESYSTEMID') {
                                     metadataLine = metadataLine + "|" + "WorkTermsAssignmentId(SourceSystemId)"
                                 }
                                 else {
-                                    for(var k=0; k<rule.DestinationColumns.length; k++){
-                                        if(rule.DestinationColumns[k].toUpperCase() === keys[i]){
+                                    for (var k = 0; k < rule.DestinationColumns.length; k++) {
+                                        if (rule.DestinationColumns[k].toUpperCase() === keys[i]) {
                                             metadataLine = metadataLine + "|" + rule.DestinationColumns[k];
                                             console.log(metadataLine);
                                             break;
                                         }
                                     }
-                                   
-                                   
+
+
                                 }
-                              
-                    
-                     
                     }
-
-
-                    
-
-                   
                     dbResult.forEach(eachResult => {
                         //forming merge lines for array of objects..
-                        var mergeLine = "MERGE|" + rule.DestinationEntity        
+                        var mergeLine = "MERGE|" + rule.DestinationEntity
 
                         // mergeLine = mergeLine + "|" + mapping;
-                       
 
-                        for(var i = 0; i<keys.length; i++){
 
-                            for(var j=0; j<mapData.length; j++){
+                        for (var i = 0; i < keys.length; i++) {
 
-                                if(keys[i] === mapData[j].SourceColumn ){
-                                    if(mapData[j].SourceData.toUpperCase() ===  eachResult[keys[i]].toUpperCase()){
-                                        eachResult[keys[i]] = mapData[j].DestData;      
+                            for (var j = 0; j < mapData.length; j++) {
+
+                                if (keys[i] === mapData[j].SourceColumn) {
+                                    if (mapData[j].SourceData.toUpperCase() === eachResult[keys[i]].toUpperCase()) {
+                                        eachResult[keys[i]] = mapData[j].DestData;
                                     }
-                                 
+
                                 }
                                 // mergeLine = mergeLine + "|" + eachResult[keys[i]]
                             }
@@ -214,22 +201,18 @@ class HdlController {
 
                             if (eachResult[keys[i]] === null) {
                                 mergeLine = mergeLine + "|"
-                                }
-                               else {
-                                   mergeLine = mergeLine + "|" + eachResult[keys[i]];
-                               }
-                        
-
-                           
-   
-                          //  console.log(mergeLine);
+                            }
+                            else {
+                                mergeLine = mergeLine + "|" + eachResult[keys[i]];
+                            }
+                            //  console.log(mergeLine);
                         }
 
-                        mergelineObjecta.push(mergeLine);
+                        mergelineObject.push(mergeLine);
                     })
 
-                    console.log(mergelineObjecta);
-            
+                    console.log(mergelineObject);
+
                 }
 
                 if (dbResult.length == 0) {
@@ -240,7 +223,7 @@ class HdlController {
                 else {
                     var HDLEntry = {
                         header: metadataLine,
-                        data: mergelineObjecta
+                        data: mergelineObject
                     }
                 }
 
@@ -248,21 +231,21 @@ class HdlController {
                 // HDLEntries.push(HDLEntry);
                 // console.log(HDLEntries);
 
-               
+
             });
 
             HDLEntries = await Promise.all(PromiseEntries);
-                console.log(HDLEntries);
-           
+            console.log(HDLEntries);
+
             // return response.send({data:HDLEntries})
-              return  ({ data: HDLEntries, error: null }) ;
-            
+            return ({ data: HDLEntries, error: null });
+
         }
- 
+
         catch (err) {
             console.log(err);
             return ({ data: null, error: err });
-            
+
         }
 
         // finally {
@@ -344,15 +327,14 @@ class HdlController {
             console.log(dataArray);
 
             // var entity = "PersonName";
-            var newentity = entity.replace( "Person_name","PersonName");
+            var newentity = entity.replace("Person_name", "PersonName");
             console.log(newentity);
 
-            var MappedEntity = dataArray.filter(e => 
-                { 
-                   entity =  e.ENTITY_NAME.replace( e.ENTITY_NAME,"PersonName")
-                    if (entity.toUpperCase() === entity.toUpperCase()) 
-                    return e 
-                });
+            var MappedEntity = dataArray.filter(e => {
+                entity = e.ENTITY_NAME.replace(e.ENTITY_NAME, "PersonName")
+                if (entity.toUpperCase() === entity.toUpperCase())
+                    return e
+            });
             console.log(MappedEntity);
             var mapData = MappedEntity.map(me => { return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA } });
             console.log(mapData);
@@ -373,63 +355,217 @@ class HdlController {
     }
 
 
-    async processSupervisor(){
-        //Get Data from Supervisor Mappings table
-        try{
-        var SupervisorMappings = await Database.connection('oracledb').select('*').from('SUPERVISOR_MAPPINGS');
-        for(var i =0 ; i < SupervisorMappings.length; i++){
-            var empNumber = SupervisorMappings[i].EMPLOYEENUMBER;
-            var mgrNumber = SupervisorMappings[i].SUPERVISORNUMBER;
-            var assignmentObj = await Database.connection('oracledb').select('*')
-                                .from('ASSIGNMENT');
-            var empAssignmentObj = assignmentObj.find(a=>a.PERSON_NUMBER === empNumber);
-            var mgrAssignmentObj = assignmentObj.find(a=>a.PERSON_NUMBER === mgrNumber);
-            // var empAssignmentObj = await Database.connection('oracledb').select('*')
-            //                             .from('ASSIGNMENT').where('PERSON_NUMBER',empNumber);
-            //  var mgrAssignmentObj = await Database.connection('oraledb').select('*')
-            //                         .from('ASSIGNMENT').where('PERSON_NUMBER',mgrNumber);           
+    async processSupervisor() {
+        //Get Data from Supervisor Mappings tablee
+        try {
+            var SupervisorMappings = await Database.connection('oracledb').select('*').from('SUPERVISOR_MAPPINGS');
+            for (var i = 0; i < SupervisorMappings.length; i++) {
+                var empNumber = SupervisorMappings[i].EMPLOYEENUMBER;
+                var mgrNumber = SupervisorMappings[i].SUPERVISORNUMBER;
+                var assignmentObj = await Database.connection('oracledb').select('*')
+                    .from('ASSIGNMENT');
+                var empAssignmentObj = assignmentObj.find(a => a.PERSON_NUMBER === empNumber);
+                var mgrAssignmentObj = assignmentObj.find(a => a.PERSON_NUMBER === mgrNumber);
 
-            //Get Assignment SOurce SystemId for the Employee
-            //Format : " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"
-            var assignmentSourceSystemId = empNumber + "_ASG";
-            var effectiveStartDate = empAssignmentObj.EFFECTIVE_START_DATE;
-            var effectiveEndDate = empAssignmentObj.EFFECTIVE_END_DATE;
-            var mgrAssignmentNumber = mgrNumber + "_ASG";
-            var mgrId = mgrNumber + "_PERSON";
-            var mgrType = mgrAssignmentObj.ASSIGNMENT_NAME;
-            var primaryFlag = mgrAssignmentObj.PRIMARY_FLAG;
+                var effective_start_date = moment(Date.parse(empAssignmentObj.EFFECTIVE_START_DATE.toString().split('-').reverse().join(' '))).format('DD-MMM-YY');
+                console.log(effective_start_date);
 
-            // Insert into Supervisor table from which we read and generate the HDL
+                // var empAssignmentObj = await Database.connection('oracledb').select('*')
+                //                             .from('ASSIGNMENT').where('PERSON_NUMBER',empNumber);
+                //  var mgrAssignmentObj = await Database.connection('oraledb').select('*')
+                //                         .from('ASSIGNMENT').where('PERSON_NUMBER',mgrNumber);           
 
-            var spvsrObj = {
-                ASSIGNMENT_NUMBER : empNumber,
-                //EFFECTIVE_START_DATE: effectiveStartDate,
-                //Effective_End_Date: effectiveEndDate,
-                MANAGER_ID: mgrId,
-                MANAGER_ASSIGNMENT_NUMBER: mgrAssignmentNumber,
-                MANAGER_TYPE: mgrType
-            };
-            var insStatus = await Database.connection('oracledb').insert(spvsrObj)
-                            .into('SUPERVISOR');
+                //Get Assignment SOurce SystemId for the Employee
+                //Format : " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"
+                var assignmentSourceSystemId = empNumber + "_ASG";
+                var effectiveStartDate = effective_start_date;
+                var effectiveEndDate = empAssignmentObj.EFFECTIVE_END_DATE;
+                var mgrAssignmentNumber = mgrNumber + "_ASG";
+                var mgrId = mgrNumber + "_PERSON";
+                var mgrType = mgrAssignmentObj.ASSIGNMENT_NAME;
+                var primaryFlag = mgrAssignmentObj.PRIMARY_FLAG;
+                var sourcesystemowner = empAssignmentObj.SOURCE_SYSTEM_OWNER;
 
-            console.log(insStatus);
+                // Insert into Supervisor table from which we read and generate the HDL
 
-            return ({data:"Successfully inserted",error:null});
-            
+                var spvsrObj = {
+                    ASSIGNMENT_NUMBER: empNumber,
+                    EFFECTIVE_START_DATE: effectiveStartDate,
+                    EFFECTIVE_END_DATE: effectiveEndDate,
+                    MANAGER_ID: mgrId,
+                    MANAGER_ASSIGNMENT_NUMBER: mgrAssignmentNumber,
+                    MANAGER_TYPE: mgrType,
+                    PRIMARY_FLAG: primaryFlag,
+                    SOURCE_SYSTEM_OWNER: sourcesystemowner
+
+                };
+                var insStatus = await Database.connection('oracledb').insert(spvsrObj)
+                    .into('SUPERVISOR');
+
+                console.log(insStatus);
+
+            }
+            return ({ data: "Successfully inserted", error: null });
+        }
+        catch (error) {
+            console.log(error)
         }
     }
-    catch(error){
-        console.log(error)
-    }
-    }
 
-    async GetSupervisorHdl(){
+    async GetSupervisorHdl() {
         var SupervisorHdlMetadataObj = {
-            DestinationEntity: 'Supervisor',
-            SourceColumns:['']
+            DestinationEntity: 'AssignmentSupervisor',
+            DestinationColumns: ['AsgIdSourceSystemId', 'SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'ManAssIdSourceSystemId', 'ManIdSourceSystemId', 'ManagerType', 'PersonIdSourceSystemId', 'PrimaryFlag'],
+            SourceColumns: ['AsgIdSourceSystemId', 'Source_System_Owner', 'SourceSystemId', 'Effective_Start_Date', 'Effective_End_Date', 'MANAGER_ASSIGNMENT_NUMBER', 'MANAGER_ID', 'MANAGER_TYPE', 'PersonIdSourceSystemId', 'Primary_Flag'],
+            SourceQuery: "select sup.ASSIGNMENT_NUMBER || '_' || 'ASG' \"ASGIDSOURCESYSTEMId\"" + ",'EBS' as SourceSystemOwner," +
+                "sup.ASSIGNMENT_NUMBER || '_' || 'ASGSUP' \"SOURCESYSTEMID\"" + ",to_char(sup.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate, to_char(sup.EFFECTIVE_END_DATE, 'YYYY/MM/DD')  AS EffectiveEndDate," +
+                "sup.MANAGER_ASSIGNMENT_NUMBER  \"MANASSIDSOURCESYSTEMID\"" + ", sup.MANAGER_ID \"MANIDSOURCESYSTEMID\"" + ", sup.MANAGER_TYPE as ManagerType ," + "sup.ASSIGNMENT_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMId\"" +
+                ", sup.Primary_Flag as PrimaryFlag FROM SUPERVISOR sup"
+
+
+        }
+
+        try {
+            //Get Data for  entity defined in arry of object
+            var dbResult = await Database.connection('oracledb').raw(SupervisorHdlMetadataObj.SourceQuery);
+            console.log(dbResult);
+
+            //Initi the entities to be written to file
+            var metadataLine = "METADATA|" + SupervisorHdlMetadataObj.DestinationEntity
+
+            var mergelineObject = [];
+
+            //sorting keys for each entity in array collection
+            if (dbResult) {
+                var keys = Object.keys(dbResult[0]).sort();
+                console.log(keys);
+
+                for (var i = 0; i < keys.length; i++) {
+                    if (keys[i] === 'ASGIDSOURCESYSTEMId') {
+                        metadataLine = metadataLine + "|" + "AssignmentId(SourceSystemId)"
+                    }
+                    else if (keys[i] === 'MANASSIDSOURCESYSTEMID') {
+                        metadataLine = metadataLine + "|" + "ManagerAssignmentId(SourceSystemId)"
+                    }
+                    else if (keys[i] === 'MANIDSOURCESYSTEMID') {
+                        metadataLine = metadataLine + "|" + "ManagerId(SourceSystemId)"
+                    }
+                    else if (keys[i] === 'PERSONIDSOURCESYSTEMID') {
+                        metadataLine = metadataLine + "|" + "PersonId(SourceSystemId)"
+                    }
+                    else {
+                        for (var k = 0; k < SupervisorHdlMetadataObj.DestinationColumns.length; k++) {
+                            if (SupervisorHdlMetadataObj.DestinationColumns[k].toUpperCase() === keys[i]) {
+                                metadataLine = metadataLine + "|" + SupervisorHdlMetadataObj.DestinationColumns[k];
+                                console.log(metadataLine);
+                                break;
+                            }
+                        }
+
+
+                    }
+                }
+
+                //forming merge lines 
+                
+
+                for (var d = 0; d < dbResult.length; d++) {
+                    
+                    var mergeLine = "MERGE|" + SupervisorHdlMetadataObj.DestinationEntity
+
+                    for (var i = 0; i < keys.length; i++) {
+
+                        if (dbResult[d][keys[i]] === null) {
+                            mergeLine = mergeLine + "|"
+                        }
+                        else {
+                            mergeLine = mergeLine + "|" + dbResult[d][keys[i]];
+                        }
+                        console.log(mergeLine);
+                    }
+                   mergelineObject.push(mergeLine);
+                }
+                
+                console.log(mergelineObject);
+
+                var HDLEntry = {
+                    header: metadataLine,
+                    data: mergelineObject
+                }
+                console.log(HDLEntry);
+                var HDLEntries = [];
+                HDLEntries.push(HDLEntry)
+
+                return HDLEntries;
+
+            }
+        }
+        catch (err) {
+            console.log(err);
         }
     }
 
+
+    async generateSupervisiorHdl({ request, response, error }) {
+        var cs = await this.GetSupervisorHdl();
+        var convertStatus = cs[0];
+        var HDLEntries = [];
+
+        if (convertStatus.data == null) {
+            response.send(convertStatus.error)
+            return
+        }
+         HDLEntries.push(convertStatus)
+
+        var projectname = "Worker"
+        var fileloc = 'public/hdls/' + projectname + '.dat';
+        var filepath = '/hdls/' + projectname + '.dat';
+
+
+        try {
+            fs.open(fileloc, 'w', function (err, file) {
+                if (err) {
+                    console.error("open error:  " + err.message);
+                }
+                else {
+                    var failed = false
+                    for (var i = 0; i < HDLEntries.length; i++) {
+                        fs.appendFileSync(file, HDLEntries[i].header + "\n", function (error) {
+                            console.log(error);
+                            failed = false
+                        })
+                        for (var j = 0; j < HDLEntries[i].data.length; j++) {
+                            fs.appendFileSync(file, HDLEntries[i].data[j] + "\n", function (error) {
+                                console.log(error);
+                            })
+                        }
+                        fs.appendFileSync(file, "\n", function (error) {
+                            console.log(error);
+                        })
+                    }
+                    fs.close(file, function (error) {
+                        if (error) {
+                            console.error("close error:  " + error.message);
+
+                        } else {
+                            console.log("File was closed!");
+
+
+                        }
+                    });
+
+                    if (failed) {
+                        response.send({ error: "HDL generation not successful " })
+                    }
+                }
+
+            })
+            return response.send({ loc: filepath })
+        }
+        catch (error) {
+            response.send(JSON.stringify(error))
+        }
+    }
 
 
 }

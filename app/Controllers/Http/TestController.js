@@ -121,7 +121,7 @@ const MigratedData = [
 {
   DestinationEntity: "WorkRelationship",
   DestinationColumns: ['LegalEmployerName', 'DateStart', 'ActionCode', 'PrimaryFlag', 'WorkerType'],
-  SourceColumns: [{entity:'WORK_RELATIONSHIP',column:'Legal_Employer_Name'}, {entity:'WORK_RELATIONSHIP',column:'Date_Start'}, {entity:'WORK_RELATIONSHIP',column:'Action_Code'},{entity:'WORK_RELATIONSHIP',column:'Primary_Flag'},{entity:'WORK_RELATIONSHIP',column:'Worker_Type'}],
+  SourceColumnInfo: [{entity:'WORK_RELATIONSHIP',column:'Legal_Employer_Name'}, {entity:'WORK_RELATIONSHIP',column:'Date_Start'}, {entity:'WORK_RELATIONSHIP',column:'Action_Code'},{entity:'WORK_RELATIONSHIP',column:'Primary_Flag'},{entity:'WORK_RELATIONSHIP',column:'Worker_Type'}],
   SourceQuery: "select Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'   \"SOURCESYSTEMID\"," +
       "Legal_Employer_Name as LegalEmployerName, to_char(Date_Start, 'DD/MM/YYYY') as DateStart, Action_Code as ActionCode, Primary_Flag as PrimaryFlag, Worker_Type as WorkerType," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\""
       + " FROM WORK_RELATIONSHIP "
@@ -132,7 +132,7 @@ const MigratedData = [
 {
   DestinationEntity: "WorkTerms",
   DestinationColumns: ['ActionCode',  'AssignmentName', 'AssignmentType', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'EffectiveEndDate', 'EffectiveLatestChange', 'EffectiveSequence', 'EffectiveStartDate', 'SystemPersonType', 'BusinessUnitShortCode', 'LegalEmployerName'],
-  SourceColumns: [{entity:'WORK_TERMS',column:'Action_Code'},{entity:'WORK_TERMS',column:'Assignment_Name'},{entity:'WORK_TERMS',column:'Assignment_Type'}, {entity:'WORK_TERMS',column:'Assignment_Number'},{entity:'WORK_TERMS',column:'Assignment_Status_Type_Code'},{entity:'WORK_TERMS',column:'Effective_End_Date'},{entity:'WORK_TERMS',column:'Effective_Latest_Change'},{entity:'WORK_TERMS',column:'Effective_Sequence'},{entity:'WORK_TERMS',column:'Effective_Start_Date'},{entity:'WORK_TERMS',column:'System_Person_Type'},{entity:'WORK_TERMS',column:'Business_Unit_Short_Code'},{entity:'WORK_TERMS',column:'Legal_Employer_Name'}],
+  SourceColumnInfo: [{entity:'WORK_TERMS',column:'Action_Code'},{entity:'WORK_TERMS',column:'Assignment_Name'},{entity:'WORK_TERMS',column:'Assignment_Type'}, {entity:'WORK_TERMS',column:'Assignment_Number'},{entity:'WORK_TERMS',column:'Assignment_Status_Type_Code'},{entity:'WORK_TERMS',column:'Effective_End_Date'},{entity:'WORK_TERMS',column:'Effective_Latest_Change'},{entity:'WORK_TERMS',column:'Effective_Sequence'},{entity:'WORK_TERMS',column:'Effective_Start_Date'},{entity:'WORK_TERMS',column:'System_Person_Type'},{entity:'WORK_TERMS',column:'Business_Unit_Short_Code'},{entity:'WORK_TERMS',column:'Legal_Employer_Name'}],
   SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ETERM' \"SOURCESYSTEMID\"" + ",Assignment_Name as AssignmentName,Assignment_Type as AssignmentType," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
       + ", Assignment_Status_Type_Code as AssignmentStatusTypeCode, to_char(Effective_End_Date, 'DD/MM/YYYY') as EffectiveEndDate, Effective_Latest_Change as EffectiveLatestChange, Effective_Sequence as EffectiveSequence, to_char(Effective_Start_Date, 'DD/MM/YYYY') as EffectiveStartDate,"
       + " System_Person_Type as SystemPersonType, Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer_Name as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ", PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\"" +
@@ -144,7 +144,7 @@ const MigratedData = [
 {
   DestinationEntity: "Assignment",
   DestinationColumns: ['ActionCode', 'EffectiveStartDate', 'EffectiveEndDate', 'EffectiveSequence', 'EffectiveLatestChange', 'AssignmentType', 'AssignmentName', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'BusinessUnitShortCode', 'LegalEmployerName', 'PersonTypeCode', 'PrimaryFlag', 'SystemPersonType', 'JobCode', 'DepartmentName', 'LocationCode'],
-  SourceColumns: [{entity:'ASSIGNMENT',column:'Action_Code'},{entity:'ASSIGNMENT',column:'Effective_Start_Date'},{entity:'ASSIGNMENT',column:'Effective_End_Date'}, {entity:'ASSIGNMENT',column:'Effective_Sequence'}, {entity:'ASSIGNMENT',column:'Effective_Latest_Change'},{entity:'ASSIGNMENT',column:'Assignment_Type'}, {entity:'ASSIGNMENT',column:'Assignment_Name'}, {entity:'ASSIGNMENT',column:'Assignment_Number'}, {entity:'ASSIGNMENT',column:'Assignment_Status_Type_Code'}, {entity:'ASSIGNMENT',column:'Business_Unit_Short_Code'}, {entity:'ASSIGNMENT',column:'Legal_Employer'},{entity:'ASSIGNMENT',column:'Person_Type_Code'},{entity:'ASSIGNMENT',column:'Primary_Flag'} , {entity:'ASSIGNMENT',column:'System_Person_Type'}, {entity:'ASSIGNMENT',column:'Job_Code'}, {entity:'ASSIGNMENT',column:'Department_Name'}, {entity:'ASSIGNMENT',column:'Location_Code'}],
+  SourceColumnInfo: [{entity:'ASSIGNMENT',column:'Action_Code'},{entity:'ASSIGNMENT',column:'Effective_Start_Date'},{entity:'ASSIGNMENT',column:'Effective_End_Date'}, {entity:'ASSIGNMENT',column:'Effective_Sequence'}, {entity:'ASSIGNMENT',column:'Effective_Latest_Change'},{entity:'ASSIGNMENT',column:'Assignment_Type'}, {entity:'ASSIGNMENT',column:'Assignment_Name'}, {entity:'ASSIGNMENT',column:'Assignment_Number'}, {entity:'ASSIGNMENT',column:'Assignment_Status_Type_Code'}, {entity:'ASSIGNMENT',column:'Business_Unit_Short_Code'}, {entity:'ASSIGNMENT',column:'Legal_Employer'},{entity:'ASSIGNMENT',column:'Person_Type_Code'},{entity:'ASSIGNMENT',column:'Primary_Flag'} , {entity:'ASSIGNMENT',column:'System_Person_Type'}, {entity:'ASSIGNMENT',column:'Job_Code'}, {entity:'ASSIGNMENT',column:'Department_Name'}, {entity:'ASSIGNMENT',column:'Location_Code'}],
   SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"" + ",to_char(Effective_Start_Date,'DD/MM/YYYY') as EffectiveStartDate,to_char(Effective_End_Date, 'DD/MM/YYYY') as EffectiveEndDate, Effective_Sequence as EffectiveSequence,"
       + "Effective_Latest_Change as EffectiveLatestChange, Assignment_Type as AssignmentType,Assignment_Name as AssignmentName," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
       + ",Assignment_Status_Type_Code as AssignmentStatusTypeCode,Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\""
@@ -153,64 +153,6 @@ const MigratedData = [
 
 }
 
-// {
-//   DestinationEntity: 'PersonAddress',
-//   DestinationColumns:['PersonAddrUsageId', 'AddressLine1','PersonNumber','PersonId','EffectiveEndDate','EffectiveStartDate','AddlAddressAttribute1','AddlAddressAttribute2','AddlAddressAttribute3','AddlAddressAttribute4', 
-//   'AddlAddressAttribute5','AddressId','AddressLine2','AddressLine3','AddressLine4','AddressType','Country','LongPostalCode','PostalCode','PrimaryFlag','Region1','Region2','Region3','TownOrCity','SourceSystemId','SourceSystemOwner','GUID'],
-//   SourceColumnInfo:[{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_1'},{entity:'PERSON',column:'PERSON_NUMBER'},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'EFFECTIVE_END_DATE'},{entity:'PERSON_ADDRESS',column:'EFFECTIVE_START_DATE'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_2'},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_3'},{entity:'PERSON_ADDRESS',column:'ADDRESS_LINE_4'},{entity:'PERSON_ADDRESS',column:'ADDRESS_TYPE'},{entity:'PERSON_ADDRESS',column:'COUNTRY'},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'POSTAL_CODE'},{entity:'',column:''},{entity:'PERSON_ADDRESS',column:'REGION_1'},{entity:'PERSON_ADDRESS',column:'REGION_2'},{entity:'PERSON_ADDRESS',column:'REGION_3'},{entity:'PERSON_ADDRESS',column:'TOWN_OR_CITY'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//   SourceQuery: "SELECT '' as PersonAddrUsageId,b.ADDRESS_LINE_1,a.PERSON_NUMBER,'' as PersonId,b.EFFECTIVE_END_DATE,b.EFFECTIVE_START_DATE,'' as AddlAddressAttribute1,'' as AddlAddressAttribute2,'' as AddlAddressAttribute3,'' as AddlAddressAttribute4, '' as AddlAddressAttribute5,'' as AddressId,    a.PERSON_NUMBER,   b.ADDRESS_LINE_2, b.ADDRESS_LINE_3," +
-//    "b.ADDRESS_LINE_4,b.ADDRESS_TYPE,b.COUNTRY,'' as LongPostalCode,b.POSTAL_CODE,'' as Primaryflag,b.REGION_1,b.REGION_2,b.REGION_3,b.TOWN_OR_CITY,'' as SourceSystemId,'' as SourceSystemOwner,'' as GUID " + " FROM PERSON a,PERSON_ADDRESS b WHERE a.UNIQUE_IDENTIFIER = b.UNIQUE_IDENTIFIER"  
-// },
-
-
-
-// {
-//   DestinationEntity: 'PersonCitizenship',
-//   DestinationColumns:['CitizenshipId', 'LegislationCode', 'PersonNumber','PersonId','CitizenshipStatus','DateFrom','DateTo','SourceSystemId','SourceSystemOwner','GUID'],
-//   SourceColumnInfo:[{entity:'',column:''},{entity:'CITIZENSHIP_VO',column:'LEGISLATION_CODE'},{entity:'CITIZENSHIP_VO',column:'PERSON_NUMBER'},{entity:'',column:''},{entity:'CITIZENSHIP_VO',column:'CITIZENSHIP_STATUS'},{entity:'CITIZENSHIP_VO',column:'DATE_FROM'},{entity:'CITIZENSHIP_VO',column:'DATE_TO'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//   SourceQuery: "select '' as CitizenshipId, LEGISLATION_CODE,PERSON_NUMBER,'' as PersonId ,CITIZENSHIP_STATUS,DATE_FROM,DATE_TO, '' as SourceSystemId, '' as GUID from CITIZENSHIP_VO;"   
-
-// },
-
-// {
-//   DestinationEntity: 'PersonDriversLicence',
-//   DestinationColumns:['DriversLicenseId', 'LegislationCode','LicenseNumber','LicenseType','PersonNumber','PersonId','DateFrom','DateTo','IssuingAuthority','IssuingCountry','IssuingLocation','LicenseSuspended','NumberOfPoints','SuspendedFromDate','SuspendedToDate','DateTo','Violations','SourceSystemId','SourceSystemOwner','GUID'],
-//   SourceColumnInfo:[{entity:'',column:''},{entity:'PERSON',column:'DRIVER_LICENSE_COUNTRY'},{entity:'PERSON',column:'DRIVER_LICENSE_NUMBER'},{entity:'PERSON',column:'DRIVER_LICENSE_TYPE'},{entity:'PERSON',column:'PERSON_NUMBER'},{entity:'',column:''},{entity:'',column:'START_DATE'},{entity:'PERSON',column:'DRIVER_LICENSE_EXP_DATE'},{entity:'DOCUMENTS_OF_RECORD_VO',column:'ISSUING_AUTHORITY'},{entity:'PERSON',column:'DRIVER_LICENSE_COUNTRY'},{entity:'PERSON',column:'DRIVER_LICENSE_STATE'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'PERSON',column:'DRIVER_LICENSE_EXP_DATE'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//   SourceQuery: "select '' as DriversLicenseId, a.DRIVER_LICENSE_COUNTRY,a.DRIVER_LICENSE_NUMBER, a.DRIVER_LICENSE_TYPE,a.PERSON_NUMBER,'' as PersonId, a.START_DATE,a.DRIVER_LICENSE_EXP_DATE,b.ISSUING_AUTHORITY,a.DRIVER_LICENSE_COUNTRY,a.DRIVER_LICENSE_STATE,'' as LicenseSuspended,''  from PERSON a, DOCUMENTS_OF_RECORD_VO b where a.PERSON_NUMBER = b.PERSON_NUMBER"
-//  },
-
-//  {
-//   DestinationEntity: 'PersonEmail',
-//   DestinationColumns:['EmailAddressId','EmailAddress', 'EmailType', 'PersonNumber','PersonId','DateFrom','DateTo','PrimaryFlag','SourceSystemId','SourceSystemOwner','GUID'],
-//   SourceColumnInfo:[{entity:'',column:''},{entity:'PERSON_EMAIL',column:'EMAIL_ADDRESS'},{entity:'PERSON_EMAIL',column:'EMAIL_TYPE'},{entity:'PERSON',column:'PERSON_NUMBER'},{entity:'',column:''},{entity:'PERSON_EMAIL',column:'DATE_FROM'},{entity:'PERSON_EMAIL',column:'DATE_TO'},{entity:'PERSON_EMAIL',column:'PRIMARY_FLAG'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//   SourceQuery: "select '' as EmailAddressId, EMAIL_ADDRESS, EMAIL_TYPE, PERSON_NUMBER,'' as PersonId, DATE_FROM,DATE_TO,'' as PRIMARY_FLAG,'' as SourceSystemId,'' as SourceSystemOwner,'' as GUID  from PERSON_EMAIL, PERSON where PERSON.UNIQUE_IDENTIFIER = PERSON_EMAIL.UNIQUE_IDENTIFIER"
-// },
-
-// {
-//     DestinationEntity: 'PersonEthnicity',
-//     DestinationColumns:['EthnicityId', 'Ethnicity', 'LegislationCode','PersonNumber','PersonId','DeclarerId','DeclarerPersonNumber','PrimaryFlag','SourceSystemId','SourceSystemOwner','GUID'],
-//     SourceColumnInfo:[{entity:'',column:''},{entity:'PERSON',column:'ETHNICITY'},{entity:'PERSON',column:'COUNTRY_CODE'},{entity:'PERSON',column:'PERSON_NUMBER'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//     SourceQuery: "select '' as EthnicityId, ETHNICITY, COUNTRY_CODE, PERSON_NUMBER,'' as PersonId,'' as DeclarerId,'' as DeclarerPersonNumber, PrimaryFlag,'' as SourceSystemId,'' as SourceSystemOwner,'' as GUID from PERSON" 
-// },
-// {
-//   DestinationEntity: 'PersonPhone',
-//   DestinationColumns : ['PhoneId','PhoneNumber','PersonNumber','PhoneType','PersonId','AreaCode','CountryCodeNumber','DateFrom','DateTo','Extension','LegislationCode','PrimaryFlag','SpeedDialNumber','Validity','SourceSystemId','SourceSystemOwner','GUID'],
-//   SourceColumnInfo:[{entity:'',column:''},{entity:'PERSON_PHONE',column:'PHONE_NUMBER'},{entity:'PERSON',column:'PERSON_NUMBER'},{entity:'PERSON_PHONE',column:'PHONE_TYPE'},{entity:'',column:''},{entity:'PERSON_PHONE',column:'AREA_CODE'},{entity:'PERSON_PHONE',column:'COUNTRY_CODE_NUMBER'},{entity:'PERSON_PHONE',column:'DATE_FROM'},{entity:'PERSON_PHONE',column:'DATE_TO'},{entity:'PERSON_PHONE',column:'EXTENSION'},{entity:'PERSON_PHONE',column:'COUNTRY_CODE'},{entity:'PERSON_PHONE',column:'PRIMARY_FLAG'},{entity:'PERSON_PHONE',column:'SPEED_DIAL_NUMBER'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//    SourceQuery :"select '' as PhoneId, a.PHONE_NUMBER,b.PERSON_NUMBER,a.PHONE_TYPE,'' as PersonId,a.AREA_CODE,a.COUNTRY_CODE_NUMBER,a.DATE_FROM,a.DATE_TO,a.EXTENSION,a.COUNTRY_CODE,a.PRIMARY_FLAG,a.SPEED_DIAL_NUMBER,'' as Validity, '' as SourceSystemId,'' as SourceSystemOwner,'' as GUID from PERSON_PHONE a,PERSON b where a.UNIQUE_IDENTIFIER=b.UNIQUE_IDENTIFIER"
-// },
-
-// {
-//   DestinationEntity: 'AssignmentSupervisor',
-//   DestinationColumns : ['AssignmentSupervisorId','AssignmentNumber','ManagerAssignmentNumber','ManagerPersonNumber','ManagerType','AssignmentId','EffectiveEndDate','EffectiveStartDate','ActionCode','ManagerId','NewManagerAssignmentNumber','NewManagerPersonNumber','NewManagerType','PersonId','PrimaryFlag','ReasonCode','ManagerAssignmentId','SourceSystemId','SourceSystemOwner','GUID'],
-//   SourceColumnInfo:[{entity:'',column:''},{entity:'SUPERVISOR',column:'ASSIGNMENT_NUMBER'},{entity:'SUPERVISOR',column:'MANAGER_ASSIGNMENT_NUMBER'},{entity:'',column:''},{entity:'SUPERVISOR',column:'MANAGER_TYPE'},{entity:'',column:''},{entity:'SUPERVISOR',column:'EFFECTIVE_END_DATE'},{entity:'SUPERVISOR',column:'EFFECTIVE_START_DATE'},{entity:'ASSIGNMENT',column:'ACTION'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'ASSIGNMENT',column:'ACTION_REASON'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//   SourceQuery : "select '' as AssignmentSupervisorId,a.ASSIGNMENT_NUMBER,a.MANAGER_ASSIGNMENT_NUMBER,'' as ManagerPersonNumber,a.MANAGER_TYPE,'' as AssignmentId,a.EFFECTIVE_END_DATE,a.EFFECTIVE_START_DATE,b.ACTION,'' as ManagerId,'' as NewManagerAssignmentNumber,'' as NewManagerPersonNumber,'' as  NewManagerType,'' as PersonId,'' as PrimaryFlag,b.ACTION_REASON,'' as ManagerAssignmentId, '' as SourceSystemId,'' as SourceSystemOwner,'' as GUID from SUPERVISOR a,ASSIGNMENT b WHERE a.UNIQUE_IDENTIFIER=b.UNIQUE_IDENTIFIER"   
-//   },
-//   {
-//       DestinationEntity:'AssignmentWorkMeasure',
-//       DestinationColumns :['AssignWorkMeasureId','AssignmentNumber','Unit','AssignmentId','EffectiveEndDate','EffectiveStartDate','ActionCode','NewUnit','ReasonCode','Value','SourceSystemId','SourceSystemOwner','GUID'],
-//       SourceColumnInfo:[{entity:'',column:''},{entity:'ASSIGNMENT',column:'ASSIGNMENT_NUMBER'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'ASSIGNMENT',column:'EFFECTIVE_DATE'},{entity:'ASSIGNMENT',column:'ACTION'},{entity:'',column:''},{entity:'ASSIGNMENT',column:'ACTION_REASON'},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''},{entity:'',column:''}],
-//       SourceQuery : "select '' as AssignWorkMeasureId,ASSIGNMENT_NUMBER,'' as Unit,'' as AssignmentId,'' as EffectiveEndDate, EFFECTIVE_DATE,ACTION,'' as NewUnit,ACTION_REASON,'' as value,  '' as SourceSystemId,'' as SourceSystemOwner,'' as GUID from ASSIGNMENT"  
-//   }
 
 ]
 
@@ -301,7 +243,7 @@ class TestController {
 
     async previewFile({request, response, err}){
     try{
-      response.status(200).send({success:true, data:DataTransferRulesForDefaultTransfers, msg:'Successfully get the data', error:null});
+      response.status(200).send({success:true, data:MigratedData, msg:'Successfully get the data', error:null});
     }catch(err){
       response.status(400).send({success:false, data:null, msg:'Error while get the data', error:err});
     }

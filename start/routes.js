@@ -68,6 +68,7 @@ Route.group(() =>
  Route.post('/api/v1/destinationdata', 'HdlController.convert')
  Route.post('/api/v1/processSupervisor','HdlController.processSupervisor')
  Route.get('/api/v1/download/hdl', 'HdlController.download')
+ Route.get('/api/v1/supervisior/hdl','HdlController.generateSupervisiorHdl')
  Route.post('/api/v1/source/columns', 'TestController.previewFile')
  Route.post('/api/v1/oracle/errors', 'FileController.errorlistFile')
 
@@ -82,6 +83,8 @@ Route.group(() =>
  
  //SetUpDataController
  Route.get('/api/vi/GetSetupData','SetupDataController.GetDataForSetupByEntity')
+
+ 
 
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 
