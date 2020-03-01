@@ -3,10 +3,12 @@
 const ErrorManager = use('App/Models/ErrorManager');
 const Database = use('Database');
 
+const HdlController = require('./HdlController');
+
 
 let Errormanager = new ErrorManager();
 
-class ValidationController {
+class ValidationController extends HdlController {
 
 
     async getstatus({ request, response, error }) {
@@ -236,6 +238,191 @@ class ValidationController {
     }
 
 
+    async storeMapUnMapIntoDB({request, response, error}) {
+        
+        try {
+            const hdlController = new HdlController();
+            
+            var HDLEntries = [];
+            var dbdata = [];
+            const deleteDB = await Database.connection('oracledb').raw('DELETE FROM VALIDATIONS_DATA');
+            //Iterating over array collection of entities
+            const PromiseEntries = hdlController.DataTransferRulesForDefaultTransfers.map(async (rule) => {
+                //Get Data for each entity defined in arry of objects
+                var dbResult = await Database.connection('oracledb').raw(rule.SourceQuery);
+                //console.log(dbResult);
+
+                //Initi the entities to be written to file
+                var metadataLine = "METADATA|" + rule.DestinationEntity
+
+                var mergelineObject = [];
+
+                //including data mapping values in hdl generation
+
+                var mappings = [];
+
+                var dataMappings = await Database.connection('oracledb').raw('select psl.entity_name, pdm.source_column_name, pdm.source_data, pdm.destination_data from project_source_entity_list psl,'
+                +'proj_data_mappings pdm where psl.entity_id = pdm.source_entity_id');
+                //console.log(dataMappings);
+
+                // var entity = "Person_name"
+                var MappedEntity = dataMappings.filter(e => {
+
+                    var entity = hdlController.lookupObj[e.ENTITY_NAME];
+
+                   // console.log(entity);
+                    if (entity.toUpperCase() === rule.DestinationEntity.toUpperCase())
+                        return e
+
+                })
+               // console.log(MappedEntity);
+                var mapData = MappedEntity.map(me => {
+                    return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA, 'SourceColumn': me.SOURCE_COLUMN_NAME, 'Entity': me.ENTITY_NAME }
+                });
+                //console.log(mapData);
+
+                //sorting keys for each entity in array collection
+                if (dbResult) {
+                    var keys = Object.keys(dbResult[0]).sort();
+                    //console.log(keys);
+
+
+                    for (var i = 0; i < keys.length; i++) {
+                        if (keys[i] === 'PERSONIDSOURCESYSTEMID') {
+                            metadataLine = metadataLine + "|" + "PersonId(SourceSystemId)"
+                        } else
+                            if (keys[i] === 'POSIDSOURCESYSTEMID') {
+                                metadataLine = metadataLine + "|" + "PeriodOfServiceId(SourceSystemId)"
+                            }
+
+                            else
+                                if (keys[i] === 'WTAIDSOURCESYSTEMID') {
+                                    metadataLine = metadataLine + "|" + "WorkTermsAssignmentId(SourceSystemId)"
+                                }
+                                else {
+                                    for (var k = 0; k < rule.DestinationColumns.length; k++) {
+                                        if (rule.DestinationColumns[k].toUpperCase() === keys[i]) {
+                                            metadataLine = metadataLine + "|" + rule.DestinationColumns[k];
+                                            //console.log(metadataLine);
+                                            break;
+                                        }
+                                    }
+
+
+                                }
+                    }
+                    dbResult.forEach(eachResult => {
+                        //forming merge lines for array of objects..
+                        var mergeLine = "MERGE|" + rule.DestinationEntity
+
+                        // mergeLine = mergeLine + "|" + mapping;
+
+
+                        for (var i = 0; i < keys.length; i++) {
+
+                            for (var j = 0; j < mapData.length; j++) {
+
+                                if (keys[i] === mapData[j].SourceColumn) {
+                                    if (mapData[j].SourceData.toUpperCase() === eachResult[keys[i]].toUpperCase()) {
+                                        eachResult[keys[i]] = mapData[j].DestData;
+                                        console.log(keys[i]);
+                                        if(keys[i] == 'PERSONNUMBER') {
+                                            console.log('1---',keys[i]);
+                                            dbdata.push({
+                                                VALIDATION_ENTITY: mapData[j].Entity,
+                                                MAPPED_PERSON_NUMBER: eachResult[keys[i]],
+                                                MAPPING_COLUMN_NAME: mapData[j].SourceColumn
+                                            });
+                                            /*let insertdata = await Database.connection('oracledb').insert({
+                                                VALIDATION_ENTITY: mapData[j].Entity,
+                                                MAPPED_PERSON_NUMBER: eachResult[keys[i]],
+                                                MAPPING_COLUMN_NAME: mapData[j].SourceColumn
+                                            }).into('VALIDATIONS_DATA');*/
+                                        }
+                                    }
+                                    else {
+                                        console.log('2---',keys[i]);
+                                        console.log(eachResult[keys[i]]);
+                                        if(keys[i] == 'PERSONNUMBER') {
+                                            
+                                            dbdata.push({
+                                                VALIDATION_ENTITY: mapData[j].Entity,
+                                                NOTMAPPED_PERSON_NUMBER: eachResult[keys[i]],
+                                                MAPPING_COLUMN_NAME: mapData[j].SourceColumn
+                                            });
+                                            /*let insertdata = await Database.connection('oracledb').insert({
+                                                VALIDATION_ENTITY: mapData[j].Entity,
+                                                NOTMAPPED_PERSON_NUMBER: eachResult[keys[i]],
+                                                MAPPING_COLUMN_NAME: mapData[j].SourceColumn
+                                            }).into('VALIDATIONS_DATA');*/
+                                        }
+                                    }
+
+                                }
+                                else {
+                                    if(keys[i] == 'PERSONNUMBER') {
+                                        dbdata.push({
+                                            VALIDATION_ENTITY: mapData[j].Entity,
+                                            NOTMAPPED_PERSON_NUMBER: eachResult[keys[i]],
+                                            MAPPING_COLUMN_NAME: mapData[j].SourceColumn
+                                        });
+                                    }
+                                }
+                                // mergeLine = mergeLine + "|" + eachResult[keys[i]]
+                            }
+
+
+
+                           
+                        }
+                    })
+
+                    
+                }
+
+                if (dbResult.length == 0) {
+                    var HDLEntry = {};
+                }
+                else {
+                    var HDLEntry = {};
+                }
+
+                return HDLEntry;
+                // HDLEntries.push(HDLEntry);
+                // console.log(HDLEntries);
+
+
+            });
+
+            HDLEntries = await Promise.all(PromiseEntries);
+            if(dbdata.length > 0){
+            
+                let dbinsert = await Database.connection('oracledb').insert(dbdata).into('VALIDATIONS_DATA'); 
+            
+                let unmapCount = await Database.connection('oracledb').raw('SELECT DISTINCT NOTMAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA WHERE NOTMAPPED_PERSON_NUMBER != 0');
+
+                let mapCount = await Database.connection('oracledb').raw('SELECT DISTINCT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA WHERE MAPPED_PERSON_NUMBER != 0');
+                //console.log(HDLEntries);
+
+                // return response.send({data:HDLEntries})
+                return ({ mapCount: mapCount.length, unmapCount: unmapCount.length, error: null });
+            }
+            else{
+                return ({ mapCount: 0, unmapCount: 0, error: null });                
+            }
+
+        }
+
+        catch (err) {
+            console.log(err);
+            return ({ data: null, error: err });
+
+        }
+
+        // finally {
+        //     Database.close(['oracledb']);
+        // }
+    }
 
 }
 

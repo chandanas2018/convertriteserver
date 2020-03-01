@@ -84,7 +84,7 @@ Route.group(() =>
  //SetUpDataController
  Route.get('/api/vi/GetSetupData','SetupDataController.GetDataForSetupByEntity')
 
- 
+ Route.get('/getValidations','ValidationController.storeMapUnMapIntoDB')
 
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 
