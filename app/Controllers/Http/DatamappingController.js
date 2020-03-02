@@ -374,8 +374,7 @@ class DatamappingController {
             var data1 = [];
             var data = request.body;
 
-            let mappings = await Database.connection('oracledb').raw('SELECT PROJECT_ID, SOURCE_COLUMN_ID, SOURCE_DATA, SOURCE_COLUMN_NAME, SOURCE_ENTITY_ID, SOURCE_DISPLAY_NAME, DESTINATION_COLUMN_ID, DESTINATION_DATA, DESTINATION_COLUMN_NAME, DESTINATION_DISPLAY_NAME FROM PROJ_DATA_MAPPINGS WHERE SOURCE_ENTITY_ID = '+data.entityid+' AND ROWNUM = 1');
-            console.log(mappings);
+            let mappings = await Database.connection('oracledb').raw('SELECT PROJECT_ID, SOURCE_COLUMN_ID,  SOURCE_COLUMN_NAME, SOURCE_ENTITY_ID, SOURCE_ENTITY_NAME, DESTINATION_COLUMN_ID, DESTINATION_ENTITY_NAME, DESTINATION_COLUMN_NAME, DISPLAY_NAME FROM PROJ_COLUMN_MAPPING WHERE SOURCE_ENTITY_ID = '+data.entityid+' AND ROWNUM = 1');
             
             for (var i = 0; i < mappings.length; i++) {
                 let qry1 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', mappings[i].SOURCE_ENTITY_ID);

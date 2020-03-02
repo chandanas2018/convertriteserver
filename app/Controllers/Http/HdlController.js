@@ -110,6 +110,11 @@ var lookupObj = {
 
 class HdlController {
 
+    constructor() {
+        this.lookupObj = lookupObj;
+        this.DataTransferRulesForDefaultTransfers = DataTransferRulesForDefaultTransfers;
+    }
+
     async convert() {
         try {
             var HDLEntries = [];
