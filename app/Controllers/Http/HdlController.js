@@ -572,6 +572,58 @@ class HdlController {
         }
     }
 
+    async CreateSalaryBasis(){
+        try{
+        var dbSourceData = await Database.connection('oracledb').select('*').from('SOURCE_SALARY');
+        var dataMappings = await hdlMappings.getMappingsByEntityId()
+        console.log(dataMappings);
+
+        //Filter Mappings for SalaryBasis
+        var MappedEntity = dataMappings.filter(e => {
+            console.log(entity);
+            if (e.ENTITY_NAME.toUpperCase() === 'SALARYBASIS')
+                return e
+
+        });
+        console.log(MappedEntity);
+        var mapData = MappedEntity.map(me => {
+            return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA, 'SourceColumn': me.SOURCE_COLUMN_NAME, 'Entity': me.ENTITY_NAME }
+        }); 
+        var assignmentObj = await Database.connection('oracledb').select('*')
+        .from('ASSIGNMENT');
+
+        if(dbSourceData != null){
+            for(var i=0;i<dbSourceData.length;i++){
+                var salBasis = mapData.find(md=>md.SourceData.toUpperCase() == dbSourceData[i].SALARY_BASIS_NAME.toUpperCase());
+                if(salBasis){
+                  
+               // var empAssignmentObj = assignmentObj.find(a => a.PERSON_NUMBER === dbSourceData[i].PERSON_NUMBER);
+
+                var Date_From = moment(Date.parse(dbSourceData[i].DATE_FROM.toString().split('-').reverse().join(' '))).format('DD-MMM-YY');
+                var Date_To = moment(Date.parse(dbSourceData[i].DATE_TO.toString().split('-').reverse().join(' '))).format('DD-MMM-YY');
+                console.log(effective_start_date);
+                    var obj = {
+                        ACTIONCODE:'CHANGE_SALARY',
+                        ASSIGNMENTID: dbSourceData[i].PERSON_NUMBER + "_ASG",
+                        DATEFROM: Date_From,
+                        DATETO: Date_To,
+                        SALARYAMOUNT: dbSourceData[i].SALARY_AMOUNT,
+                        SALARYBASISNAME: salBasis.DestData,
+                        SALARYAPPROVED: 'Y'
+                    };
+                    var res = await Database.connection('oracledb').insert(obj).into('SALARY');
+                    console.log(res);
+                }
+            }
+        }
+
+        return ({ data: "Salary data successfully inserted", error: null });
+    }
+    catch(err){
+        console.log(err);
+    }
+    }
+
 
 }
 module.exports = HdlController
