@@ -173,7 +173,13 @@ class FileController {
         console.log(rows);
 
         try {
+           
             //deleting table data 
+        
+            if(data.filename === "PERSON_SALARY"){
+                data.filename = "SOURCE_SALARY";
+            }
+            
 
 
             await Database.connection('oracledb').table(data.filename)
@@ -183,17 +189,21 @@ class FileController {
             for (var i = 0; i < rows.length; i++) {
                 console.log(rows[i]);
 
-                // var dateobj = {
-                //     DATE_OF_BIRTH:rows[i].DATE_OF_BIRTH,
-                //     EFFECTIVE_START_DATE:rows[i].EFFECTIVE_START_DATE,
-                //     START_DATE:rows[i].START_DATE
-                // }
+                
+                var dateobj = {
+                    datefrom : rows[i].DATE_FROM,
+                    dateto: rows[i].DATE_TO ,
+                    dateofbirth : rows[i].DATE_OF_BIRTH,
+                    effectivestartdate : rows[i].EFFECTIVE_START_DATE,
+                    startdate:rows[i].START_DATE,
+                    datestart :rows[i].DATE_START
+                }
+                console.log(dateobj);  
 
                 if (data.filename === "PERSON") {
-
-                    rows[i].DATE_OF_BIRTH = moment(Date.parse(rows[i].DATE_OF_BIRTH.split('-').reverse().join(' '))).format('DD-MMM-YY');
-                    rows[i].EFFECTIVE_START_DATE = moment(Date.parse(rows[i].EFFECTIVE_START_DATE.split('-').reverse().join(' '))).format('DD-MMM-YY');
-                    rows[i].START_DATE = moment(Date.parse(rows[i].START_DATE.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    rows[i].DATE_OF_BIRTH = moment(Date.parse(dateobj.dateofbirth.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    rows[i].EFFECTIVE_START_DATE = moment(Date.parse(dateobj.effectivestartdate.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    rows[i].START_DATE = moment(Date.parse(dateobj.startdate.split('-').reverse().join(' '))).format('DD-MMM-YY');
 
                 }
 
@@ -201,16 +211,20 @@ class FileController {
                     data.filename === "PERSON_LEGISLATIVE_INFO" ||
                     data.filename === "ASSIGNMENT" ||
                     data.filename === 'WORK_TERMS') {
-                    rows[i].EFFECTIVE_START_DATE = moment(Date.parse(rows[i].EFFECTIVE_START_DATE.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    rows[i].EFFECTIVE_START_DATE = moment(Date.parse(dateobj.effectivestartdate.split('-').reverse().join(' '))).format('DD-MMM-YY');
                 }
 
                 else if (data.filename === "WORK_RELATIONSHIP") {
-                    rows[i].DATE_START = moment(Date.parse(rows[i].DATE_START.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    rows[i].DATE_START = moment(Date.parse(dateobj.datestart.split('-').reverse().join(' '))).format('DD-MMM-YY');
                 }
 
-
-
-
+                else if (dateobj.datefrom){
+                    rows[i].DATE_FROM = moment(Date.parse(dateobj.datefrom.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    if (dateobj.dateto){
+                        rows[i].DATE_TO = moment(Date.parse(dateobj.dateto.split('-').reverse().join(' '))).format('DD-MMM-YY');
+                    }
+                 }
+                
                 var insertedData = await Database.connection('oracledb').table(data.filename.toUpperCase())
                     .insert(rows[i]);
                 console.log(insertedData);
@@ -223,7 +237,10 @@ class FileController {
 
             if (rows != null || rows.length == 0) {
                 try {
-                    // to update status of file      
+                    // to update status of file 
+                    if(data.filename === "SOURCE_SALARY"){
+                        data.filename = "PERSON_SALARY";
+                    }    
                     let qry = await Database.connection('oracledb').table('PROJECT_LEGACY_UPLOAD_STATUS').where({ 'ENTITY_NAME': data.filename, 'PROJECT_ID': 2 })
                         .update({ 'UPLOAD_STATUS': 'UPLOADED', 'TIMESTAMP': new Date() });
                     console.log(qry)

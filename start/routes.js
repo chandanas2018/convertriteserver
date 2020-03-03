@@ -86,6 +86,7 @@ Route.group(() =>
 
  Route.get('/getValidations','ValidationController.storeMapUnMapIntoDB')
 
+
 // Route.group(() => {
 //  Route.post('login', 'LoginController') 
 // }).prefix('api')

@@ -121,6 +121,11 @@ class DatamappingController {
             console.log(sourcedata);
             SourceData = sourcedata;
             }
+            else if(data1.data.SOURCE_COLUMN_NAME == "SALARY_BASIS_NAME"){
+                var sourcedata = await Database.connection('oracledb').raw("SELECT salary_basis_name as source_data_name from source_salary");
+            console.log(sourcedata);
+            SourceData = sourcedata;
+            }
             else {
                 var sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT flv.lookup_code as source_data_id, flv.lookup_type as source_data_code, flv.meaning as source_data_name "
                     + " FROM APPS.fnd_lookup_values flv,APPS.fnd_lookup_types flt" + " WHERE flt.LOOKUP_TYPE ='" + data1.data.SOURCE_COLUMN_NAME + "'and flt.lookup_type = flv.lookup_type and flv.language ='US'");
@@ -155,6 +160,14 @@ class DatamappingController {
             else if (data1.data.DESTINATION_COLUMN_NAME == "GRADE_CODE") {
                 data1.data.DESTINATION_COLUMN = 'grades'
                 var destinationdata = await Database.connection('oracledb').raw("select gradeid, grade_code as DEST_DATA_ID, gradename as DEST_DATA_NAME from "
+                 + data1.data.DESTINATION_COLUMN );
+                console.log(destinationdata);
+                DestinationData = destinationdata;
+
+            }
+            else if (data1.data.DESTINATION_COLUMN_NAME == "SALARY_BASIS_NAME") {
+                data1.data.DESTINATION_COLUMN = 'salarybasis'
+                var destinationdata = await Database.connection('oracledb').raw("select salarybasisname as DEST_DATA_NAME from "
                  + data1.data.DESTINATION_COLUMN );
                 console.log(destinationdata);
                 DestinationData = destinationdata;
@@ -475,32 +488,7 @@ class DatamappingController {
     }
 
 
-
-    //to display the source data based on the source column name
-    // async sourcedata({ request, response, error }) {
-    //     try {
-    //to get column name from proj_datatype_entity_columns
-    // var name = await Database.select('COLUMN_NAME').from('PROJ_DATATYPE_ENTITY_COLUMNS')
-    // .where('COLUMN_NAME' , data1.data.DESTINATION_COLUMN_NAME);
-    // console.log(name);
-    //to get the destination data for selected dest column mapped value
-    // var table =  'DEST' + '_' + data1.data.DESTINATION_ENTITY_NAME;
-    // console.log(table);
-    //         var data = request.body;
-    //         //select source column id from project_source_entity_column_list table
-    //         let sourcecolumnid = await Database.select('COLUMN_ID').from('PROJ_SOURCE_ENTITY_COLUMN_LIST')
-    //             .where('COLUMN_NAME', data.sourcecolumnname);
-    //         console.log(sourcecolumnid);
-    //         let sourcedata = await Database.select('*').from('SOURCE_MASTER_DATA')
-    //             .where('COLUMN_ID', sourcecolumnid);
-    //         console.log(sourcedata);
-    //         return response.status(200).send({success:true, data:sourcedata, msg:"Successfully get the data", err:null})
-    //     }
-    //     catch (error) {
-    //         return response.status(400).send({success:false, data:null, msg:"Error while get the data", err:error})
-    //     }
-    // }
-
+   
     //To get all data store in PROJ_DATA_MAPPINGS from Upload Data Mappings excel. 
     async uploadDataMappingFromExcel({request, response, error}) {
         try {
