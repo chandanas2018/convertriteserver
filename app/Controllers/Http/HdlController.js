@@ -343,15 +343,7 @@ class HdlController {
             console.log(MappedEntity);
             var mapData = MappedEntity.map(me => { return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA } });
             console.log(mapData);
-            //newArray.push(value.ENTITY_NAME)
-
-
-            // function myFunction(value) {
-            //     return value < dataArray.length;
-
-            // }
-
-            //return response.status(200).send({success:true, msg:'data mappings list', data:data, err:null});
+            
         }
         catch (error) {
             console.log(error)
@@ -424,7 +416,7 @@ class HdlController {
             SourceColumns: ['AsgIdSourceSystemId', 'Source_System_Owner', 'SourceSystemId', 'Effective_Start_Date', 'Effective_End_Date', 'MANAGER_ASSIGNMENT_NUMBER', 'MANAGER_ID', 'MANAGER_TYPE', 'PersonIdSourceSystemId', 'Primary_Flag'],
             SourceQuery: "select sup.ASSIGNMENT_NUMBER || '_' || 'ASG' \"ASGIDSOURCESYSTEMId\"" + ",'EBS' as SourceSystemOwner," +
                 "sup.ASSIGNMENT_NUMBER || '_' || 'ASGSUP' \"SOURCESYSTEMID\"" + ",to_char(sup.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate, to_char(sup.EFFECTIVE_END_DATE, 'YYYY/MM/DD')  AS EffectiveEndDate," +
-                "sup.MANAGER_ASSIGNMENT_NUMBER  \"MANASSIDSOURCESYSTEMID\"" + ", sup.MANAGER_ID \"MANIDSOURCESYSTEMID\"" + ", sup.MANAGER_TYPE as ManagerType ," + "sup.ASSIGNMENT_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMId\"" +
+                "sup.MANAGER_ASSIGNMENT_NUMBER  \"MANASSIDSOURCESYSTEMID\"" + ", sup.MANAGER_ID \"MANIDSOURCESYSTEMID\"" + ", 'LINE_MANAGER' as ManagerType ," + "sup.ASSIGNMENT_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"" +
                 ", sup.Primary_Flag as PrimaryFlag FROM SUPERVISOR sup"
 
 
@@ -473,8 +465,7 @@ class HdlController {
 
                 //forming merge lines 
                 
-
-                for (var d = 0; d < dbResult.length; d++) {
+                 for (var d = 0; d < dbResult.length; d++) {
                     
                     var mergeLine = "MERGE|" + SupervisorHdlMetadataObj.DestinationEntity
 
