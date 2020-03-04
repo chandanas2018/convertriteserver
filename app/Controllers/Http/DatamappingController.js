@@ -94,14 +94,14 @@ class DatamappingController {
             // console.log(sourcedata);
 
             //TODO REFACTOR AFTER THE DEMO
-            if (data1.data.SOURCE_COLUMN_NAME == "LOCATION_CODE") {
+            if (data1.data.SOURCE_COLUMN_NAME == "LOCATIONCODE") {
                 var sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT hlat.location_id as source_data_id, hlat.location_code as source_data_code,"
                     + " hlat.description as source_data_name FROM apps.hr_locations_all_tl hlat, apps.hr_locations_all hla, apps.hr_location_info_types hlit, apps.HR_LOCATION_EXTRA_INFO hlei"
                     + " WHERE hlat.description IS NOT NULL " + "AND hla.location_id = hlei.location_id " + " AND hlat.location_id = hla.location_id " + " AND hla.country = 'US' " + "and hlei.information_type = hlit.information_type");
                 console.log(sourcedata);
                 SourceData = sourcedata;
             }
-            else if (data1.data.SOURCE_COLUMN_NAME == "JOB_CODE") {
+            else if (data1.data.SOURCE_COLUMN_NAME == "JOBCODE") {
                 var sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT b.job_id as source_data_code, TO_CHAR(b.date_from,'YYYY/MM/DD') as EffectiveStartDate,"
                     + " t.name as source_data_name FROM apps.per_jobs b, apps.per_jobs_tl t " + " WHERE t.job_id = b.job_id  AND t.language = 'US' AND b.business_group_id = 202");
                 console.log(sourcedata);
@@ -115,14 +115,14 @@ class DatamappingController {
                 SourceData = sourcedata;
 
             }
-            else if(data1.data.SOURCE_COLUMN_NAME == "GRADE_CODE"){
+            else if(data1.data.SOURCE_COLUMN_NAME == "GRADECODE"){
                 var sourcedata = await Database.connection('oracledb').raw("SELECT TO_CHAR(pg.date_from,'YYYY/MM/DD') as datefrom,pg.grade_id as source_data_code, gdt.name as source_data_name "
                 + " FROM per_grades_tl gdt, per_grades pg " + " WHERE gdt.grade_id  = pg.grade_id AND  gdt.language (+) = 'US' " + "And  pg.business_group_id = 202 ");
             console.log(sourcedata);
             SourceData = sourcedata;
             }
             else if(data1.data.SOURCE_COLUMN_NAME == "SALARY_BASIS_NAME"){
-                var sourcedata = await Database.connection('oracledb').raw("SELECT salary_basis_name as source_data_name from source_salary");
+                var sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT salary_basis_name as source_data_name from source_salary");
             console.log(sourcedata);
             SourceData = sourcedata;
             }
@@ -135,14 +135,14 @@ class DatamappingController {
 
             //to get the destination mapping data for dest mapped column
             //  TODO REFACTOR AFTER THE DEMO
-            if (data1.data.DESTINATION_COLUMN_NAME == "LOCATION_CODE") {
+            if (data1.data.DESTINATION_COLUMN_NAME == "LOCATIONCODE") {
                 data1.data.DESTINATION_COLUMN = 'Locations'
                 var destinationdata = await Database.connection('oracledb').raw("select  location_id , location_code as DEST_DATA_ID , location_name as DEST_DATA_NAME from "
                     + data1.data.DESTINATION_COLUMN + " where country = 'US'");
                 console.log(destinationdata);
                 DestinationData = destinationdata;
             }
-            else if (data1.data.DESTINATION_COLUMN_NAME == "JOB_CODE") {
+            else if (data1.data.DESTINATION_COLUMN_NAME == "JOBCODE") {
                 data1.data.DESTINATION_COLUMN = 'jobs'
                 var destinationdata = await Database.connection('oracledb').raw("select  jobid , jobcode as DEST_DATA_ID , name as DEST_DATA_NAME from "
                     + data1.data.DESTINATION_COLUMN);
@@ -157,7 +157,7 @@ class DatamappingController {
                 DestinationData = destinationdata;
 
             }
-            else if (data1.data.DESTINATION_COLUMN_NAME == "GRADE_CODE") {
+            else if (data1.data.DESTINATION_COLUMN_NAME == "GRADECODE") {
                 data1.data.DESTINATION_COLUMN = 'grades'
                 var destinationdata = await Database.connection('oracledb').raw("select gradeid, grade_code as DEST_DATA_ID, gradename as DEST_DATA_NAME from "
                  + data1.data.DESTINATION_COLUMN );
@@ -199,9 +199,9 @@ class DatamappingController {
 
             var dataMappings = [];
             //Todo refactor after the demo
-            if (data.remainingdata.SOURCE_COLUMN_NAME === "LOCATION_CODE" || 
-                data.remainingdata.SOURCE_COLUMN_NAME === "JOB_CODE"||
-                data.remainingdata.SOURCE_COLUMN_NAME === "GRADE_CODE" ||
+            if (data.remainingdata.SOURCE_COLUMN_NAME === "LOCATIONCODE" || 
+                data.remainingdata.SOURCE_COLUMN_NAME === "JOBCODE"||
+                data.remainingdata.SOURCE_COLUMN_NAME === "GRADECODE" ||
                 data.remainingdata.SOURCE_COLUMN_NAME === "DEPARTMENT_NAME") {
                 let datamappings = await Database.connection('oracledb').insert({
                     PROJECT_ID: data.projectid,
@@ -218,6 +218,22 @@ class DatamappingController {
                 console.log(datamappings);
                 dataMappings = datamappings;
 
+            }
+            else if (data.remainingdata.SOURCE_COLUMN_NAME === "SALARY_BASIS_NAME"){
+                let datamappings = await Database.connection('oracledb').insert({
+                    PROJECT_ID: data.projectid,
+                    SOURCE_ENTITY_ID: data.sourceentityid,
+                    SOURCE_COLUMN_ID: data.remainingdata.SOURCE_COLUMN_ID,
+                    SOURCE_COLUMN_NAME: data.remainingdata.SOURCE_COLUMN_NAME,
+                    DESTINATION_COLUMN_ID: data.remainingdata.DESTINATION_COLUMN_ID,
+                    DESTINATION_COLUMN_NAME: data.remainingdata.DESTINATION_COLUMN_NAME,
+                    SOURCE_DATA: data.sourcedisplayname,
+                    SOURCE_DISPLAY_NAME: data.sourcedisplayname,
+                    DESTINATION_DATA: data.destinationdataname,
+                    DESTINATION_DISPLAY_NAME: data.destinationdataname
+                }).into('PROJ_DATA_MAPPINGS');
+                console.log(datamappings);
+                dataMappings = datamappings;
             }
             else {
                 let datamappings = await Database.connection('oracledb').insert({
@@ -236,6 +252,7 @@ class DatamappingController {
 
                 dataMappings = datamappings;
             }
+            
 
 
             //for maintaining  user log
@@ -398,7 +415,7 @@ class DatamappingController {
                 //console.log(qry3);
                 let qry4 = await Database.connection('oracledb').select('DEST_ENTITY_NAME').from('PROJ_DATATYPE_ENTITY_LIST').where('DEST_ENTITY_ID', qry3[0].DEST_ENTITY_ID);
                 //console.log(qry4);
-                var source_table_name = 'SOURCE_'+qry4[0].DEST_ENTITY_NAME;
+                var source_table_name = 'SOURCE_'+ qry4[0].DEST_ENTITY_NAME;
                 let qry5 = '',qry6 = '';
                 if(qry4[0].DEST_ENTITY_NAME == 'LOOKUPS') {
                     source_table_name = qry1[0].ENTITY_NAME;
@@ -407,7 +424,7 @@ class DatamappingController {
                 }
                 else {
                     var source_column = mappings[i].SOURCE_COLUMN_NAME;
-                    if(mappings[i].SOURCE_COLUMN_NAME == 'GRADE_CODE'){
+                    if(mappings[i].SOURCE_COLUMN_NAME == 'GRADECODE'){
                         source_column = 'GRADEID';
                     }
                     qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + source_column + ' AS SOURCE_DATA_NAME from ' + source_table_name);
