@@ -88,5 +88,5 @@ Route.group(() =>
  Route.get('/getValidations','ValidationController.storeMapUnMapIntoDB')
 
 
-
+Route.post('/processSupervisor','HdlController.processSupervisor')
 Route.post('/CreateSalaryBasis', 'HdlController.CreateSalaryBasis')
