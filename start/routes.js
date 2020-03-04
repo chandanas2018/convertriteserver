@@ -86,7 +86,6 @@ Route.group(() =>
 
  Route.get('/getValidations','ValidationController.storeMapUnMapIntoDB')
 
+Route.get('/generateSalaryHdl', 'HdlController.generateSalaryHdl')
 
-// Route.group(() => {
-//  Route.post('login', 'LoginController') 
-// }).prefix('api')
+Route.post('/CreateSalaryBasis', 'HdlController.CreateSalaryBasis')

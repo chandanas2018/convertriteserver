@@ -122,7 +122,7 @@ class DatamappingController {
             SourceData = sourcedata;
             }
             else if(data1.data.SOURCE_COLUMN_NAME == "SALARY_BASIS_NAME"){
-                var sourcedata = await Database.connection('oracledb').raw("SELECT salary_basis_name as source_data_name from source_salary");
+                var sourcedata = await Database.connection('oracledb').raw("SELECT DISTINCT salary_basis_name as source_data_name from source_salary");
             console.log(sourcedata);
             SourceData = sourcedata;
             }
@@ -159,7 +159,7 @@ class DatamappingController {
             }
             else if (data1.data.DESTINATION_COLUMN_NAME == "GRADE_CODE") {
                 data1.data.DESTINATION_COLUMN = 'grades'
-                var destinationdata = await Database.connection('oracledb').raw("select gradeid, gradecode as DEST_DATA_ID, gradename as DEST_DATA_NAME from "
+                var destinationdata = await Database.connection('oracledb').raw("select gradeid, grade_code as DEST_DATA_ID, gradename as DEST_DATA_NAME from "
                  + data1.data.DESTINATION_COLUMN );
                 console.log(destinationdata);
                 DestinationData = destinationdata;
@@ -219,6 +219,22 @@ class DatamappingController {
                 dataMappings = datamappings;
 
             }
+            else if (data.remainingdata.SOURCE_COLUMN_NAME === "SALARY_BASIS_NAME"){
+                let datamappings = await Database.connection('oracledb').insert({
+                    PROJECT_ID: data.projectid,
+                    SOURCE_ENTITY_ID: data.sourceentityid,
+                    SOURCE_COLUMN_ID: data.remainingdata.SOURCE_COLUMN_ID,
+                    SOURCE_COLUMN_NAME: data.remainingdata.SOURCE_COLUMN_NAME,
+                    DESTINATION_COLUMN_ID: data.remainingdata.DESTINATION_COLUMN_ID,
+                    DESTINATION_COLUMN_NAME: data.remainingdata.DESTINATION_COLUMN_NAME,
+                    SOURCE_DATA: data.sourcedisplayname,
+                    SOURCE_DISPLAY_NAME: data.sourcedisplayname,
+                    DESTINATION_DATA: data.destinationdataname,
+                    DESTINATION_DISPLAY_NAME: data.destinationdataname
+                }).into('PROJ_DATA_MAPPINGS');
+                console.log(datamappings);
+                dataMappings = datamappings;
+            }
             else {
                 let datamappings = await Database.connection('oracledb').insert({
                     PROJECT_ID: data.projectid,
@@ -236,6 +252,7 @@ class DatamappingController {
 
                 dataMappings = datamappings;
             }
+            
 
 
             //for maintaining  user log

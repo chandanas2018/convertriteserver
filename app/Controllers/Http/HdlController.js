@@ -14,7 +14,7 @@ const DataTransferRulesForDefaultTransfers = [
         DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonNumber', 'StartDate', 'DateOfBirth', 'ActionCode', 'BloodType'],
         SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'EFFECTIVE_END_DATE', 'Person_Number', 'Start_Date', 'DATE_OF_BIRTH', 'ActionCode', 'Blood_type'],
         SourceQuery: "SELECT to_char(P.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate,  to_char(P.EFFECTIVE_END_DATE,'YYYY/MM/DD') AS EffectiveEndDate, P.PERSON_NUMBER AS PersonNumber, to_char(P.Start_Date,'YYYY/MM/DD') as StartDate, to_char(P.DATE_OF_BIRTH, 'DD/MM/YYYY') AS DateOfBirth, 'EBS' As SourceSystemOwner, actioncode as ActionCode, p.blood_type as BloodType," +
-            " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\"" + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL"
+            " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\"" + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL AND P.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
     },
 
@@ -23,7 +23,7 @@ const DataTransferRulesForDefaultTransfers = [
         DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonIdSourceSystemId', 'PersonNumber', 'LegislationCode', 'NameType', 'FirstName', 'MiddleNames', 'LastName', 'Title'],
         SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'PersonIdSourceSystemId', 'PERSON_NUMBER', 'Legislation_Code', 'Name_Type', 'First_Name', 'Middle_Names', 'Last_Name', 'Title'],
         SourceQuery: "SELECT to_char(pn.effective_start_date,'YYYY/MM/DD') as effectivestartdate, to_char(pn.Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate," + "  P.PERSON_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"," + "pn. Person_Number as PersonNumber,pn. Legislation_Code as LegislationCode,'GLOBAL' as NameType, pn. First_Name as FirstName, pn. Middle_Names as MiddleNames," +
-            "pn.Last_Name as LastName, pn.title as Title, 'EBS' AS SourceSystemOwner," + "P.PERSON_NUMBER || '_' || 'PERSON_NAME'  \"SOURCESYSTEMID\"" + " FROM PERSON_NAME pn INNER JOIN PERSON p on p.PERSON_ID = pn.PERSON_ID"
+            "pn.Last_Name as LastName, pn.title as Title, 'EBS' AS SourceSystemOwner," + "P.PERSON_NUMBER || '_' || 'PERSON_NAME'  \"SOURCESYSTEMID\"" + " FROM PERSON_NAME pn INNER JOIN PERSON p on p.PERSON_ID = pn.PERSON_ID WHERE pn.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
     },
 
@@ -34,7 +34,7 @@ const DataTransferRulesForDefaultTransfers = [
         SourceQuery: "SELECT  PLI.PERSON_NUMBER AS PersonNumber, to_char(PLI.EFFECTIVE_START_DATE, 'YYYY/MM/DD') AS EffectiveStartDate, to_char(PLI.EFFECTIVE_END_DATE, 'YYYY/MM/DD') AS EffectiveEndDate," + " PLI.PERSON_NUMBER  || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"" + ",PLI.Legislation_Code AS " +
             "LegislationCode,PLI.Highest_Education_Level AS HighestEducationLevel,PLI.Marital_Status AS MaritalStatus, PLI.Sex, PLI.Marital_Status_Date AS MaritalStatusDate,'EBS' AS SourceSystemOwner," +
             " PLI.PERSON_NUMBER || '_' || 'PERSON_LEGISLATIVE_DATA'  \"SOURCESYSTEMID\"" +
-            " FROM PERSON_LEGISLATIVE_INFO PLI INNER JOIN PERSON P ON PLI.PERSON_ID = P.PERSON_ID"
+            " FROM PERSON_LEGISLATIVE_INFO PLI INNER JOIN PERSON P ON PLI.PERSON_ID = P.PERSON_ID where PLI.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
     },
 
 
@@ -44,7 +44,7 @@ const DataTransferRulesForDefaultTransfers = [
         SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Legal_Employer_Name', 'Date_Start', 'Action_Code', 'Primary_Flag', 'Worker_Type', 'PersonIdSourceSystemId'],
         SourceQuery: "select Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'   \"SOURCESYSTEMID\"," +
             "Legal_Employer_Name as LegalEmployerName, to_char(Date_Start, 'YYYY/MM/DD') as DateStart, Action_Code as ActionCode, Primary_Flag as PrimaryFlag, Worker_Type as WorkerType," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\""
-            + " FROM WORK_RELATIONSHIP "
+            + " FROM WORK_RELATIONSHIP WHERE PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
     },
 
@@ -56,20 +56,20 @@ const DataTransferRulesForDefaultTransfers = [
         SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ETERM' \"SOURCESYSTEMID\"" + ",Assignment_Name as AssignmentName,Assignment_Type as AssignmentType," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
             + ", Assignment_Status_Type_Code as AssignmentStatusTypeCode, to_char(Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate, Effective_Latest_Change as EffectiveLatestChange, Effective_Sequence as EffectiveSequence, to_char(Effective_Start_Date, 'YYYY/MM/DD') as EffectiveStartDate,"
             + " System_Person_Type as SystemPersonType, Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer_Name as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ", PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\"" +
-            " FROM WORK_TERMS "
+            " FROM WORK_TERMS WHERE PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
 
     },
 
     {
         DestinationEntity: "Assignment",
-        DestinationColumns: ['ActionCode', 'SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'EffectiveSequence', 'EffectiveLatestChange', 'AssignmentType', 'AssignmentName', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'BusinessUnitShortCode', 'LegalEmployerName', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'PersonTypeCode', 'PrimaryFlag', 'SystemPersonType', 'WtaIdSourceSystemId', 'JobCode', 'DepartmentName', 'LocationCode'],
-        SourceColumns: ['Action_Code', 'Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'Effective_Sequence', 'Effective_Latest_Change', 'Assignment_Type', 'Assignment_Name', 'Assignment_Number', 'Assignment_Status_Type_Code', 'Business_Unit_Short_Code', 'Legal_Employer', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'Person_Type_Code', 'Primary_Flag', 'System_Person_Type', 'WtaIdSourceSystemId', 'Job_Code', 'Department_Name', 'Location_Code'],
+        DestinationColumns: ['ActionCode', 'SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'EffectiveSequence', 'EffectiveLatestChange', 'AssignmentType', 'AssignmentName', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'BusinessUnitShortCode', 'LegalEmployerName', 'LocationCode', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'PersonTypeCode', 'PrimaryFlag', 'SystemPersonType', 'WtaIdSourceSystemId', 'JobCode', 'DepartmentName'],
+        SourceColumns: ['Action_Code', 'Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'Effective_Sequence', 'Effective_Latest_Change', 'Assignment_Type', 'Assignment_Name', 'Assignment_Number', 'Assignment_Status_Type_Code', 'Business_Unit_Short_Code', 'Legal_Employer', 'Location_Code', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'Person_Type_Code', 'Primary_Flag', 'System_Person_Type', 'WtaIdSourceSystemId', 'Job_Code', 'Department_Name'],
         SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"" + ",to_char(Effective_Start_Date,'YYYY/MM/DD') as EffectiveStartDate,to_char(Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate, Effective_Sequence as EffectiveSequence,"
             + "Effective_Latest_Change as EffectiveLatestChange, Assignment_Type as AssignmentType,Assignment_Name as AssignmentName," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
-            + ",Assignment_Status_Type_Code as AssignmentStatusTypeCode,Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\""
+            + ",Assignment_Status_Type_Code as AssignmentStatusTypeCode,Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer as LegalEmployerName, Location_Code as LocationCode, " + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\""
             + ", PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ",Person_Type_Code as PersonTypeCode, Primary_Flag as PrimaryFlag, System_Person_Type as SystemPersonType,"
-            + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",Job_Code as JobCode, Department_Name as DepartmentName, Location_Code as Location_Code " + " FROM ASSIGNMENT "
+            + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",Job_Code as JobCode, Department_Name as DepartmentName" + " FROM ASSIGNMENT WHERE PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
     }
 
@@ -102,7 +102,8 @@ var lookupObj = {
     PERSON_ADDRESS: "PersonAddress",
     WORK_RELATIONSHIP: "WorkRelationship",
     WORK_TERMS: "WorkTerms",
-    ASSIGNMENT: "Assignment"
+    ASSIGNMENT: "Assignment",
+    PERSON_SALARY:"person_salary"
 }
 
 
@@ -138,13 +139,16 @@ class HdlController {
 
                 // var entity = "Person_name"
                 var MappedEntity = dataMappings.filter(e => {
+                   
+                        var entity = lookupObj[e.ENTITY_NAME];
 
-                    var entity = lookupObj[e.ENTITY_NAME];
+                        console.log(entity);
 
-                    console.log(entity);
-                    if (entity.toUpperCase() === rule.DestinationEntity.toUpperCase())
-                        return e
+                        if (entity.toUpperCase() === rule.DestinationEntity.toUpperCase())
+                            return e
 
+
+                    
                 })
                 console.log(MappedEntity);
                 var mapData = MappedEntity.map(me => {
@@ -343,7 +347,7 @@ class HdlController {
             console.log(MappedEntity);
             var mapData = MappedEntity.map(me => { return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA } });
             console.log(mapData);
-            
+
         }
         catch (error) {
             console.log(error)
@@ -414,14 +418,13 @@ class HdlController {
             DestinationEntity: 'AssignmentSupervisor',
             DestinationColumns: ['AsgIdSourceSystemId', 'SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'ManAssIdSourceSystemId', 'ManIdSourceSystemId', 'ManagerType', 'PersonIdSourceSystemId', 'PrimaryFlag'],
             SourceColumns: ['AsgIdSourceSystemId', 'Source_System_Owner', 'SourceSystemId', 'Effective_Start_Date', 'Effective_End_Date', 'MANAGER_ASSIGNMENT_NUMBER', 'MANAGER_ID', 'MANAGER_TYPE', 'PersonIdSourceSystemId', 'Primary_Flag'],
-            SourceQuery: "select sup.ASSIGNMENT_NUMBER || '_' || 'ASG' \"ASGIDSOURCESYSTEMId\"" + ",'EBS' as SourceSystemOwner," +
+            SourceQuery: "select sup.ASSIGNMENT_NUMBER || '_' || 'ASG' \"ASGIDSOURCESYSTEMID\"" + ",'EBS' as SourceSystemOwner," +
                 "sup.ASSIGNMENT_NUMBER || '_' || 'ASGSUP' \"SOURCESYSTEMID\"" + ",to_char(sup.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate, to_char(sup.EFFECTIVE_END_DATE, 'YYYY/MM/DD')  AS EffectiveEndDate," +
                 "sup.MANAGER_ASSIGNMENT_NUMBER  \"MANASSIDSOURCESYSTEMID\"" + ", sup.MANAGER_ID \"MANIDSOURCESYSTEMID\"" + ", 'LINE_MANAGER' as ManagerType ," + "sup.ASSIGNMENT_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"" +
-                ", sup.Primary_Flag as PrimaryFlag FROM SUPERVISOR sup"
+                ", sup.Primary_Flag as PrimaryFlag FROM SUPERVISOR sup WHERE sup.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
 
         }
-
         try {
             //Get Data for  entity defined in arry of object
             var dbResult = await Database.connection('oracledb').raw(SupervisorHdlMetadataObj.SourceQuery);
@@ -438,7 +441,7 @@ class HdlController {
                 console.log(keys);
 
                 for (var i = 0; i < keys.length; i++) {
-                    if (keys[i] === 'ASGIDSOURCESYSTEMId') {
+                    if (keys[i] === 'ASGIDSOURCESYSTEMID') {
                         metadataLine = metadataLine + "|" + "AssignmentId(SourceSystemId)"
                     }
                     else if (keys[i] === 'MANASSIDSOURCESYSTEMID') {
@@ -464,9 +467,9 @@ class HdlController {
                 }
 
                 //forming merge lines 
-                
-                 for (var d = 0; d < dbResult.length; d++) {
-                    
+
+                for (var d = 0; d < dbResult.length; d++) {
+
                     var mergeLine = "MERGE|" + SupervisorHdlMetadataObj.DestinationEntity
 
                     for (var i = 0; i < keys.length; i++) {
@@ -479,9 +482,9 @@ class HdlController {
                         }
                         console.log(mergeLine);
                     }
-                   mergelineObject.push(mergeLine);
+                    mergelineObject.push(mergeLine);
                 }
-                
+
                 console.log(mergelineObject);
 
                 var HDLEntry = {
@@ -511,7 +514,7 @@ class HdlController {
             response.send(convertStatus.error)
             return
         }
-         HDLEntries.push(convertStatus)
+        HDLEntries.push(convertStatus)
 
         var projectname = "Worker"
         var fileloc = 'public/hdls/' + projectname + '.dat';
@@ -563,58 +566,202 @@ class HdlController {
         }
     }
 
-    async CreateSalaryBasis(){
-        try{
-        var dbSourceData = await Database.connection('oracledb').select('*').from('SOURCE_SALARY');
-        var dataMappings = await hdlMappings.getMappingsByEntityId()
-        console.log(dataMappings);
+    async CreateSalaryBasis() {
+        try {
+            var dbSourceData = await Database.connection('oracledb').select('*').from('SOURCE_SALARY');
+            var dataMappings = await hdlMappings.getMappingsByEntityId()
+            console.log(dataMappings);
 
-        //Filter Mappings for SalaryBasis
-        var MappedEntity = dataMappings.filter(e => {
-            console.log(entity);
-            if (e.ENTITY_NAME.toUpperCase() === 'SALARYBASIS')
-                return e
+            //Filter Mappings for SalaryBasis
+            var MappedEntity = dataMappings.filter(e => {
 
-        });
-        console.log(MappedEntity);
-        var mapData = MappedEntity.map(me => {
-            return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA, 'SourceColumn': me.SOURCE_COLUMN_NAME, 'Entity': me.ENTITY_NAME }
-        }); 
-        var assignmentObj = await Database.connection('oracledb').select('*')
-        .from('ASSIGNMENT');
+                if (e.ENTITY_NAME.toUpperCase() === 'PERSON_SALARY')
+                    return e
 
-        if(dbSourceData != null){
-            for(var i=0;i<dbSourceData.length;i++){
-                var salBasis = mapData.find(md=>md.SourceData.toUpperCase() == dbSourceData[i].SALARY_BASIS_NAME.toUpperCase());
-                if(salBasis){
-                  
-               // var empAssignmentObj = assignmentObj.find(a => a.PERSON_NUMBER === dbSourceData[i].PERSON_NUMBER);
+            });
+            console.log(MappedEntity);
+            var mapData = MappedEntity.map(me => {
+                return { 'SourceData': me.SOURCE_DATA, 'DestData': me.DESTINATION_DATA, 'SourceColumn': me.SOURCE_COLUMN_NAME, 'Entity': me.ENTITY_NAME }
+            });
+            var assignmentObj = await Database.connection('oracledb').select('*')
+                .from('ASSIGNMENT');
 
-                var Date_From = moment(Date.parse(dbSourceData[i].DATE_FROM.toString().split('-').reverse().join(' '))).format('DD-MMM-YY');
-                var Date_To = moment(Date.parse(dbSourceData[i].DATE_TO.toString().split('-').reverse().join(' '))).format('DD-MMM-YY');
-                console.log(effective_start_date);
-                    var obj = {
-                        ACTIONCODE:'CHANGE_SALARY',
-                        ASSIGNMENTID: dbSourceData[i].PERSON_NUMBER + "_ASG",
-                        DATEFROM: Date_From,
-                        DATETO: Date_To,
-                        SALARYAMOUNT: dbSourceData[i].SALARY_AMOUNT,
-                        SALARYBASISNAME: salBasis.DestData,
-                        SALARYAPPROVED: 'Y'
-                    };
-                    var res = await Database.connection('oracledb').insert(obj).into('SALARY');
-                    console.log(res);
+            if (dbSourceData != null) {
+                for (var i = 0; i < dbSourceData.length; i++) {
+                    var salBasis = mapData.find(md => md.SourceData.toUpperCase() == dbSourceData[i].SALARY_BASIS_NAME.toUpperCase());
+                    if (salBasis) {
+
+                        // var empAssignmentObj = assignmentObj.find(a => a.PERSON_NUMBER === dbSourceData[i].PERSON_NUMBER);
+                        if (dbSourceData.DATE_FROM) {
+                            var Date_From = moment(Date.parse(dbSourceData[i].DATE_FROM.toString().split('-').reverse().join(' '))).format('DD-MMM-YY');
+                        }
+                        if (dbSourceData.DATE_TO) {
+                            var Date_To = moment(Date.parse(dbSourceData[i].DATE_TO.toString().split('-').reverse().join(' '))).format('DD-MMM-YY');
+                        }
+
+                        var obj = {
+                            ACTIONCODE: 'CHANGE_SALARY',
+                            ASSIGNMENTID: dbSourceData[i].PERSON_NUMBER + "_ASG",
+                            DATEFROM: Date_From,
+                            DATETO: Date_To,
+                            SALARYAMOUNT: dbSourceData[i].SALARY_AMOUNT,
+                            SALARYBASISNAME: salBasis.DestData,
+                            SALARYAPPROVED: 'Y',
+                            PERSONNUMBER: dbSourceData[i].PERSON_NUMBER
+                        };
+                        var res = await Database.connection('oracledb').insert(obj).into('SALARY');
+                        console.log(res);
+                    }
                 }
             }
+
+            return ({ data: "Salary data successfully inserted", error: null });
         }
-
-        return ({ data: "Salary data successfully inserted", error: null });
-    }
-    catch(err){
-        console.log(err);
-    }
+        catch (err) {
+            console.log(err);
+        }
     }
 
+    async GetSalaryHdl() {
+        var SalaryHdlMetadataObj = {
+            DestinationEntity: 'Salary',
+            DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'ActionCode', 'AssIdSourceSystemId', 'DateFrom', 'DateTo', 'SalaryAmount', 'SalaryBasisName', 'SalaryApproved', 'PersonNumber'],
+            SourceColumns: ['SourceSystemOwner', 'SourceSystemId', 'ActionCode', 'AssIdSourceSystemId', 'DateFrom', 'DateTo', 'SalaryAmount', 'SalaryBasisName', 'SalaryApproved', 'PersonNumber'],
+            SourceQuery: "SELECT 'EBS' as SourceSystemOwner, 'SALID'|| '_' || sa.ASSIGNMENTID   \"SOURCESYSTEMID\", sa.ActionCode," + "sa.ASSIGNMENTID || '_' || 'ASG' \"ASSIDSOURCESYSTEMID\", to_char(sa.DateFrom, 'YYYY/MM/DD')  AS DateFrom, to_char(sa.DateTo, 'YYYY/MM/DD')  AS DateTo, sa.SalaryAmount, sa.SalaryBasisName, sa.SalaryApproved" + " from salary sa WHERE sa.PERSONNUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
+        }
+        try {
+            //Get Data for  entity defined in arry of object
+            var dbResult = await Database.connection('oracledb').raw(SalaryHdlMetadataObj.SourceQuery);
+            console.log(dbResult);
+
+            //Initi the entities to be written to file
+            var metadataLine = "METADATA|" + SalaryHdlMetadataObj.DestinationEntity
+
+            var mergelineObject = [];
+
+            //sorting keys for each entity in array collection
+            if (dbResult) {
+                var keys = Object.keys(dbResult[0]).sort();
+                console.log(keys);
+
+                for (var i = 0; i < keys.length; i++) {
+                    if (keys[i] === 'ASSIDSOURCESYSTEMID') {
+                        metadataLine = metadataLine + "|" + "AssignmentId(SourceSystemId)"
+                    }
+                    else {
+                        for (var k = 0; k < SalaryHdlMetadataObj.DestinationColumns.length; k++) {
+                            if (SalaryHdlMetadataObj.DestinationColumns[k].toUpperCase() === keys[i]) {
+                                metadataLine = metadataLine + "|" + SalaryHdlMetadataObj.DestinationColumns[k];
+                                console.log(metadataLine);
+                                break;
+                            }
+                        }
+
+
+                    }
+                }
+
+                //forming merge lines 
+
+                for (var d = 0; d < dbResult.length; d++) {
+
+                    var mergeLine = "MERGE|" + SalaryHdlMetadataObj.DestinationEntity
+
+                    for (var i = 0; i < keys.length; i++) {
+
+                        if (dbResult[d][keys[i]] === null) {
+                            mergeLine = mergeLine + "|"
+                        }
+                        else if (keys[i] === "SOURCESYSTEMID") {
+                            mergeLine = mergeLine + "|" + dbResult[d][keys[i]] + "_" + d
+                        }
+                        else {
+                            mergeLine = mergeLine + "|" + dbResult[d][keys[i]];
+                        }
+                        console.log(mergeLine);
+                    }
+                    mergelineObject.push(mergeLine);
+                }
+
+                console.log(mergelineObject);
+
+                var HDLEntry = {
+                    header: metadataLine,
+                    data: mergelineObject
+                }
+                console.log(HDLEntry);
+                var HDLEntries = [];
+                HDLEntries.push(HDLEntry)
+
+                return HDLEntries;
+
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    async generateSalaryHdl({ request, response, error }) {
+        var cs = await this.GetSalaryHdl();
+        var convertStatus = cs[0];
+        var HDLEntries = [];
+
+        if (convertStatus.data == null) {
+            response.send(convertStatus.error)
+            return
+        }
+        HDLEntries.push(convertStatus)
+
+        var projectname = "Worker"
+        var fileloc = 'public/hdls/' + projectname + '.dat';
+        var filepath = '/hdls/' + projectname + '.dat';
+
+
+        try {
+            fs.open(fileloc, 'w', function (err, file) {
+                if (err) {
+                    console.error("open error:  " + err.message);
+                }
+                else {
+                    var failed = false
+                    for (var i = 0; i < HDLEntries.length; i++) {
+                        fs.appendFileSync(file, HDLEntries[i].header + "\n", function (error) {
+                            console.log(error);
+                            failed = false
+                        })
+                        for (var j = 0; j < HDLEntries[i].data.length; j++) {
+                            fs.appendFileSync(file, HDLEntries[i].data[j] + "\n", function (error) {
+                                console.log(error);
+                            })
+                        }
+                        fs.appendFileSync(file, "\n", function (error) {
+                            console.log(error);
+                        })
+                    }
+                    fs.close(file, function (error) {
+                        if (error) {
+                            console.error("close error:  " + error.message);
+
+                        } else {
+                            console.log("File was closed!");
+
+
+                        }
+                    });
+
+                    if (failed) {
+                        response.send({ error: "HDL generation not successful " })
+                    }
+                }
+
+            })
+            return response.send({ loc: filepath })
+        }
+        catch (error) {
+            response.send(JSON.stringify(error))
+        }
+    }
 }
 module.exports = HdlController
