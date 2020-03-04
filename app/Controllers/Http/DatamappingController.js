@@ -159,7 +159,7 @@ class DatamappingController {
             }
             else if (data1.data.DESTINATION_COLUMN_NAME == "GRADE_CODE") {
                 data1.data.DESTINATION_COLUMN = 'grades'
-                var destinationdata = await Database.connection('oracledb').raw("select gradeid, gradecode as DEST_DATA_ID, gradename as DEST_DATA_NAME from "
+                var destinationdata = await Database.connection('oracledb').raw("select gradeid, grade_code as DEST_DATA_ID, gradename as DEST_DATA_NAME from "
                  + data1.data.DESTINATION_COLUMN );
                 console.log(destinationdata);
                 DestinationData = destinationdata;
@@ -387,7 +387,7 @@ class DatamappingController {
             var data1 = [];
             var data = request.body;
 
-            let mappings = await Database.connection('oracledb').raw('SELECT PROJECT_ID, SOURCE_COLUMN_ID,  SOURCE_COLUMN_NAME, SOURCE_ENTITY_ID, SOURCE_ENTITY_NAME, DESTINATION_COLUMN_ID, DESTINATION_ENTITY_NAME, DESTINATION_COLUMN_NAME, DISPLAY_NAME FROM PROJ_COLUMN_MAPPING WHERE SOURCE_ENTITY_ID = '+data.entityid+' AND ROWNUM = 1');
+            let mappings = await Database.connection('oracledb').raw('SELECT PROJECT_ID, SOURCE_COLUMN_ID,  SOURCE_COLUMN_NAME, SOURCE_ENTITY_ID, SOURCE_ENTITY_NAME, DESTINATION_COLUMN_ID, DESTINATION_ENTITY_NAME, DESTINATION_COLUMN_NAME, DISPLAY_NAME FROM PROJ_COLUMN_MAPPING WHERE SOURCE_ENTITY_ID = '+data.entityid+" and SOURCE_COLUMN_NAME = '"+data.columnname+"'");
             
             for (var i = 0; i < mappings.length; i++) {
                 let qry1 = await Database.connection('oracledb').select('ENTITY_NAME').from('PROJECT_SOURCE_ENTITY_LIST').where('ENTITY_ID', mappings[i].SOURCE_ENTITY_ID);
@@ -406,8 +406,11 @@ class DatamappingController {
                     qry6 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].DESTINATION_COLUMN_NAME + ' AS DEST_DATA_NAME from ' +source_table_name);
                 }
                 else {
-                    qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
-                    console.log('SELECT DISTINCT ' + mappings[i].SOURCE_COLUMN_NAME + ' AS SOURCE_DATA_NAME from ' + source_table_name);
+                    var source_column = mappings[i].SOURCE_COLUMN_NAME;
+                    if(mappings[i].SOURCE_COLUMN_NAME == 'GRADE_CODE'){
+                        source_column = 'GRADEID';
+                    }
+                    qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + source_column + ' AS SOURCE_DATA_NAME from ' + source_table_name);
                     qry6 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + mappings[i].DESTINATION_COLUMN_NAME + ' AS DEST_DATA_NAME from ' +qry4[0].DEST_ENTITY_NAME);
                 }    
                 var mappeddata = {
@@ -504,8 +507,16 @@ class DatamappingController {
                     let qry3 = await Database.connection('oracledb').select('DEST_ENTITY_ID', 'COLUMN_ID').from('PROJ_DATATYPE_ENTITY_COLUMNS').where('COLUMN_NAME', data.mappings[i].DestinationColumnName);
                     console.log('sourcedata--->',data.mappings[i].SourceData);
                     if (data.mappings[i].SourceData !== "" && data.mappings[i].DestinationData !== "") {
-                        let qry4 = await Database.connection('oracledb').raw('SELECT '+alias_column_name+'_NAME as source_display_name FROM '+source_table_name+' WHERE '+data.mappings[i].SourceColumnName+"='"+data.mappings[i].SourceData+"'");
-                        let qry5 = await Database.connection('oracledb').raw('SELECT '+alias_column_name+'_NAME as dest_display_name FROM '+data.mappings[i].DestinationEntity+' WHERE '+data.mappings[i].DestinationColumnName+"='"+data.mappings[i].DestinationData+"'");
+                        var source_column = data.mappings[i].SourceColumnName;
+                        if(data.mappings[i].SourceColumnName == 'GRADE_CODE'){
+                            source_column = 'GRADEID';
+                        }
+                        alias_column_name = alias_column_name+'_NAME';
+                        if(alias_column_name == 'GRADE_NAME'){
+                            alias_column_name = 'GRADENAME';
+                        }
+                        let qry4 = await Database.connection('oracledb').raw('SELECT '+alias_column_name+' as source_display_name FROM '+source_table_name+' WHERE '+source_column+"='"+data.mappings[i].SourceData+"'");
+                        let qry5 = await Database.connection('oracledb').raw('SELECT '+alias_column_name+' as dest_display_name FROM '+data.mappings[i].DestinationEntity+' WHERE '+data.mappings[i].DestinationColumnName+"='"+data.mappings[i].DestinationData+"'");
                         console.log(qry4[0].SOURCE_DISPLAY_NAME);
                         console.log(qry5[0].DEST_DISPLAY_NAME);
                         let qry6 = await Database.connection('oracledb').raw("SELECT count(*) as COUNT_MAPPINGS from PROJ_DATA_MAPPINGS WHERE SOURCE_DATA='"+data.mappings[i].SourceData+"' AND DESTINATION_DATA='"+data.mappings[i].DestinationData+"'");
