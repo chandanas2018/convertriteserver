@@ -69,6 +69,7 @@ Route.group(() =>
  Route.post('/api/v1/processSupervisor','HdlController.processSupervisor')
  Route.get('/api/v1/download/hdl', 'HdlController.download')
  Route.get('/api/v1/supervisior/hdl','HdlController.generateSupervisiorHdl')
+ Route.get('/api/v1/generateSalaryHdl', 'HdlController.generateSalaryHdl')
  Route.post('/api/v1/source/columns', 'TestController.previewFile')
  Route.post('/api/v1/oracle/errors', 'FileController.errorlistFile')
 
@@ -86,6 +87,6 @@ Route.group(() =>
 
  Route.get('/getValidations','ValidationController.storeMapUnMapIntoDB')
 
-Route.get('/generateSalaryHdl', 'HdlController.generateSalaryHdl')
+
 
 Route.post('/CreateSalaryBasis', 'HdlController.CreateSalaryBasis')
