@@ -391,6 +391,7 @@ class HdlController {
                 var mgrType = mgrAssignmentObj.ASSIGNMENT_NAME;
                 var primaryFlag = mgrAssignmentObj.PRIMARY_FLAG;
                 var sourcesystemowner = empAssignmentObj.SOURCE_SYSTEM_OWNER;
+                var personnumber = empNumber;
 
                 // Insert into Supervisor table from which we read and generate the HDL
 
@@ -402,7 +403,8 @@ class HdlController {
                     MANAGER_ASSIGNMENT_NUMBER: mgrAssignmentNumber,
                     MANAGER_TYPE: mgrType,
                     PRIMARY_FLAG: primaryFlag,
-                    SOURCE_SYSTEM_OWNER: sourcesystemowner
+                    SOURCE_SYSTEM_OWNER: sourcesystemowner,
+                    PERSON_NUMBER:personnumber
 
                 };
                 var insStatus = await Database.connection('oracledb').insert(spvsrObj)
@@ -481,6 +483,9 @@ class HdlController {
 
                         if (dbResult[d][keys[i]] === null) {
                             mergeLine = mergeLine + "|"
+                        }
+                        else if (keys[i] === "SOURCESYSTEMID"){
+                            mergeLine = mergeLine + "|" + dbResult[d][keys[i]] + "_" + d;
                         }
                         else {
                             mergeLine = mergeLine + "|" + dbResult[d][keys[i]];
