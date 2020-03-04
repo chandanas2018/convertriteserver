@@ -275,18 +275,18 @@ class ValidationController extends HdlController {
                 //sorting keys for each entity in array collection
                 if (dbResult) {
                     var keys = Object.keys(dbResult[0]).sort();
-                    
+  
                     dbResult.forEach(eachResult => {
 
                         for (var i = 0; i < keys.length; i++) {
 
                             for (var j = 0; j < mapData.length; j++) {
                                 //Checking whether sourcecolumn with keys if it is true
-                                if (keys[i] === mapData[j].SourceColumn) {
+                                if (keys[i].indexOf(mapData[j].SourceColumn)) {
                                     //If true, then checking whether mapped source data and entries data is null or not.
                                     if (mapData[j].SourceData != null && eachResult[keys[i]] != null) {
                                         //If true, then comparing both mapped source data and database entries data is equal or not.
-                                        if (mapData[j].SourceData.toUpperCase() === eachResult[keys[i]].toUpperCase()) {
+                                        if (mapData[j].SourceData.toUpperCase().indexOf(eachResult[keys[i]].toUpperCase())) {
                                             //If true, then framing the query based on entity, sourcecolumn and sourcedata.
                                             var mapPersonDataQuery = "SELECT PERSON_NUMBER FROM "+mapData[j].Entity+" WHERE "+mapData[j].SourceColumn+"='"+mapData[j].SourceData+"'";
                                             //Here already data is mapped found, then pushing with validation_entity, person_query, mapping_column_name, mapped_data.
@@ -339,7 +339,7 @@ class ValidationController extends HdlController {
                 //Inserting all mapped entries into VALIDATIONS_DATA Table.
                 let dbinsert = await Database.connection('oracledb').insert(MapEntries).into('VALIDATIONS_DATA');
                 //Removing duplicate if required for UNMapEntries array based on VALIDATION_ENTITY.
-                UNMapEntries = removeDuplicates(UNMapEntries, "VALIDATION_ENTITY");
+                UNMapEntries = removeDuplicates(UNMapEntries, "MAPPING_COLUMN_NAME");
                 //Checking whether un mapped data is exists or not.
                 if (UNMapEntries.length > 0) {
                     //If true, then looping all unmap entries.
@@ -370,19 +370,21 @@ class ValidationController extends HdlController {
 
                 
                 //Getting all mapped data query.
-                let unmapQueryData = await Database.connection('oracledb').raw('SELECT ID,MAPPING_COLUMN_NAME as COLUMN_NAME,UNMAPPED_DATA as MAP_DATA FROM VALIDATIONS_DATA WHERE NOTMAPPED_PERSON_NUMBER != 0');
+                //let unmapQueryData = await Database.connection('oracledb').raw('SELECT DISTINCT ID,MAPPING_COLUMN_NAME as COLUMN_NAME,UNMAPPED_DATA as MAP_DATA FROM VALIDATIONS_DATA WHERE NOTMAPPED_PERSON_NUMBER != 0');
                 //Getting all unmapped data query.
-                let mapQueryData = await Database.connection('oracledb').raw('SELECT ID,MAPPING_COLUMN_NAME as COLUMN_NAME,MAPPED_DATA as MAP_DATA FROM VALIDATIONS_DATA WHERE MAPPED_PERSON_NUMBER != 0');
+                //let mapQueryData = await Database.connection('oracledb').raw('SELECT DISTINCT ID,MAPPING_COLUMN_NAME as COLUMN_NAME,MAPPED_DATA as MAP_DATA FROM VALIDATIONS_DATA WHERE MAPPED_PERSON_NUMBER != 0');
+                let mapQueryData = await Database.connection('oracledb').raw('SELECT MAPPING_COLUMN_NAME, COUNT(MAPPED_PERSON_NUMBER) as COUNT_MAP FROM VALIDATIONS_DATA  GROUP BY MAPPING_COLUMN_NAME');
+                let unmapQueryData = await Database.connection('oracledb').raw('SELECT MAPPING_COLUMN_NAME, COUNT(NOTMAPPED_PERSON_NUMBER) as COUNT_UNMAP FROM VALIDATIONS_DATA GROUP BY MAPPING_COLUMN_NAME');
                 var totalData = [];
                 //If mapdata present or not
                 if(mapQueryData.length > 0){
                     //If true, then looping through pushing all map data into totalData array.
                     mapQueryData.forEach((mdata, index) => {
                         totalData.push({
-                            "id": mdata.ID,
-                            "series": "MAPPED_"+mdata.COLUMN_NAME,
-                            "group": mdata.MAP_DATA,
-                            "value": mapQueryData.length
+                            "id": index,
+                            "series": 'MAP_'+mdata.MAPPING_COLUMN_NAME,
+                            "group": 'group1',
+                            "value": mdata.COUNT_MAP
                         });
                     });
                     //If unmap data present or not.
@@ -390,10 +392,10 @@ class ValidationController extends HdlController {
                         //If true, then looping through pushing all unmap data into totalData array.
                         unmapQueryData.forEach((umdata, index) => {
                             totalData.push({
-                                "id": umdata.ID,
-                                "series": "UNMAPPED_"+umdata.COLUMN_NAME,
-                                "group": umdata.MAP_DATA,
-                                "value": unmapQueryData.length
+                                "id": mapQueryData.length + index,
+                                "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
+                                "group": "group1",
+                                "value": umdata.COUNT_UNMAP
                             });
                         });
                     }
@@ -404,10 +406,10 @@ class ValidationController extends HdlController {
                         //If true, then looping through pushing all unmap data into totalData array.
                         unmapQueryData.forEach((umdata, index) => {
                             totalData.push({
-                                "id": umdata.ID,
-                                "series": "UNMAPPED_"+umdata.COLUMN_NAME,
-                                "group": umdata.MAP_DATA,
-                                "value": unmapQueryData.length
+                                "id": mapQueryData.length + index,
+                                "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
+                                "group": "group1",
+                                "value": umdata.COUNT_UNMAP
                             });
                         });
                     }

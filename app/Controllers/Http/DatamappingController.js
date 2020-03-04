@@ -407,7 +407,7 @@ class DatamappingController {
                 }
                 else {
                     var source_column = mappings[i].SOURCE_COLUMN_NAME;
-                    if(mappings[i].SOURCE_COLUMN_NAME == 'GRADE_CODE'){
+                    if(mappings[i].SOURCE_COLUMN_NAME == 'GRADECODE'){
                         source_column = 'GRADEID';
                     }
                     qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + source_column + ' AS SOURCE_DATA_NAME from ' + source_table_name);
