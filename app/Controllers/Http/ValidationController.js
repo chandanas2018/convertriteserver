@@ -466,6 +466,7 @@ class ValidationController {
                 let mapQueryData = await Database.connection('oracledb').raw('SELECT MAPPING_COLUMN_NAME, COUNT(MAPPED_PERSON_NUMBER) as COUNT_MAP FROM VALIDATIONS_DATA  GROUP BY MAPPING_COLUMN_NAME');
                 let unmapQueryData = await Database.connection('oracledb').raw('SELECT MAPPING_COLUMN_NAME, COUNT(NOTMAPPED_PERSON_NUMBER) as COUNT_UNMAP FROM VALIDATIONS_DATA GROUP BY MAPPING_COLUMN_NAME');
                 var totalData = [];
+                var totalData1 = [];
                 //If mapdata present or not
                 if(mapQueryData.length > 0){
                     //If true, then looping through pushing all map data into totalData array.
@@ -481,7 +482,7 @@ class ValidationController {
                     if(unmapQueryData.length > 0) {
                         //If true, then looping through pushing all unmap data into totalData array.
                         unmapQueryData.forEach((umdata, index) => {
-                            totalData.push({
+                            totalData1.push({
                                 "id": mapQueryData.length + index,
                                 "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
                                 "group": "group1",
@@ -495,7 +496,7 @@ class ValidationController {
                     if(unmapQueryData.length > 0) {
                         //If true, then looping through pushing all unmap data into totalData array.
                         unmapQueryData.forEach((umdata, index) => {
-                            totalData.push({
+                            totalData1.push({
                                 "id": mapQueryData.length + index,
                                 "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
                                 "group": "group1",
@@ -506,7 +507,7 @@ class ValidationController {
                 }
 
                 // return response.send({data:HDLEntries})
-                return ({ success: totalData });
+                return ({ success: totalData1 });
             }
             else {
                 //If not mapped data.

@@ -9,62 +9,57 @@ const fs = require('fs');
 var hdlMappings = require('../../DataServices/HdlMappings');
 
 const DataTransferRulesForDefaultTransfers = [
-    // {
-    //     DestinationEntity: "Worker",
-    //     DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonNumber', 'StartDate', 'DateOfBirth', 'ActionCode', 'BloodType'],
-    //     SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'EFFECTIVE_END_DATE', 'Person_Number', 'Start_Date', 'DATE_OF_BIRTH', 'ActionCode', 'Blood_type'],
-    //     SourceQuery: "SELECT to_char(P.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate,  to_char(P.EFFECTIVE_END_DATE,'YYYY/MM/DD') AS EffectiveEndDate, P.PERSON_NUMBER AS PersonNumber, to_char(P.Start_Date,'YYYY/MM/DD') as StartDate, to_char(P.DATE_OF_BIRTH, 'DD/MM/YYYY') AS DateOfBirth, 'EBS' As SourceSystemOwner, actioncode as ActionCode, p.blood_type as BloodType," +
-    //         " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\"" + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL "
-    //         // AND P.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
+    {
+        DestinationEntity: "Worker",
+        DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonNumber', 'StartDate', 'DateOfBirth', 'ActionCode', 'BloodType'],
+        SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'EFFECTIVE_END_DATE', 'Person_Number', 'Start_Date', 'DATE_OF_BIRTH', 'ActionCode', 'Blood_type'],
+        SourceQuery: "SELECT to_char(P.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate,  to_char(P.EFFECTIVE_END_DATE,'YYYY/MM/DD') AS EffectiveEndDate, P.PERSON_NUMBER AS PersonNumber, to_char(P.Start_Date,'YYYY/MM/DD') as StartDate, to_char(P.DATE_OF_BIRTH, 'DD/MM/YYYY') AS DateOfBirth, 'EBS' As SourceSystemOwner, actioncode as ActionCode, p.blood_type as BloodType," +
+            " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\"" + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL AND P.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
-    // },
+    },
 
-    // {
-    //     DestinationEntity: 'PersonName',
-    //     DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonIdSourceSystemId', 'PersonNumber', 'LegislationCode', 'NameType', 'FirstName', 'MiddleNames', 'LastName', 'Title'],
-    //     SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'PersonIdSourceSystemId', 'PERSON_NUMBER', 'Legislation_Code', 'Name_Type', 'First_Name', 'Middle_Names', 'Last_Name', 'Title'],
-    //     SourceQuery: "SELECT to_char(pn.effective_start_date,'YYYY/MM/DD') as effectivestartdate, to_char(pn.Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate," + "  P.PERSON_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"," + "pn. Person_Number as PersonNumber,pn. Legislation_Code as LegislationCode,'GLOBAL' as NameType, pn. First_Name as FirstName, pn. Middle_Names as MiddleNames," +
-    //         "pn.Last_Name as LastName, pn.title as Title, 'EBS' AS SourceSystemOwner," + "P.PERSON_NUMBER || '_' || 'PERSON_NAME'  \"SOURCESYSTEMID\"" + " FROM PERSON_NAME pn INNER JOIN PERSON p on p.PERSON_ID = pn.PERSON_ID"
-    //         //  WHERE pn.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
+    {
+        DestinationEntity: 'PersonName',
+        DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonIdSourceSystemId', 'PersonNumber', 'LegislationCode', 'NameType', 'FirstName', 'MiddleNames', 'LastName', 'Title'],
+        SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'PersonIdSourceSystemId', 'PERSON_NUMBER', 'Legislation_Code', 'Name_Type', 'First_Name', 'Middle_Names', 'Last_Name', 'Title'],
+        SourceQuery: "SELECT to_char(pn.effective_start_date,'YYYY/MM/DD') as effectivestartdate, to_char(pn.Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate," + "  P.PERSON_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"," + "pn. Person_Number as PersonNumber,pn. Legislation_Code as LegislationCode,'GLOBAL' as NameType, pn. First_Name as FirstName, pn. Middle_Names as MiddleNames," +
+            "pn.Last_Name as LastName, pn.title as Title, 'EBS' AS SourceSystemOwner," + "P.PERSON_NUMBER || '_' || 'PERSON_NAME'  \"SOURCESYSTEMID\"" + " FROM PERSON_NAME pn INNER JOIN PERSON p on p.PERSON_ID = pn.PERSON_ID  WHERE pn.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
-    // },
+    },
 
-    // {
-    //     DestinationEntity: "PersonLegislativeData",
-    //     DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonIdSourceSystemId', 'LegislationCode', 'HighestEducationLevel', 'MaritalStatus', 'MaritalStatusDate', 'Sex', 'PersonNumber'],
-    //     SourceColumns: ['SOURCE_SYSTEM_OWNER', 'SOURCE_SYSTEM_ID', 'EFFECTIVE_START_DATE', 'EFFECTIVE_END_DATE', 'PersonIdSourceSystemId', 'Legislation_Code', 'Highest_Education_Level', 'Marital_Status', 'Marital_Status_Date', 'Sex', 'PERSON_NUMBER'],
-    //     SourceQuery: "SELECT  PLI.PERSON_NUMBER AS PersonNumber, to_char(PLI.EFFECTIVE_START_DATE, 'YYYY/MM/DD') AS EffectiveStartDate, to_char(PLI.EFFECTIVE_END_DATE, 'YYYY/MM/DD') AS EffectiveEndDate," + " PLI.PERSON_NUMBER  || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"" + ",PLI.Legislation_Code AS " +
-    //         "LegislationCode,PLI.Highest_Education_Level AS HighestEducationLevel,PLI.Marital_Status AS MaritalStatus, PLI.Sex, PLI.Marital_Status_Date AS MaritalStatusDate,'EBS' AS SourceSystemOwner," +
-    //         " PLI.PERSON_NUMBER || '_' || 'PERSON_LEGISLATIVE_DATA'  \"SOURCESYSTEMID\"" +
-    //         " FROM PERSON_LEGISLATIVE_INFO PLI INNER JOIN PERSON P ON PLI.PERSON_ID = P.PERSON_ID"
-    //         //  where PLI.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
-    // },
+    {
+        DestinationEntity: "PersonLegislativeData",
+        DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonIdSourceSystemId', 'LegislationCode', 'HighestEducationLevel', 'MaritalStatus', 'MaritalStatusDate', 'Sex', 'PersonNumber'],
+        SourceColumns: ['SOURCE_SYSTEM_OWNER', 'SOURCE_SYSTEM_ID', 'EFFECTIVE_START_DATE', 'EFFECTIVE_END_DATE', 'PersonIdSourceSystemId', 'Legislation_Code', 'Highest_Education_Level', 'Marital_Status', 'Marital_Status_Date', 'Sex', 'PERSON_NUMBER'],
+        SourceQuery: "SELECT  PLI.PERSON_NUMBER AS PersonNumber, to_char(PLI.EFFECTIVE_START_DATE, 'YYYY/MM/DD') AS EffectiveStartDate, to_char(PLI.EFFECTIVE_END_DATE, 'YYYY/MM/DD') AS EffectiveEndDate," + " PLI.PERSON_NUMBER  || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"" + ",PLI.Legislation_Code AS " +
+            "LegislationCode,PLI.Highest_Education_Level AS HighestEducationLevel,PLI.Marital_Status AS MaritalStatus, PLI.Sex, PLI.Marital_Status_Date AS MaritalStatusDate,'EBS' AS SourceSystemOwner," +
+            " PLI.PERSON_NUMBER || '_' || 'PERSON_LEGISLATIVE_DATA'  \"SOURCESYSTEMID\"" +
+            " FROM PERSON_LEGISLATIVE_INFO PLI INNER JOIN PERSON P ON PLI.PERSON_ID = P.PERSON_ID where PLI.PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
+    },
 
 
-    // {
-    //     DestinationEntity: "WorkRelationship",
-    //     DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'LegalEmployerName', 'DateStart', 'ActionCode', 'PrimaryFlag', 'WorkerType', 'PersonIdSourceSystemId'],
-    //     SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Legal_Employer_Name', 'Date_Start', 'Action_Code', 'Primary_Flag', 'Worker_Type', 'PersonIdSourceSystemId'],
-    //     SourceQuery: "select Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'   \"SOURCESYSTEMID\"," +
-    //         "Legal_Employer_Name as LegalEmployerName, to_char(Date_Start, 'YYYY/MM/DD') as DateStart, Action_Code as ActionCode, Primary_Flag as PrimaryFlag, Worker_Type as WorkerType," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\""
-    //         + " FROM WORK_RELATIONSHIP "
-    //         // WHERE PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
+    {
+        DestinationEntity: "WorkRelationship",
+        DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'LegalEmployerName', 'DateStart', 'ActionCode', 'PrimaryFlag', 'WorkerType', 'PersonIdSourceSystemId'],
+        SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Legal_Employer_Name', 'Date_Start', 'Action_Code', 'Primary_Flag', 'Worker_Type', 'PersonIdSourceSystemId'],
+        SourceQuery: "select Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'   \"SOURCESYSTEMID\"," +
+            "Legal_Employer_Name as LegalEmployerName, to_char(Date_Start, 'YYYY/MM/DD') as DateStart, Action_Code as ActionCode, Primary_Flag as PrimaryFlag, Worker_Type as WorkerType," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\""
+            + " FROM WORK_RELATIONSHIP WHERE PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
 
-    // },
-
-
-    // {
-    //     DestinationEntity: "WorkTerms",
-    //     DestinationColumns: ['ActionCode', 'SourceSystemOwner', 'SourceSystemId', 'AssignmentName', 'AssignmentType', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'EffectiveEndDate', 'EffectiveLatestChange', 'EffectiveSequence', 'EffectiveStartDate', 'SystemPersonType', 'BusinessUnitShortCode', 'LegalEmployerName', 'PersonIdSourceSystemId', 'PosIdSourceSystemId'],
-    //     SourceColumns: ['Action_Code', 'Source_System_Owner', 'Source_System_Id', 'Assignment_Name', 'Assignment_Type', 'Assignment_Number', 'Assignment_Status_Type_Code', 'Effective_End_Date', 'Effective_Latest_Change', 'Effective_Sequence', 'Effective_Start_Date', 'System_Person_Type', 'Business_Unit_Short_Code', 'Legal_Employer_Name', 'PersonIdSourceSystemId', 'PosIdSourceSystemId'],
-    //     SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ETERM' \"SOURCESYSTEMID\"" + ",Assignment_Name as AssignmentName,Assignment_Type as AssignmentType," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
-    //         + ", Assignment_Status_Type_Code as AssignmentStatusTypeCode, to_char(Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate, Effective_Latest_Change as EffectiveLatestChange, Effective_Sequence as EffectiveSequence, to_char(Effective_Start_Date, 'YYYY/MM/DD') as EffectiveStartDate,"
-    //         + " System_Person_Type as SystemPersonType, Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer_Name as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ", PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\"" +
-    //         " FROM WORK_TERMS "
-    //         // WHERE PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
+    },
 
 
-    // },
+    {
+        DestinationEntity: "WorkTerms",
+        DestinationColumns: ['ActionCode', 'SourceSystemOwner', 'SourceSystemId', 'AssignmentName', 'AssignmentType', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'EffectiveEndDate', 'EffectiveLatestChange', 'EffectiveSequence', 'EffectiveStartDate', 'SystemPersonType', 'BusinessUnitShortCode', 'LegalEmployerName', 'PersonIdSourceSystemId', 'PosIdSourceSystemId'],
+        SourceColumns: ['Action_Code', 'Source_System_Owner', 'Source_System_Id', 'Assignment_Name', 'Assignment_Type', 'Assignment_Number', 'Assignment_Status_Type_Code', 'Effective_End_Date', 'Effective_Latest_Change', 'Effective_Sequence', 'Effective_Start_Date', 'System_Person_Type', 'Business_Unit_Short_Code', 'Legal_Employer_Name', 'PersonIdSourceSystemId', 'PosIdSourceSystemId'],
+        SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ETERM' \"SOURCESYSTEMID\"" + ",Assignment_Name as AssignmentName,Assignment_Type as AssignmentType," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
+            + ", Assignment_Status_Type_Code as AssignmentStatusTypeCode, to_char(Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate, Effective_Latest_Change as EffectiveLatestChange, Effective_Sequence as EffectiveSequence, to_char(Effective_Start_Date, 'YYYY/MM/DD') as EffectiveStartDate,"
+            + " System_Person_Type as SystemPersonType, Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer_Name as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ", PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\"" +
+            " FROM WORK_TERMS WHERE PERSON_NUMBER in (SELECT MAPPED_PERSON_NUMBER FROM VALIDATIONS_DATA)"
+
+
+    },
 
     {
         DestinationEntity: "Assignment",
@@ -203,9 +198,13 @@ class HdlController {
                             for (var j = 0; j < mapData.length; j++) {
 
                                 if (keys[i] === mapData[j].SourceColumn) {
-                                    if (mapData[j].SourceData.toUpperCase() === eachResult[keys[i]].toUpperCase()) {
-                                        eachResult[keys[i]] = mapData[j].DestData;
+                                    if(mapData[j].SourceData!=null && eachResult[keys[i]] != null){
+                                        if (mapData[j].SourceData.toUpperCase() === eachResult[keys[i]].toUpperCase()) {
+                                            eachResult[keys[i]] = mapData[j].DestData;
+                                           
+                                        }    
                                     }
+                                   
 
                                 }
                                 // mergeLine = mergeLine + "|" + eachResult[keys[i]]
