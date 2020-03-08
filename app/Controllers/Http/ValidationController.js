@@ -327,7 +327,7 @@ class ValidationController {
         
         try {
            
-            
+            var req = request.body;
             var HDLEntries = [];
              var MapEntries = [];
             var UNMapEntries = [];
@@ -342,7 +342,7 @@ class ValidationController {
                 var mappings = [];
                 // Get all data mappings based on entity id.
                 var dataMappings = await Database.connection('oracledb').raw('select psl.entity_name, pdm.source_column_name, pdm.source_data, pdm.destination_data from project_source_entity_list psl,'
-                +'proj_data_mappings pdm where psl.entity_id = pdm.source_entity_id');
+                +'proj_data_mappings pdm where psl.entity_id = pdm.source_entity_id and psl.entity_id='+req.entityId);
 
                 var MappedEntity = dataMappings.filter(e => {
 
@@ -455,7 +455,9 @@ class ValidationController {
                         }
                     }
                     //Inserting all unmap data into VALIDATIONS_DATA Table.
-                    let dbinsert = await Database.connection('oracledb').insert(UnMapData).into('VALIDATIONS_DATA');
+                    if(UnMapData.length > 0) {
+                        let dbinsert = await Database.connection('oracledb').insert(UnMapData).into('VALIDATIONS_DATA');
+                    }
                 }
 
                 
@@ -485,7 +487,7 @@ class ValidationController {
                             totalData1.push({
                                 "id": mapQueryData.length + index,
                                 "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
-                                "group": "group1",
+                                "group": umdata.MAPPING_COLUMN_NAME,
                                 "value": umdata.COUNT_UNMAP
                             });
                         });
@@ -499,7 +501,7 @@ class ValidationController {
                             totalData1.push({
                                 "id": mapQueryData.length + index,
                                 "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
-                                "group": "group1",
+                                "group": umdata.MAPPING_COLUMN_NAME,
                                 "value": umdata.COUNT_UNMAP
                             });
                         });
