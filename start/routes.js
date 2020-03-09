@@ -90,3 +90,5 @@ Route.group(() =>
 
 Route.post('/processSupervisor','HdlController.processSupervisor')
 Route.post('/CreateSalaryBasis', 'HdlController.CreateSalaryBasis')
+
+Route.get('/downloadValidation', 'ValidationController.downloadValidations');

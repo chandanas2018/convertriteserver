@@ -529,6 +529,35 @@ class ValidationController {
         // }
     }
 
+    async downloadValidations({request, response, error}) {
+        try {
+            var data = request.body;
+
+            var result = [];
+
+            var validationData = await Database.connection('oracledb').raw('SELECT p.PROJECT_NAME, v.TYPE, v.SOURCE_ENTITY, v.SOURCE_FIELD, v.DESTINATION_ENTITY, v.DESTINATION_FIELD, v.MESSAGE FROM VALIDATIONS v INNER JOIN LIST_OF_PROJECTS p ON v.PROJECTID = p.PROJECT_ID');
+
+            if(validationData.length > 0) {
+                validationData.forEach((res) => {
+                    result.push({
+                        "PROJECT_NAME": res.PROJECT_NAME,
+                        "TYPE": res.TYPE,
+                        "SOURCE_ENTITY": res.SOURCE_ENTITY,
+                        "SOURCE_FIELD": res.SOURCE_FIELD,
+                        "DESTINATION_ENTITY": res.DESTINATION_ENTITY,
+                        "DESTINATION_FIELD": res.DESTINATION_FIELD,
+                        "MESSAGE": res.MESSAGE
+                    });
+                });
+            }
+            return ({success: result});
+        }
+        catch(err) {
+            console.log(err);
+            return ({ success: null, error: err });
+        }
+    }
+
 }
 
 function removeDuplicates(originalArray, prop) {
