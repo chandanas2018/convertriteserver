@@ -85,7 +85,7 @@ Route.group(() =>
  //SetUpDataController
  Route.get('/api/vi/GetSetupData','SetupDataController.GetDataForSetupByEntity')
 
- Route.get('/getValidations','ValidationController.storeMapUnMapIntoDB')
+ Route.post('/getValidations','ValidationController.storeMapUnMapIntoDB')
 
 
 Route.post('/processSupervisor','HdlController.processSupervisor')
