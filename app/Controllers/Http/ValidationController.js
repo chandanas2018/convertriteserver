@@ -14,7 +14,7 @@ const DataTransferRulesForDefaultTransfers = [
         DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'PersonNumber', 'StartDate', 'DateOfBirth', 'ActionCode', 'BloodType'],
         SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'EFFECTIVE_END_DATE', 'Person_Number', 'Start_Date', 'DATE_OF_BIRTH', 'ActionCode', 'Blood_type'],
         SourceQuery: "SELECT to_char(P.EFFECTIVE_START_DATE, 'YYYY/MM/DD')  AS EffectiveStartDate,  to_char(P.EFFECTIVE_END_DATE,'YYYY/MM/DD') AS EffectiveEndDate, P.PERSON_NUMBER AS PersonNumber, to_char(P.Start_Date,'YYYY/MM/DD') as StartDate, to_char(P.DATE_OF_BIRTH, 'DD/MM/YYYY') AS DateOfBirth, 'EBS' As SourceSystemOwner, actioncode as ActionCode, p.blood_type as BloodType," +
-            " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\"" + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL "        
+            " P.PERSON_NUMBER || '_' ||'PERSON' \"SOURCESYSTEMID\"" + " FROM PERSON P  WHERE P.PERSON_ID is not NULL AND P.PERSON_NUMBER IS NOT NULL "
 
     },
 
@@ -24,7 +24,7 @@ const DataTransferRulesForDefaultTransfers = [
         SourceColumns: ['Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'PersonIdSourceSystemId', 'PERSON_NUMBER', 'Legislation_Code', 'Name_Type', 'First_Name', 'Middle_Names', 'Last_Name', 'Title'],
         SourceQuery: "SELECT to_char(pn.effective_start_date,'YYYY/MM/DD') as effectivestartdate, to_char(pn.Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate," + "  P.PERSON_NUMBER || '_' || 'PERSON' \"PERSONIDSOURCESYSTEMID\"," + "pn. Person_Number as PersonNumber,pn. Legislation_Code as LegislationCode,'GLOBAL' as NameType, pn. First_Name as FirstName, pn. Middle_Names as MiddleNames," +
             "pn.Last_Name as LastName, pn.title as Title, 'EBS' AS SourceSystemOwner," + "P.PERSON_NUMBER || '_' || 'PERSON_NAME'  \"SOURCESYSTEMID\"" + " FROM PERSON_NAME pn INNER JOIN PERSON p on p.PERSON_ID = pn.PERSON_ID"
-          
+
 
     },
 
@@ -36,7 +36,7 @@ const DataTransferRulesForDefaultTransfers = [
             "LegislationCode,PLI.Highest_Education_Level AS HighestEducationLevel,PLI.Marital_Status AS MaritalStatus, PLI.Sex, PLI.Marital_Status_Date AS MaritalStatusDate,'EBS' AS SourceSystemOwner," +
             " PLI.PERSON_NUMBER || '_' || 'PERSON_LEGISLATIVE_DATA'  \"SOURCESYSTEMID\"" +
             " FROM PERSON_LEGISLATIVE_INFO PLI INNER JOIN PERSON P ON PLI.PERSON_ID = P.PERSON_ID"
-           
+
     },
 
 
@@ -47,7 +47,7 @@ const DataTransferRulesForDefaultTransfers = [
         SourceQuery: "select Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'   \"SOURCESYSTEMID\"," +
             "Legal_Employer_Name as LegalEmployerName, to_char(Date_Start, 'YYYY/MM/DD') as DateStart, Action_Code as ActionCode, Primary_Flag as PrimaryFlag, Worker_Type as WorkerType," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\""
             + " FROM WORK_RELATIONSHIP "
-            
+
 
     },
 
@@ -60,7 +60,7 @@ const DataTransferRulesForDefaultTransfers = [
             + ", Assignment_Status_Type_Code as AssignmentStatusTypeCode, to_char(Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate, Effective_Latest_Change as EffectiveLatestChange, Effective_Sequence as EffectiveSequence, to_char(Effective_Start_Date, 'YYYY/MM/DD') as EffectiveStartDate,"
             + " System_Person_Type as SystemPersonType, Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer_Name as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ", PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\"" +
             " FROM WORK_TERMS "
-           
+
 
 
     },
@@ -74,11 +74,11 @@ const DataTransferRulesForDefaultTransfers = [
             + ",Assignment_Status_Type_Code as AssignmentStatusTypeCode,Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\""
             + ", PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ",Person_Type_Code as PersonTypeCode, Primary_Flag as PrimaryFlag, System_Person_Type as SystemPersonType,"
             + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",JobCode , Department_Name as DepartmentName, LocationCode , GradeCode " + " FROM ASSIGNMENT "
-           
+
 
     }
 
- 
+
 ]
 
 var lookupObj = {
@@ -90,7 +90,7 @@ var lookupObj = {
     WORK_RELATIONSHIP: "WorkRelationship",
     WORK_TERMS: "WorkTerms",
     ASSIGNMENT: "Assignment",
-    PERSON_SALARY:"person_salary"
+    PERSON_SALARY: "person_salary"
 }
 class ValidationController {
 
@@ -323,13 +323,13 @@ class ValidationController {
     }
 
 
-    async storeMapUnMapIntoDB({request, response, error}) {
-        
+    async storeMapUnMapIntoDB({ request, response, error }) {
+
         try {
-           
+
             var req = request.body;
             var HDLEntries = [];
-             var MapEntries = [];
+            var MapEntries = [];
             var UNMapEntries = [];
             var dbdata = [], UnMapData = [];
             const deleteDB = await Database.connection('oracledb').raw('DELETE FROM VALIDATIONS_DATA');
@@ -342,13 +342,13 @@ class ValidationController {
                 var mappings = [];
                 // Get all data mappings based on entity id.
                 var dataMappings = await Database.connection('oracledb').raw('select psl.entity_name, pdm.source_column_name, pdm.source_data, pdm.destination_data from project_source_entity_list psl,'
-                +'proj_data_mappings pdm where psl.entity_id = pdm.source_entity_id and psl.entity_id='+req.entityId);
+                    + 'proj_data_mappings pdm where psl.entity_id = pdm.source_entity_id and psl.entity_id=' + req.entityId);
 
                 var MappedEntity = dataMappings.filter(e => {
 
-                    var entity =lookupObj[e.ENTITY_NAME];
+                    var entity = lookupObj[e.ENTITY_NAME];
 
-                    if(entity) {
+                    if (entity) {
                         if (entity.toUpperCase() === rule.DestinationEntity.toUpperCase())
                             return e
                     }
@@ -363,7 +363,7 @@ class ValidationController {
                 //sorting keys for each entity in array collection
                 if (dbResult) {
                     var keys = Object.keys(dbResult[0]).sort();
-  
+
                     dbResult.forEach(eachResult => {
 
                         for (var i = 0; i < keys.length; i++) {
@@ -378,7 +378,7 @@ class ValidationController {
                                         //If true, then comparing both mapped source data and database entries data is equal or not.
                                         if (mapData[j].SourceData.toUpperCase().indexOf(eachResult[keys[i]].toUpperCase())) {
                                             //If true, then framing the query based on entity, sourcecolumn and sourcedata.
-                                            var mapPersonDataQuery = "SELECT PERSON_NUMBER FROM "+mapData[j].Entity+" WHERE "+mapData[j].SourceColumn + "='"+mapData[j].SourceData+"'";
+                                            var mapPersonDataQuery = "SELECT PERSON_NUMBER FROM " + mapData[j].Entity + " WHERE " + mapData[j].SourceColumn + "='" + mapData[j].SourceData + "'";
                                             //Here already data is mapped found, then pushing with validation_entity, person_query, mapping_column_name, mapped_data.
                                             dbdata.push({
                                                 VALIDATION_ENTITY: mapData[j].Entity,
@@ -398,18 +398,18 @@ class ValidationController {
             HDLEntries = await Promise.all(PromiseEntries);
             var not_mapped_query = '';
             //If mapped data(dbdata) is present or not.
-            if(dbdata.length > 0){
+            if (dbdata.length > 0) {
                 //If true, then removing duplicate data and stored in dbdata.
                 dbdata = removeDuplicates(dbdata, "MAPPED_DATA");
                 //Looping through all dbdata mapped data.
-                for(var i = 0;i < dbdata.length;i++) {
+                for (var i = 0; i < dbdata.length; i++) {
                     //Get person number, code from respective mapped query.
                     var query = await Database.connection('oracledb').raw(dbdata[i].PERSON_QUERY);
                     //Checking if data is present.
-                    if(query.length > 0){
+                    if (query.length > 0) {
                         //If true, then looping all mapped data based on person number.
-                        query.forEach((pdata) => {  
-                            not_mapped_query += pdata.PERSON_NUMBER+",";  
+                        query.forEach((pdata) => {
+                            not_mapped_query += pdata.PERSON_NUMBER + ",";
                             //Here pushing all mapped data in MapEntries array.
                             MapEntries.push({
                                 VALIDATION_ENTITY: dbdata[i].VALIDATION_ENTITY,
@@ -433,17 +433,17 @@ class ValidationController {
                 //Checking whether un mapped data is exists or not.
                 if (UNMapEntries.length > 0) {
                     //If true, then looping all unmap entries.
-                    for (var j = 0;j < UNMapEntries.length; j++) {
+                    for (var j = 0; j < UNMapEntries.length; j++) {
                         //Checking whether person number last character is comma or not.
-                        if((UNMapEntries[j].UNMAP_QUERY).toString().slice(-1) == ',') {
+                        if ((UNMapEntries[j].UNMAP_QUERY).toString().slice(-1) == ',') {
                             //If true, then removing last character comma from string.
                             var person_ids = (UNMapEntries[j].UNMAP_QUERY).toString().slice(0, -1);
                             //Checking whether unmap data from already map data using NOT IN.
-                            var query = await Database.connection('oracledb').raw("SELECT PERSON_NUMBER, "+UNMapEntries[j].MAPPING_COLUMN_NAME+" as MAP_COLUMN FROM "+UNMapEntries[j].VALIDATION_ENTITY+" where PERSON_NUMBER NOT IN ("+person_ids+")");
+                            var query = await Database.connection('oracledb').raw("SELECT PERSON_NUMBER, " + UNMapEntries[j].MAPPING_COLUMN_NAME + " as MAP_COLUMN FROM " + UNMapEntries[j].VALIDATION_ENTITY + " where PERSON_NUMBER NOT IN (" + person_ids + ")");
                             //If data is exists or not.
-                            if(query.length > 0){
+                            if (query.length > 0) {
                                 //If true, then looping all push into UnMapData array.
-                                query.forEach((pdata) => {  
+                                query.forEach((pdata) => {
                                     UnMapData.push({
                                         VALIDATION_ENTITY: UNMapEntries[j].VALIDATION_ENTITY,
                                         NOTMAPPED_PERSON_NUMBER: pdata.PERSON_NUMBER,
@@ -455,12 +455,12 @@ class ValidationController {
                         }
                     }
                     //Inserting all unmap data into VALIDATIONS_DATA Table.
-                    if(UnMapData.length > 0) {
+                    if (UnMapData.length > 0) {
                         let dbinsert = await Database.connection('oracledb').insert(UnMapData).into('VALIDATIONS_DATA');
                     }
                 }
 
-                
+
                 //Getting all mapped data query.
                 //let unmapQueryData = await Database.connection('oracledb').raw('SELECT DISTINCT ID,MAPPING_COLUMN_NAME as COLUMN_NAME,UNMAPPED_DATA as MAP_DATA FROM VALIDATIONS_DATA WHERE NOTMAPPED_PERSON_NUMBER != 0');
                 //Getting all unmapped data query.
@@ -470,50 +470,62 @@ class ValidationController {
                 var totalData = [];
                 var totalData1 = [];
                 //If mapdata present or not
-                if(mapQueryData.length > 0){
+                if (mapQueryData.length > 0) {
                     //If true, then looping through pushing all map data into totalData array.
                     mapQueryData.forEach((mdata, index) => {
-                        totalData.push({
-                            "id": index,
-                            "series": 'MAP_'+mdata.MAPPING_COLUMN_NAME,
-                            "group": 'group1',
-                            "value": mdata.COUNT_MAP
-                        });
+                        if (mdata.COUNT_UNMAP != 0) {
+                            totalData.push({
+                                "id": index,
+                                "series": 'MAP_' + mdata.MAPPING_COLUMN_NAME,
+                                "group": mdata.MAPPING_COLUMN_NAME,
+                                "value": mdata.COUNT_MAP
+                            });
+                        } else {
+                            console.log(mdata.COUNT_UNMAP);
+                        }
                     });
                     //If unmap data present or not.
-                    if(unmapQueryData.length > 0) {
+                    if (unmapQueryData.length > 0) {
                         //If true, then looping through pushing all unmap data into totalData array.
                         unmapQueryData.forEach((umdata, index) => {
-                            totalData1.push({
-                                "id": mapQueryData.length + index,
-                                "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
-                                "group": umdata.MAPPING_COLUMN_NAME,
-                                "value": umdata.COUNT_UNMAP
-                            });
+                            if (umdata.COUNT_UNMAP != 0) {
+                                totalData.push({
+                                    "id": mapQueryData.length + index,
+                                    "series": 'UNMAP_' + umdata.MAPPING_COLUMN_NAME,
+                                    "group": umdata.MAPPING_COLUMN_NAME,
+                                    "value": umdata.COUNT_UNMAP
+                                });
+                            } else {
+                                console.log(umdata.COUNT_UNMAP);
+                            }
                         });
                     }
                 }
-                else{
+                else {
                     //If unmap data present or not.
-                    if(unmapQueryData.length > 0) {
+                    if (unmapQueryData.length > 0) {
                         //If true, then looping through pushing all unmap data into totalData array.
                         unmapQueryData.forEach((umdata, index) => {
-                            totalData1.push({
-                                "id": mapQueryData.length + index,
-                                "series": 'UNMAP_'+umdata.MAPPING_COLUMN_NAME,
-                                "group": umdata.MAPPING_COLUMN_NAME,
-                                "value": umdata.COUNT_UNMAP
-                            });
+                            if (umdata.COUNT_UNMAP != 0) {
+                                totalData.push({
+                                    "id": mapQueryData.length + index,
+                                    "series": 'UNMAP_' + umdata.MAPPING_COLUMN_NAME,
+                                    "group": umdata.MAPPING_COLUMN_NAME,
+                                    "value": umdata.COUNT_UNMAP
+                                });
+                            } else {
+                                console.log(umdata.COUNT_UNMAP);
+                            }
                         });
                     }
                 }
 
                 // return response.send({data:HDLEntries})
-                return ({ success: totalData1 });
+                return ({ success: totalData });
             }
             else {
                 //If not mapped data.
-                return ({ success: null, error: null });                
+                return ({ success: null, error: null });
             }
 
         }
@@ -533,16 +545,16 @@ class ValidationController {
 
 function removeDuplicates(originalArray, prop) {
     var newArray = [];
-    var lookupObject  = {};
+    var lookupObject = {};
 
-    for(var i in originalArray) {
-       lookupObject[originalArray[i][prop]] = originalArray[i];
+    for (var i in originalArray) {
+        lookupObject[originalArray[i][prop]] = originalArray[i];
     }
 
-    for(i in lookupObject) {
+    for (i in lookupObject) {
         newArray.push(lookupObject[i]);
     }
-     return newArray;
+    return newArray;
 }
 
 
