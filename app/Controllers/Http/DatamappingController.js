@@ -150,9 +150,9 @@ class DatamappingController {
                 DestinationData = destinationdata;
             }
             else if (data1.data.DESTINATION_COLUMN_NAME == "DEPARTMENT_NAME") {
-                data1.data.DESTINATION_COLUMN = 'organizations'
-                var destinationdata = await Database.connection('oracledb').raw("select classification_code, organizationid as DEST_DATA_ID, name as DEST_DATA_NAME from "
-                 + data1.data.DESTINATION_COLUMN  + " where classification_code = 'DEPARTMENT' ");
+                data1.data.DESTINATION_COLUMN = 'departments'
+                var destinationdata = await Database.connection('oracledb').raw("select name as DEST_DATA_NAME, organizationid as DEST_DATA_ID from  " + data1.data.DESTINATION_COLUMN  + 
+                " d inner join  locations l on d.locationid = l.location_id where l.country = 'US' ")
                 console.log(destinationdata);
                 DestinationData = destinationdata;
 
@@ -427,6 +427,9 @@ class DatamappingController {
                     if(mappings[i].SOURCE_COLUMN_NAME == 'GRADECODE'){
                         source_column = 'GRADEID';
                     }
+                    if(mappings[i].SOURCE_COLUMN_NAME == 'DEPARTMENT_NAME'){
+                        source_column = 'DEPARTMENTID';
+                    }
                     var destination_column = mappings[i].DESTINATION_COLUMN_NAME;
                     if(mappings[i].DESTINATION_COLUMN_NAME == 'GRADECODE'){
                         destination_column = 'GRADE_CODE'
@@ -435,7 +438,7 @@ class DatamappingController {
                         destination_column = 'LOCATION_CODE'
                     }
                     if (mappings[i].DESTINATION_COLUMN_NAME == 'DEPARTMENT_NAME') {
-                        destination_column = 'NAME'
+                        destination_column = 'ORGANIZATIONID'
                     }
 
                     qry5 = await Database.connection('oracledb').raw('SELECT DISTINCT ' + source_column + ' AS SOURCE_DATA_NAME from ' + source_table_name);
@@ -539,6 +542,9 @@ class DatamappingController {
                         if(data.mappings[i].SourceColumnName == 'GRADECODE'){
                             source_column = 'GRADEID';
                         }
+                        if(data.mappings[i].SourceColumnName == 'DEPARTMENT_NAME'){
+                            source_column = 'DEPARTMENTID';
+                        }
                         var destination_column = data.mappings[i].DestinationColumnName;
                         if(data.mappings[i].DestinationColumnName == 'GRADECODE'){
                         destination_column = 'GRADE_CODE'
@@ -548,7 +554,7 @@ class DatamappingController {
                     }
                     if(data.mappings[i].DestinationColumnName == 'DEPARTMENT_NAME')
                     {
-                        destination_column = 'NAME';
+                        destination_column = 'ORGANIZATIONID';
                     }
                     alias_column_name = alias_column_name + '_NAME';
                     if (alias_column_name == 'GRADE_NAME') {

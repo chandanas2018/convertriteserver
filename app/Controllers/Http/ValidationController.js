@@ -67,14 +67,14 @@ const DataTransferRulesForDefaultTransfers = [
 
     {
         DestinationEntity: "Assignment",
-        DestinationColumns: ['ActionCode', 'SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'EffectiveSequence', 'EffectiveLatestChange', 'AssignmentType', 'AssignmentName', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'BusinessUnitShortCode', 'LegalEmployerName', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'PersonTypeCode', 'PrimaryFlag', 'SystemPersonType', 'WtaIdSourceSystemId', 'JobCode', 'DepartmentName', 'LocationCode', 'GradeCode'],
-        SourceColumns: ['Action_Code', 'Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'Effective_Sequence', 'Effective_Latest_Change', 'Assignment_Type', 'Assignment_Name', 'Assignment_Number', 'Assignment_Status_Type_Code', 'Business_Unit_Short_Code', 'Legal_Employer', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'Person_Type_Code', 'Primary_Flag', 'System_Person_Type', 'WtaIdSourceSystemId', 'JobCode', 'Department_Name', 'LocationCode', 'GradeCode'],
+        DestinationColumns: ['ActionCode', 'SourceSystemOwner', 'SourceSystemId', 'EffectiveStartDate', 'EffectiveEndDate', 'EffectiveSequence', 'EffectiveLatestChange', 'AssignmentType', 'AssignmentName', 'AssignmentNumber', 'AssignmentStatusTypeCode', 'BusinessUnitShortCode', 'LegalEmployerName', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'PersonTypeCode', 'PrimaryFlag', 'SystemPersonType', 'WtaIdSourceSystemId', 'JobCode', 'DepartmentId', 'LocationCode', 'GradeCode'],
+        SourceColumns: ['Action_Code', 'Source_System_Owner', 'Source_System_Id', 'Effective_Start_Date', 'Effective_End_Date', 'Effective_Sequence', 'Effective_Latest_Change', 'Assignment_Type', 'Assignment_Name', 'Assignment_Number', 'Assignment_Status_Type_Code', 'Business_Unit_Short_Code', 'Legal_Employer', 'PosIdSourceSystemId', 'PersonIdSourceSystemId', 'Person_Type_Code', 'Primary_Flag', 'System_Person_Type', 'WtaIdSourceSystemId', 'JobCode', 'DepartmentId', 'LocationCode', 'GradeCode'],
         SourceQuery: "select Action_Code as ActionCode, Source_System_Owner as SourceSystemOwner," + " PERSON_NUMBER || '_' || 'ASG' \"SOURCESYSTEMID\"" + ",to_char(Effective_Start_Date,'YYYY/MM/DD') as EffectiveStartDate,to_char(Effective_End_Date, 'YYYY/MM/DD') as EffectiveEndDate, Effective_Sequence as EffectiveSequence,"
             + "Effective_Latest_Change as EffectiveLatestChange, Assignment_Type as AssignmentType,Assignment_Name as AssignmentName," + " Assignment_Name || PERSON_NUMBER \"ASSIGNMENTNUMBER\""
             + ",Assignment_Status_Type_Code as AssignmentStatusTypeCode,Business_Unit_Short_Code as BusinessUnitShortCode, Legal_Employer as LegalEmployerName," + " PERSON_NUMBER || '_' || 'PERIOD_OF_SERVICE'\"POSIDSOURCESYSTEMID\""
             + ", PERSON_NUMBER || '_' || 'PERSON'   \"PERSONIDSOURCESYSTEMID\"" + ",Person_Type_Code as PersonTypeCode, Primary_Flag as PrimaryFlag, System_Person_Type as SystemPersonType,"
-            + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",JobCode , Department_Name as DepartmentName, LocationCode , GradeCode " + " FROM ASSIGNMENT "
-
+            + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",JobCode , DepartmentId , LocationCode , GradeCode " + " FROM ASSIGNMENT "
+           
 
     }
 
@@ -377,6 +377,10 @@ class ValidationController {
                                     if (mapData[j].SourceData != null && eachResult[keys[i]] != null) {
                                         //If true, then comparing both mapped source data and database entries data is equal or not.
                                         if (mapData[j].SourceData.toUpperCase().indexOf(eachResult[keys[i]].toUpperCase())) {
+                                            //TODO : REFACTOR THE CODE AFTER DEMO
+                                            if(mapData[j].SourceColumn === "DEPARTMENT_NAME"){
+                                                mapData[j].SourceColumn = "DEPARTMENTID";
+                                            }
                                             //If true, then framing the query based on entity, sourcecolumn and sourcedata.
                                             var mapPersonDataQuery = "SELECT PERSON_NUMBER FROM " + mapData[j].Entity + " WHERE " + mapData[j].SourceColumn + "='" + mapData[j].SourceData + "'";
                                             //Here already data is mapped found, then pushing with validation_entity, person_query, mapping_column_name, mapped_data.
