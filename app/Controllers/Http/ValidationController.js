@@ -76,8 +76,15 @@ const DataTransferRulesForDefaultTransfers = [
             + " PERSON_NUMBER || '_' || 'ETERM'   \"WTAIDSOURCESYSTEMID\"" + ",JobCode , DepartmentId , LocationCode , GradeCode " + " FROM ASSIGNMENT "
            
 
-    }
+    },
 
+    {
+        DestinationEntity: 'Person_Salary',
+        DestinationColumns: ['SourceSystemOwner', 'SourceSystemId', 'ActionCode', 'AssIdSourceSystemId', 'DateFrom', 'DateTo', 'SalaryAmount', 'SalaryBasisName', 'SalaryApproved', 'PersonNumber'],
+        SourceColumns: ['SourceSystemOwner', 'SourceSystemId', 'ActionCode', 'AssIdSourceSystemId', 'DateFrom', 'DateTo', 'SalaryAmount', 'SalaryBasisName', 'SalaryApproved', 'PersonNumber'],
+        SourceQuery: "SELECT 'EBS' as SourceSystemOwner, 'SALID'|| '_' || sa.ASSIGNMENTID   \"SOURCESYSTEMID\", sa.ActionCode," + "sa.ASSIGNMENTID || '_' || 'ASG' \"ASSIDSOURCESYSTEMID\", to_char(sa.DateFrom, 'YYYY/MM/DD')  AS DateFrom, to_char(sa.DateTo, 'YYYY/MM/DD')  AS DateTo, sa.SalaryAmount, sa.SalaryBasisName, sa.SalaryApproved  from salary sa"
+
+    }
 
 ]
 
@@ -307,7 +314,7 @@ class ValidationController {
 
 
 
-                console.log(entity_column_mappings);
+                // console.log(entity_column_mappings);
 
                 // array.push(finalArray)
 
@@ -348,6 +355,8 @@ class ValidationController {
 
                     var entity = lookupObj[e.ENTITY_NAME];
 
+                   
+
                     if (entity) {
                         if (entity.toUpperCase() === rule.DestinationEntity.toUpperCase())
                             return e
@@ -381,6 +390,11 @@ class ValidationController {
                                             if(mapData[j].SourceColumn === "DEPARTMENT_NAME"){
                                                 mapData[j].SourceColumn = "DEPARTMENTID";
                                             }
+                                            if(mapData[j].Entity === "PERSON_SALARY"){
+                                                mapData[j].Entity = "SOURCE_SALARY"
+                                            }
+                            
+
                                             //If true, then framing the query based on entity, sourcecolumn and sourcedata.
                                             var mapPersonDataQuery = "SELECT PERSON_NUMBER FROM " + mapData[j].Entity + " WHERE " + mapData[j].SourceColumn + "='" + mapData[j].SourceData + "'";
                                             //Here already data is mapped found, then pushing with validation_entity, person_query, mapping_column_name, mapped_data.
