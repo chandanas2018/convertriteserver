@@ -11,8 +11,9 @@ class ProjectController {
         try{
           var date = new Date().toUTCString().slice(4, 17);
           var data = request.body;
-          let qry = await Database.insert({
-              //PROJECT_ID:data.projectid,
+          let max_project_id = await Database.connection('oracledb').raw("SELECT (MAX(PROJECT_ID)+1) as PROJECT_ID FROM LIST_OF_PROJECTS");
+          let qry = await Database.connection('oracledb').insert({
+              PROJECT_ID:max_project_id[0].PROJECT_ID,
               PROJECT_NAME:data.projectname,
               DATE_OF_CREATION: date,
               DATE_OF_UPDATION:date,
@@ -22,7 +23,8 @@ class ProjectController {
           }).into('LIST_OF_PROJECTS');
           console.log(qry);
 
-          let transactions = await Database.connection('oracledb').insert({ PROJECT_ID:data.projectid,
+          let transactions = await Database.connection('oracledb').insert({ 
+            PROJECT_ID:max_project_id[0].PROJECT_ID,
             TRANSACTION_DATE:date,
             ENTITIY_ACCESSED:'',
             TRANSACTION_STATUS:'project created',
@@ -30,7 +32,7 @@ class ProjectController {
         }).into('PROJECT_TRANSACTIONS');
         console.log(transactions);
       
-          return response.status(200).send({success:true, data:qry, msg:'Successfully created the project', err:null});
+          return response.status(200).send({success:true, data:{PROJECT_ID: max_project_id[0].PROJECT_ID, PROJECT_NAME: data.projectname, PROJECT_DESCRIPTION: data.description}, msg:'Successfully created the project', err:null});
         }
         catch(error){
             return response.status(400).send({success:false, data:null, msg:'Successfully created the project', err:error});
@@ -49,7 +51,7 @@ class ProjectController {
         try{
             var data = request.body;
             let qry = await Database.connection('oracledb').select('PROJECT_ID','PROJECT_NAME','PROJECT_DESCRIPTION','CONVERSION_STATUS',)
-            .from('LIST_OF_PROJECTS').where('PROJECT_CREATED_BY', data.email );
+            .from('LIST_OF_PROJECTS');
             console.log(qry);
            
             return response.status(200).send({success:true, data:qry, msg :'List of created projects', err:null});

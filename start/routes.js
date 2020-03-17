@@ -28,6 +28,7 @@ Route.group(() =>
     //Route.post('/file/transactions', 'ProjectController.saveTransactions')
     Route.get('/upload/extracts','ProjectController.uploadExtracts')
     Route.get('/projects/testConfig', 'ProjectController.testConfig')
+    Route.post('/projects/create', 'ProjectController.createProject')
 }).prefix('api/v1')
 
 //Routes for entity mappings
