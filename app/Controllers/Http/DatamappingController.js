@@ -9,8 +9,9 @@ class DatamappingController {
     async identificationColumnList({ request, response, error }) {
         try {
             var data = request.body;
+            var project_id = request.header('Project_Id');
             let identifications = await Database.connection('oracledb').select('IDENTIFICATION_STATUS', 'COLUMN_ID', 'COLUMN_NAME', 'DISPLAY_NAME', 'IS_MANDATORY', 'IS_MULTISELECT').from('PROJ_ENTITY_IDENTIFICATION')
-                .where('ENTITY_ID', data.entityid).orderBy('IS_MANDATORY', 'desc');
+                .where('ENTITY_ID', data.entityid).where('PROJECT_ID',project_id).orderBy('IS_MANDATORY', 'desc');
             console.log(identifications);
             Database.close(['oracledb']);
             return response.status(200).send({ success: true, data: identifications, msg: 'Successfully get the list', error: null });

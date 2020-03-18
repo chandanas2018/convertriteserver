@@ -331,9 +331,9 @@ class ValidationController {
 
 
     async storeMapUnMapIntoDB({ request, response, error }) {
-
+        var project_id = request.header('Project_Id');
         try {
-
+            if(project_id == 2){
             var req = request.body;
             var HDLEntries = [];
             var MapEntries = [];
@@ -547,6 +547,10 @@ class ValidationController {
             }
 
         }
+        else{
+            return ({ success: null, error: null });
+        }
+    }
 
         catch (err) {
             console.log(err);

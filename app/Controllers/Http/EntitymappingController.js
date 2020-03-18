@@ -10,7 +10,9 @@ class EntitymappingController {
 
     async sourceEntities({ request, response, error }) {
         try {
-            var sourcentities = await Database.connection('oracledb').select('*').from('PROJECT_SOURCE_ENTITY_LIST');
+            var project_id = request.header('Project_Id');
+            var sourcentities = await Database.connection('oracledb').select('*').from('PROJECT_SOURCE_ENTITY_LIST')
+            .where('PROJECT_ID', project_id);
             console.log(sourcentities);
             return response.status(200).send({ success: true, data: sourcentities, msg: 'Successfully get the entity list', err: null });
             //return response.json(entities)

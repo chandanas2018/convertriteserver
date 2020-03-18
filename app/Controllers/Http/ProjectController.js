@@ -103,8 +103,10 @@ class ProjectController {
      //List of Entity names with status 
      async uploadExtracts({request, response, error }){
         try{
+            var project_id = request.header('Project_Id');
+            console.log(project_id);
             let uploads = await Database.connection('oracledb').select('ENTITY_NAME','UPLOAD_STATUS', 'TIMESTAMP').from('PROJECT_LEGACY_UPLOAD_STATUS')
-            .where('PROJECT_ID', 2);
+            .where('PROJECT_ID', project_id);
             console.log(uploads);
            
             return response.status(200).send({success:true, data:uploads, msg:'Successfully get the upload files list', err:null});
